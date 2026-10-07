@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <script src="../assets/ai-offline.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Equipe de Marketing & Tráfego Pago | Clínica D'Moura</title>
@@ -95,7 +96,10 @@
             background: rgba(212, 175, 55, 0.7);
         }
     </style>
-  <link rel="stylesheet" href="../css/google-theme.css">
+  <link rel="icon" href="../assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0c1f26">
 </head>
 <body class="bg-brand-darkNavy text-slate-100 font-sans min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-brand-purple selection:text-white">
 
@@ -859,7 +863,7 @@ Características pessoais e de fala:
             const maxRetries = 3;
             let delay = 1000;
 
-            while (retries < maxRetries) {
+            while (apiKey && retries < maxRetries) {
                 try {
                     const response = await fetch(apiUrl, {
                         method: 'POST',

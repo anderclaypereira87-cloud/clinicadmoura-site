@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
+  <script src="../assets/ai-offline.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dra. Danusa Moura - Biomedicina Estética & Instituto DMap</title>
@@ -83,7 +84,10 @@
         ::-webkit-scrollbar-thumb:hover { background: #3b52a4; }
     </style>
     <link rel="stylesheet" href="../assets/avatares/avatar-falante.css">
-  <link rel="stylesheet" href="../css/google-theme.css">
+  <link rel="icon" href="../assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0c1f26">
 </head>
 <body class="bg-dmap-950 text-slate-200 min-h-screen font-sans flex flex-col justify-between selection:bg-dmap-blue selection:text-white">
 
@@ -114,7 +118,7 @@
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     Clínica D'Moura Ativa
                 </span>
-                <button id="toggle-settings" title="Ajustes do Avatar e Voz" class="px-3.5 py-2 rounded bg-dmap-850 hover:bg-dmap-800 text-dmap-slate hover:text-dmap-gold border border-slate-700/60 text-xs font-semibold flex items-center gap-2 transition">
+                <button id="toggle-settings" style="display:none" aria-hidden="true" tabindex="-1" title="Ajustes do Avatar e Voz" class="px-3.5 py-2 rounded bg-dmap-850 hover:bg-dmap-800 text-dmap-slate hover:text-dmap-gold border border-slate-700/60 text-xs font-semibold flex items-center gap-2 transition">
                     <i class="fa-solid fa-sliders"></i>
                     <span class="hidden sm:inline">Voz & API IA</span>
                 </button>
@@ -806,7 +810,7 @@ Regras de Resposta:
                 }
 
             } catch (err) {
-                console.error("Erro na consulta com Dra. Danusa:", err);
+                console.warn("Erro na consulta com Dra. Danusa:", err);
                 const fallbackReply = `Como biomédica esteta no Instituto DMap e na Clínica D'Moura, meu compromisso é aliar tecnologia e biossegurança. Para o seu caso, combinamos triagem individualizada e bioestimuladores de alta performance. Gostaria de agendar uma consulta presencial de avaliação?`;
                 doctorThinkingMsg.innerHTML = `<p class="font-bold text-dmap-gold mb-1 text-[11px] uppercase tracking-wider">Dra. Danusa Moura</p>${fallbackReply}`;
                 speakText(fallbackReply);

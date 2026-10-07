@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
+  <script src="../assets/ai-offline.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dra. Flávia - Avatar Interativo de Estética e Cosmetologia</title>
@@ -107,7 +108,10 @@
             background: rgba(216, 131, 131, 0.6);
         }
     </style>
-  <link rel="stylesheet" href="../css/google-theme.css">
+  <link rel="icon" href="../assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0c1f26">
 </head>
 <body class="bg-plum-950 text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-rosegold-500 selection:text-plum-950">
 
@@ -134,7 +138,7 @@
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     Dra. Flávia Online
                 </span>
-                <button id="toggle-settings" title="Configurações da API" class="px-3 py-1.5 rounded-lg bg-plum-800 hover:bg-plum-700 text-rosegold-400 border border-rosegold-500/30 text-sm flex items-center gap-2 transition">
+                <button id="toggle-settings" style="display:none" aria-hidden="true" tabindex="-1" title="Configurações da API" class="px-3 py-1.5 rounded-lg bg-plum-800 hover:bg-plum-700 text-rosegold-400 border border-rosegold-500/30 text-sm flex items-center gap-2 transition">
                     <i class="fa-solid fa-gear"></i>
                     <span class="hidden sm:inline">Configurações</span>
                 </button>
@@ -830,7 +834,7 @@ Mantenha suas respostas concisas e objetivas (máximo 2 a 3 parágrafos curtos) 
                 }
 
             } catch (err) {
-                console.error("Erro na geração da IA:", err);
+                console.warn("Erro na geração da IA:", err);
                 const fallbackReply = `Na estética avançada, combinamos a tecnologia da cosmetologia com tratamentos focados em gordura localizada e reconstrução dos fios capilares. Recomendo passar por uma avaliação individualizada para definir o melhor protocolo!`;
                 doctorThinkingMsg.innerHTML = `<p class="font-semibold text-rosegold-400 mb-1">Dra. Flávia</p>${fallbackReply}`;
                 speakText(fallbackReply);

@@ -8,13 +8,16 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="assets/ana/ana.css">
   <link rel="stylesheet" href="assets/avatares/avatar-falante.css">
-  <link rel="stylesheet" href="css/google-theme.css">
+  <link rel="icon" href="assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0c1f26">
 </head>
 <body>
   <header class="site-header">
     <div class="container nav">
       <a class="brand" href="index.html">
-        <img src="assets/logo-dmoura-clinica.jpg" alt="Clínica D'Moura">
+        <img src="assets/logo-clinica-dmoura.jpg" alt="Clínica D'Moura">
         <div class="brand-text">
           <strong>Clínica D'Moura</strong>
           <span>Instituto DMAP</span>
@@ -50,13 +53,7 @@
       </div>
       <div class="hero-logos">
         <div class="logo-card logo-main">
-          <img src="assets/logo-dmoura-clinica.jpg" alt="Logo Clínica D'Moura">
-        </div>
-        <div class="logo-card">
-          <img src="assets/logo-instituto-dmap.jpeg" alt="Instituto DMAP">
-        </div>
-        <div class="logo-card banner">
-          <img src="assets/banner-instituto-dmap.jpeg" alt="Banner Instituto DMAP">
+          <picture><source srcset="assets/logo-clinica-dmoura.webp" type="image/webp"><img src="assets/logo-clinica-dmoura.jpg" alt="Logo Clínica D'Moura" width="640" height="640"></picture>
         </div>
       </div>
     </section>
@@ -67,19 +64,32 @@
           <h2>Nossas unidades</h2>
           <p>Atendimento presencial em três cidades de Pernambuco.</p>
         </div>
-        <div class="grid grid-3">
-          <article class="card">
+        <div class="grid grid-3" id="unidades-grid">
+          <article class="card unit-card" data-unit="recife" data-lat="-8.0476" data-lng="-34.877" data-dest="Avenida Agamenon Magalhães, 210, Santo Amaro, Recife - PE">
             <h3><span class="unit-pin"></span>Recife — Santo Amaro</h3>
             <p>Unidade principal na capital. Consultas e procedimentos com a equipe D'Moura.</p>
+            <p class="unit-addr">Avenida Agamenon Magalhães, 210, 1º andar, sala 05 — Galeria FDM, Santo Amaro, Recife-PE</p>
+            <p class="unit-dist" aria-live="polite"></p>
+            <a class="btn btn-outline unit-route" href="https://www.google.com/maps/dir/?api=1&amp;destination=Avenida%20Agamenon%20Magalh%C3%A3es%2C%20210%2C%20Santo%20Amaro%2C%20Recife%20-%20PE" target="_blank" rel="noopener">Como chegar</a>
           </article>
-          <article class="card">
+          <article class="card unit-card" data-unit="caruaru" data-lat="-8.2846" data-lng="-35.9699" data-dest="Avenida Agamenon Magalhães, 1020C, Maurício de Nassau, Caruaru - PE">
             <h3><span class="unit-pin"></span>Caruaru — Maurício de Nassau</h3>
             <p>Atendimento no Agreste, com a mesma identidade de cuidado e acolhimento.</p>
+            <p class="unit-addr">Avenida Agamenon Magalhães, 1020C, Maurício de Nassau, Caruaru-PE</p>
+            <p class="unit-dist" aria-live="polite"></p>
+            <a class="btn btn-outline unit-route" href="https://www.google.com/maps/dir/?api=1&amp;destination=Avenida%20Agamenon%20Magalh%C3%A3es%2C%201020C%2C%20Maur%C3%ADcio%20de%20Nassau%2C%20Caruaru%20-%20PE" target="_blank" rel="noopener">Como chegar</a>
           </article>
-          <article class="card">
+          <article class="card unit-card" data-unit="garanhuns" data-lat="-8.8829" data-lng="-36.4966" data-dest="Avenida Capitão João Leite, 300, Boa Vista, Garanhuns - PE">
             <h3><span class="unit-pin"></span>Garanhuns — Boa Vista</h3>
             <p>Presença no Brejo, aproximando a clínica da comunidade local.</p>
+            <p class="unit-addr">Avenida Capitão João Leite, 300 — Empresarial Leandro, Boa Vista, Garanhuns-PE</p>
+            <p class="unit-dist" aria-live="polite"></p>
+            <a class="btn btn-outline unit-route" href="https://www.google.com/maps/dir/?api=1&amp;destination=Avenida%20Capit%C3%A3o%20Jo%C3%A3o%20Leite%2C%20300%2C%20Boa%20Vista%2C%20Garanhuns%20-%20PE" target="_blank" rel="noopener">Como chegar</a>
           </article>
+        </div>
+        <div class="gps-row">
+          <button type="button" class="btn btn-gold" id="gps-btn">📍 Usar meu GPS: unidade mais próxima</button>
+          <p class="gps-status" id="gps-status" aria-live="polite"></p>
         </div>
       </div>
     </section>
@@ -222,7 +232,7 @@
       <div class="container">
         <div class="section-head">
           <h2>Galeria de vídeos</h2>
-          <p>Conteúdo visual clínico e institucional. Os arquivos são carregados quando disponíveis em <code>/videos/</code>.</p>
+          <p>Conteúdo visual clínico e institucional.</p>
         </div>
         <div class="grid video-grid" id="video-preview-grid">
           <!-- Prefill 6 cards; videos.html shows all 12 -->
@@ -338,6 +348,7 @@
       });
     })();
   </script>
+  <script src="assets/gps-unidades.js" defer></script>
   <script src="assets/ana/ana.js" defer></script>
 </body>
 </html>

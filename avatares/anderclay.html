@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
+  <script src="../assets/ai-offline.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Anderclay Pereira | Instituto DMAP & Ecossistema Empresarial</title>
@@ -112,7 +113,11 @@
     .wave-active .wave-bar:nth-child(5) { animation: barPulse 0.7s infinite ease-in-out 0.05s; }
   </style>
   <link rel="stylesheet" href="../assets/avatares/avatar-falante.css">
-  <link rel="stylesheet" href="../css/google-theme.css">
+  <link rel="icon" href="../assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0c1f26">
+  <style>html,body{overflow-x:hidden;max-width:100%}</style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
@@ -1314,7 +1319,7 @@
           speakText("Como empresário e fundador do Instituto DMAP, estou sempre focado em converter ideias em soluções reais de negócios e desenvolvimento profissional.");
         }
       } catch (err) {
-        console.error("AI Response error:", err);
+        console.warn("AI Response error:", err);
         speakText("O Instituto DMAP une conhecimento, arte e negócios para impulsionar a sua trajetória profissional ao próximo nível.");
       }
     }

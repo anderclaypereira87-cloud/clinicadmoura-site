@@ -1,19 +1,19 @@
 /* Clínica D'Moura + Instituto DMAP — shared styles */
 :root {
-  --bg: #0B1220;
-  --bg-deep: #070d18;
-  --bg-card: #0f1a2e;
-  --bg-card-hover: #152238;
-  --navy: #0a1628;
-  --gold: #C5A059;
+  --bg: #0c1f26;
+  --bg-deep: #08161b;
+  --bg-card: #10292f;
+  --bg-card-hover: #153239;
+  --navy: #0a1a20;
+  --gold: #c99a4e;
   --gold-soft: #E8D8B8;
-  --gold-dim: rgba(197, 160, 89, 0.18);
-  --teal: #0D9488;
-  --teal-bright: #14B8A6;
-  --teal-dim: rgba(13, 148, 136, 0.15);
+  --gold-dim: rgba(201, 154, 78, 0.18);
+  --teal: #1a8c8a;
+  --teal-bright: #04a4a1;
+  --teal-dim: rgba(26, 140, 138, 0.15);
   --text: #F5F0E8;
   --text-muted: #A8B0C0;
-  --border: rgba(197, 160, 89, 0.22);
+  --border: rgba(201, 154, 78, 0.22);
   --radius: 16px;
   --shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
   --font: "Segoe UI", system-ui, -apple-system, sans-serif;
@@ -50,7 +50,7 @@ img { max-width: 100%; height: auto; display: block; }
   top: 0;
   z-index: 50;
   backdrop-filter: blur(14px);
-  background: rgba(11, 18, 32, 0.88);
+  background: rgba(12, 31, 38, 0.92);
   border-bottom: 1px solid var(--border);
 }
 
@@ -633,3 +633,16 @@ section { padding: 2.75rem 0; }
   .hero-logos .logo-card { height: 130px; }
   .hero-logos .logo-card.logo-main { height: 170px; }
 }
+
+/* GPS unidades + logo (2026-10-07) */
+.unit-addr { font-size: .85rem; margin-top: .5rem; }
+.unit-dist { font-size: .85rem; color: var(--teal-bright) !important; min-height: 1.2em; margin: .35rem 0 .75rem; }
+.unit-card { display: flex; flex-direction: column; }
+.unit-card .unit-route { margin-top: auto; align-self: flex-start; }
+.unit-card.unit-nearest { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), var(--shadow); }
+.gps-row { text-align: center; margin-top: 1.5rem; }
+.gps-status { color: var(--text-muted); font-size: .9rem; margin-top: .6rem; min-height: 1.2em; }
+.hero-logos .logo-card.logo-main { height: auto; max-width: 360px; padding: 0; background: transparent; border: 0; box-shadow: none; }
+.hero-logos .logo-card.logo-main img { aspect-ratio: 1; height: auto; object-fit: cover; border-radius: 18px; }
+.hero-logos { grid-template-columns: 1fr; justify-items: center; }
+.brand img { border-radius: 8px; }

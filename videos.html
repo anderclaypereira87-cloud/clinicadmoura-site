@@ -6,13 +6,16 @@
   <title>Galeria de Vídeos | Clínica D'Moura</title>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="assets/ana/ana.css">
-  <link rel="stylesheet" href="css/google-theme.css">
+  <link rel="icon" href="assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0c1f26">
 </head>
 <body>
   <header class="site-header">
     <div class="container nav">
       <a class="brand" href="index.html">
-        <img src="assets/logo-dmoura-clinica.jpg" alt="Clínica D'Moura">
+        <img src="assets/logo-clinica-dmoura.jpg" alt="Clínica D'Moura">
         <div class="brand-text">
           <strong>Clínica D'Moura</strong>
           <span>Vídeos</span>
@@ -35,7 +38,6 @@
       <h1>Galeria de vídeos</h1>
       <p>
         Conteúdo educativo e institucional da Clínica D'Moura.
-        Players com controles nativos; posters do manifesto em <code>videos/manifest.json</code>.
       </p>
     </div>
 
@@ -44,7 +46,7 @@
       <audio controls preload="metadata" src="assets/voz-danusa/apresentacao/01.mp3" style="width:100%;margin-top:.5rem"></audio>
     </section>
     <div class="notice">
-      <strong>Privacidade:</strong> apenas vídeos marcados como públicos (<code>safe: true</code>).
+      <strong>Privacidade:</strong> apenas vídeos públicos.
       Material clínico íntimo não é publicado nesta galeria.
     </div>
 
@@ -93,7 +95,7 @@
         } catch (_) {}
         items = items.filter(function (v) { return v && v.safe !== false && v.public_gallery !== false; });
         if (!items.length) {
-          grid.innerHTML = '<p class="notice">Nenhum vídeo no manifesto ainda.</p>';
+          grid.innerHTML = '<p class="notice">Galeria de vídeos em breve.</p>';
           return;
         }
         grid.innerHTML = items.map(function (v) { return cardHTML(v, 'videos/'); }).join('');

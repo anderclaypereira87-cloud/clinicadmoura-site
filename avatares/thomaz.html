@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
+  <script src="../assets/ai-offline.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dr. Thomaz - Avatar Interativo de Quiropraxia e Fisioterapia</title>
@@ -102,7 +103,10 @@
         }
     </style>
     <link rel="stylesheet" href="../assets/avatares/avatar-falante.css">
-  <link rel="stylesheet" href="../css/google-theme.css">
+  <link rel="icon" href="../assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0c1f26">
 </head>
 <body class="bg-navy-950 text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-gold-500 selection:text-navy-950">
 
@@ -129,7 +133,7 @@
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     Dr. Thomaz Online
                 </span>
-                <button id="toggle-settings" title="Configurações da API" class="px-3 py-1.5 rounded-lg bg-navy-800 hover:bg-navy-700 text-gold-500 border border-gold-500/30 text-sm flex items-center gap-2 transition">
+                <button id="toggle-settings" style="display:none" aria-hidden="true" tabindex="-1" title="Configurações da API" class="px-3 py-1.5 rounded-lg bg-navy-800 hover:bg-navy-700 text-gold-500 border border-gold-500/30 text-sm flex items-center gap-2 transition">
                     <i class="fa-solid fa-gear"></i>
                     <span class="hidden sm:inline">Configurações</span>
                 </button>
@@ -815,7 +819,7 @@ Mantenha suas respostas concisas e diretas (máximo 2 a 3 parágrafos curtos) pa
                 }
 
             } catch (err) {
-                console.error("Erro na geração da IA:", err);
+                console.warn("Erro na geração da IA:", err);
                 const fallbackReply = `A quiropraxia foca no alívio de interferências no sistema nervoso através de ajustes articulares precisos na coluna. Como fisioterapeuta e quiropraxista no Instituto DMAP, recomendo uma avaliação detalhada para identificar o seu caso específico!`;
                 doctorThinkingMsg.innerHTML = `<p class="font-semibold text-gold-400 mb-1">Dr. Thomaz</p>${fallbackReply}`;
                 speakText(fallbackReply);
