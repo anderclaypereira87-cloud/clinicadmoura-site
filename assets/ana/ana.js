@@ -39,9 +39,9 @@
    * Conhecimento: tirado só do site + fatos confirmados
    * ------------------------------------------------------------------ */
   var UNIDADES = {
-    recife: { cidade: 'Recife', bairro: 'Santo Amaro', no: 'no Santo Amaro', rotulo: 'Recife — Santo Amaro' },
-    caruaru: { cidade: 'Caruaru', bairro: 'Maurício de Nassau', no: 'no Maurício de Nassau', rotulo: 'Caruaru — Maurício de Nassau' },
-    garanhuns: { cidade: 'Garanhuns', bairro: 'Boa Vista', no: 'na Boa Vista', rotulo: 'Garanhuns — Boa Vista' }
+    recife: { cidade: 'Recife', bairro: 'Santo Amaro', no: 'no Santo Amaro', rotulo: 'Recife — Santo Amaro', end: 'Av. Agamenon Magalhães, 210, 1º andar, sala 05 — Galeria FDM, Santo Amaro' },
+    caruaru: { cidade: 'Caruaru', bairro: 'Maurício de Nassau', no: 'no Maurício de Nassau', rotulo: 'Caruaru — Maurício de Nassau', end: 'Av. Agamenon Magalhães, 1020C, Maurício de Nassau' },
+    garanhuns: { cidade: 'Garanhuns', bairro: 'Boa Vista', no: 'na Boa Vista', rotulo: 'Garanhuns — Boa Vista', end: 'Av. Capitão João Leite, 300 — Empresarial Leandro, Boa Vista' }
   };
 
   // livros.html: títulos, autores, resumos, links "Quero o curso" e valores exatamente como estão na página
@@ -282,12 +282,12 @@
       return r;
     },
     unidades: function () {
-      return { texto: 'A gente atende em três cidades:\n• Recife, no Santo Amaro\n• Caruaru, no Maurício de Nassau\n• Garanhuns, na Boa Vista\nO endereço completo a equipe te manda no WhatsApp. Qual fica melhor pra você?',
+      return { texto: 'A gente atende em três cidades:\n• Recife: ' + UNIDADES.recife.end + '\n• Caruaru: ' + UNIDADES.caruaru.end + '\n• Garanhuns: ' + UNIDADES.garanhuns.end + '\nNa aba Mapa você vê a rota e a unidade mais perto de você. Qual fica melhor pra você?',
         acoes: botoesCidades().concat([A.pagina('Ver unidades', 'index.html#unidades')]) };
     },
     cidade: function (pergunta) {
       var u = UNIDADES[estado.unidade];
-      var r = { texto: pergunta ? 'Temos sim! Em ' + u.cidade + ', a unidade fica ' + u.no + '. O endereço completo a equipe te manda no WhatsApp.' : 'Anotado: ' + u.cidade + ', unidade ' + u.bairro + '.' };
+      var r = { texto: pergunta ? 'Temos sim! Em ' + u.cidade + ', a unidade fica ' + u.no + '. Endereço: ' + u.end + ' (' + u.cidade + '-PE). A rota está na aba Mapa.' : 'Anotado: ' + u.cidade + ', unidade ' + u.bairro + '.' };
       if (estado.unidade === 'garanhuns') r.texto += ' Por aí a avaliação custa R$ 150.';
       return oferecer(r, 'agendar', 'Quer que eu encaminhe seu agendamento pra lá?');
     },
@@ -760,6 +760,7 @@
   window.ana = {
     responder: function (t) { return responder(t); },
     abrir: function () { abrir(); },
+    perguntar: function (t) { abrir(); interagiu = true; enviar(t); },
     filaLigacoes: function () { return ler(localStorage, CH_FILA, []); },
     validarTelefone: telefoneValido
   };

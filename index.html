@@ -1,354 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Clínica D'Moura e Instituto DMAP — atendimento médico e estética em Recife, Caruaru e Garanhuns.">
-  <title>Clínica D'Moura | Instituto DMAP</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="assets/ana/ana.css">
-  <link rel="stylesheet" href="assets/avatares/avatar-falante.css">
-  <link rel="icon" href="assets/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <meta name="theme-color" content="#0c1f26">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clínica D'Moura &amp; Instituto DMAP — Anderclay Pereira</title>
+<meta name="description" content="Clínica D'Moura e Instituto DMAP: procedimentos estéticos, vídeos, avatares, livros e unidades em Recife, Caruaru e Garanhuns.">
+<link rel="icon" href="assets/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/ana/ana.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav">
-      <a class="brand" href="index.html">
-        <img src="assets/logo-clinica-dmoura.jpg" alt="Clínica D'Moura">
-        <div class="brand-text">
-          <strong>Clínica D'Moura</strong>
-          <span>Instituto DMAP</span>
-        </div>
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html" class="active">Início</a></li>
-        <li><a href="avatares/index.html">Avatares</a></li>
-        <li><a href="procedimentos.html">Procedimentos</a></li>
-        <li><a href="livros.html">Livros</a></li>
-        <li><a href="videos.html">Vídeos</a></li>
-        <li><a class="btn btn-whatsapp" href="https://wa.me/5581997181046" target="_blank" rel="noopener">WhatsApp</a></li>
-      </ul>
+<header class="top">
+  <a class="brand" href="#clinica" data-go="clinica"><img src="assets/logo-clinica-dmoura.jpg" alt="Logo Clínica D'Moura"><span><b>D'MOURA CLÍNICA · INSTITUTO DMAP</b><small>ANDERCLAY PEREIRA · CNPJ 60.412.110/0001-92</small></span></a>
+  <nav class="tabs" role="tablist" aria-label="Seções">
+    <button role="tab" data-tab="clinica">1. Clínica D'Moura &amp; Procedimentos</button>
+    <button role="tab" data-tab="videos">2. Vídeos &amp; Aulas</button>
+    <button role="tab" data-tab="avatares">3. Avatares &amp; Livros</button>
+    <button role="tab" data-tab="mapa">4. Mapa &amp; Assistente IA</button>
+    <button role="tab" data-tab="avaliacoes">5. Avaliações</button>
+  </nav>
+  <a class="wa-top" href="https://wa.me/5581997181046?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar." target="_blank" rel="noopener">Agendar no WhatsApp</a>
+</header>
+<main>
+  <div class="hero">
+    <div>
+      <p class="kick">D'Moura Clínica · Instituto DMAP</p>
+      <h1>CLÍNICA D'MOURA &amp; INSTITUTO DMAP</h1>
+      <p class="mut">Como conectar artes, profissões, conhecimento e oportunidades para transformar talento em desenvolvimento sustentável.</p>
+      <p><b class="gold">ANDERCLAY PEREIRA</b><br><span class="mut" style="font-size:13px">Desenvolvimento Multidisciplinar em Artes e Profissões | CNPJ 60.412.110/0001-92</span></p>
+      <div class="row">
+        <button class="btn btn-gold" data-go="mapa">Abrir Mapa &amp; Assistente IA</button>
+        <a class="btn btn-teal" href="https://wa.me/5581997181046?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar." target="_blank" rel="noopener">Agendar pelo WhatsApp</a>
+      </div>
     </div>
-  </header>
+    <div class="logos">
+      <figure><img src="assets/logo-clinica-dmoura.jpg" alt="D'Moura Clínica"><figcaption>D'MOURA CLÍNICA</figcaption></figure>
+      <figure><img src="assets/logo-instituto-dmap.jpeg" alt="Instituto DMAP"><figcaption>INSTITUTO DMAP</figcaption></figure>
+    </div>
+  </div>
 
-  <main data-layout="home-reorg-20261007">
-    <section class="container hero">
+  <section class="tab" id="tab-clinica">
+    <div class="sec-h"><p class="kick">Parte 1 · D'Moura Clínica</p><h2>Clínica D'Moura — Procedimentos &amp; Protocolos</h2><p class="mut">Direção Institucional: Anderclay Pereira · Excelência Clínica</p></div>
+    <div class="grid" id="procs"></div>
+  </section>
+
+  <section class="tab" id="tab-videos">
+    <div class="sec-h"><p class="kick">Parte 2 · Acervo audiovisual</p><h2>Vídeos &amp; Aulas — Clínica D'Moura &amp; Instituto DMAP</h2><p class="mut">Toque no vídeo para assistir. Dúvidas? Chame a gente no WhatsApp.</p></div>
+    <div class="vgrid" id="vids"></div>
+  </section>
+
+  <section class="tab" id="tab-avatares">
+    <div class="sec-h"><p class="kick">Parte 3 · Especialistas virtuais &amp; governança</p><h2>12 Avatares Executivos — Clínica D'Moura &amp; DMAP</h2><p class="mut">Toque em "Ouvir fala" para o avatar se apresentar, ou abra a página dele para conversar.</p></div>
+    <div class="grid" id="avs"></div>
+    <div class="sec-h"><p class="kick">Parte 4 · Biblioteca autoral &amp; formação</p><h2>Obras &amp; Livros — Anderclay Pereira (Instituto DMAP)</h2></div>
+    <div class="grid" id="books"></div>
+  </section>
+
+  <section class="tab" id="tab-mapa">
+    <div class="sec-h"><p class="kick">Parte 4 · Mapa, GPS &amp; Assistente</p><h2>Nossas unidades em Pernambuco</h2><p class="mut" id="gps-status" aria-live="polite">Toque em "Usar minha localização" para ver a unidade mais perto de você.</p></div>
+    <div class="mapwrap">
+      <div id="map" role="region" aria-label="Mapa das unidades"></div>
       <div>
-        <span class="hero-badge">Ecossistema D'Moura · DMAP</span>
-        <h1>Cuidado clínico com <em>excelência</em> e acolhimento</h1>
-        <p>
-          A Clínica D'Moura e o Instituto DMAP unem atendimento médico, estética e gestão
-          em Recife, Caruaru e Garanhuns. Converse com nossos avatares especializados ou
-          fale direto com a equipe.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-gold" href="avatares/index.html">Explorar avatares</a>
-          <a class="btn btn-teal" href="procedimentos.html">Ver procedimentos</a>
-          <a class="btn btn-outline" href="livros.html">Livros &amp; Formação</a>
-          <a class="btn btn-outline" href="videos.html">Galeria de vídeos</a>
-        </div>
-      </div>
-      <div class="hero-logos">
-        <div class="logo-card logo-main">
-          <picture><source srcset="assets/logo-clinica-dmoura.webp" type="image/webp"><img src="assets/logo-clinica-dmoura.jpg" alt="Logo Clínica D'Moura" width="640" height="640"></picture>
-        </div>
-      </div>
-    </section>
-
-    <section id="unidades">
-      <div class="container">
-        <div class="section-head">
-          <h2>Nossas unidades</h2>
-          <p>Atendimento presencial em três cidades de Pernambuco.</p>
-        </div>
-        <div class="grid grid-3" id="unidades-grid">
-          <article class="card unit-card" data-unit="recife" data-lat="-8.0476" data-lng="-34.877" data-dest="Avenida Agamenon Magalhães, 210, Santo Amaro, Recife - PE">
-            <h3><span class="unit-pin"></span>Recife — Santo Amaro</h3>
-            <p>Unidade principal na capital. Consultas e procedimentos com a equipe D'Moura.</p>
-            <p class="unit-addr">Avenida Agamenon Magalhães, 210, 1º andar, sala 05 — Galeria FDM, Santo Amaro, Recife-PE</p>
-            <p class="unit-dist" aria-live="polite"></p>
-            <a class="btn btn-outline unit-route" href="https://www.google.com/maps/dir/?api=1&amp;destination=Avenida%20Agamenon%20Magalh%C3%A3es%2C%20210%2C%20Santo%20Amaro%2C%20Recife%20-%20PE" target="_blank" rel="noopener">Como chegar</a>
-          </article>
-          <article class="card unit-card" data-unit="caruaru" data-lat="-8.2846" data-lng="-35.9699" data-dest="Avenida Agamenon Magalhães, 1020C, Maurício de Nassau, Caruaru - PE">
-            <h3><span class="unit-pin"></span>Caruaru — Maurício de Nassau</h3>
-            <p>Atendimento no Agreste, com a mesma identidade de cuidado e acolhimento.</p>
-            <p class="unit-addr">Avenida Agamenon Magalhães, 1020C, Maurício de Nassau, Caruaru-PE</p>
-            <p class="unit-dist" aria-live="polite"></p>
-            <a class="btn btn-outline unit-route" href="https://www.google.com/maps/dir/?api=1&amp;destination=Avenida%20Agamenon%20Magalh%C3%A3es%2C%201020C%2C%20Maur%C3%ADcio%20de%20Nassau%2C%20Caruaru%20-%20PE" target="_blank" rel="noopener">Como chegar</a>
-          </article>
-          <article class="card unit-card" data-unit="garanhuns" data-lat="-8.8829" data-lng="-36.4966" data-dest="Avenida Capitão João Leite, 300, Boa Vista, Garanhuns - PE">
-            <h3><span class="unit-pin"></span>Garanhuns — Boa Vista</h3>
-            <p>Presença no Brejo, aproximando a clínica da comunidade local.</p>
-            <p class="unit-addr">Avenida Capitão João Leite, 300 — Empresarial Leandro, Boa Vista, Garanhuns-PE</p>
-            <p class="unit-dist" aria-live="polite"></p>
-            <a class="btn btn-outline unit-route" href="https://www.google.com/maps/dir/?api=1&amp;destination=Avenida%20Capit%C3%A3o%20Jo%C3%A3o%20Leite%2C%20300%2C%20Boa%20Vista%2C%20Garanhuns%20-%20PE" target="_blank" rel="noopener">Como chegar</a>
-          </article>
-        </div>
-        <div class="gps-row">
-          <button type="button" class="btn btn-gold" id="gps-btn">📍 Usar meu GPS: unidade mais próxima</button>
-          <p class="gps-status" id="gps-status" aria-live="polite"></p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-alt" id="avatares">
-      <div class="container">
-        <div class="section-head">
-          <h2>Avatares do ecossistema</h2>
-          <p>Assistentes digitais da clínica e do Instituto DMAP — conversa por voz e texto, no estilo Canvas/Gemini.</p>
-        </div>
-        <div class="grid team-grid">
-          <a class="card avatar-card" href="avatares/anderclay.html">
-            <div class="icon af-icone-foto"><img src="assets/avatares/fotos/anderclay-mini.jpg" alt="Foto de Anderclay Pereira" width="64" height="64" loading="lazy"></div>
-            <div class="role">Direção</div>
-            <h3>Anderclay Pereira</h3>
-            <p>Visão estratégica D'Moura / DMAP</p>
-            <span class="cta">Abrir avatar →</span>
-          </a>
-          <a class="card avatar-card" href="avatares/danusa.html">
-            <div class="icon af-icone-foto"><img src="assets/avatares/fotos/danusa-mini.jpg" alt="Foto da Dra. Danusa Moura" width="64" height="64" loading="lazy"></div>
-            <div class="role">Médica</div>
-            <h3>Dra. Danusa</h3>
-            <p>Equipe clínica D'Moura</p>
-            <span class="cta">Abrir avatar →</span>
-          </a>
-          <a class="card avatar-card" href="avatares/flavia.html">
-            <!-- TODO foto Flávia/Paula: usuário envia em 08/10/2026 -->
-            <div class="icon foto-placeholder" title="Foto em breve">DF</div>
-            <div class="foto-em-breve">foto em breve</div>
-            <div class="role">Estética &amp; Cosmetologia</div>
-            <h3>Dra. Flávia</h3>
-            <p>Equipe clínica D'Moura</p>
-            <span class="cta">Abrir avatar →</span>
-          </a>
-          <a class="card avatar-card" href="avatares/paula.html">
-            <!-- TODO foto Flávia/Paula: usuário envia em 08/10/2026 -->
-            <div class="icon foto-placeholder" title="Foto em breve">DP</div>
-            <div class="foto-em-breve">foto em breve</div>
-            <div class="role">Estética Integrativa</div>
-            <h3>Dra. Paula</h3>
-            <p>Equipe clínica D'Moura</p>
-            <span class="cta">Abrir avatar →</span>
-          </a>
-          <a class="card avatar-card" href="avatares/sarah.html">
-            <div class="icon af-icone-foto"><img src="assets/avatares/fotos/sarah-mini.jpg" alt="Ilustração da Sarah" width="64" height="64" loading="lazy"></div>
-            <div class="role">Recepção</div>
-            <h3>Sarah</h3>
-            <p>Atendimento e acolhimento</p>
-            <span class="cta">Abrir avatar →</span>
-          </a>
-          <a class="card avatar-card" href="avatares/marciana.html">
-            <div class="icon af-icone-foto"><img src="assets/avatares/fotos/marciana-mini.jpg" alt="Foto da Dra. Marciana Rodrigues" width="64" height="64" loading="lazy"></div>
-            <div class="role">Psicóloga</div>
-            <h3>Dra. Marciana</h3>
-            <p>Equipe clínica D'Moura</p>
-            <span class="cta">Abrir avatar →</span>
-          </a>
-          <a class="card avatar-card" href="avatares/thomaz.html">
-            <div class="icon af-icone-foto"><img src="assets/avatares/fotos/thomaz-mini.jpg" alt="Foto do Dr. Thomaz" width="64" height="64" loading="lazy"></div>
-            <div class="role">Médico</div>
-            <h3>Dr. Thomaz</h3>
-            <p>Equipe clínica D'Moura</p>
-            <span class="cta">Abrir avatar →</span>
-          </a>
-          <a class="card avatar-card" href="avatares/henrique.html">
-            <div class="icon af-icone-foto"><img src="assets/avatares/fotos/henrique-mini.jpg" alt="Foto do Dr. Henrique Furtado" width="64" height="64" loading="lazy"></div>
-            <div class="role">Oftalmologia</div>
-            <h3>Dr. Henrique</h3>
-            <p>Exames, catarata, cirurgia refrativa</p>
-            <span class="cta">Abrir avatar →</span>
-          </a>
-          <a class="card avatar-card" href="avatares/marketing-dmoura.html">
-            <div class="icon">DN</div>
-            <div class="role">Marketing</div>
-            <h3>Marketing D'Moura</h3>
-            <p>Dennys · tráfego e campanhas</p>
-            <span class="cta">Abrir avatar →</span>
-          </a>
-          <a class="card avatar-card" href="avatares/proposta-dmap.html">
-            <div class="icon">PD</div>
-            <div class="role">Instituto DMAP</div>
-            <h3>Proposta executiva</h3>
-            <p>Visão institucional DMAP</p>
-            <span class="cta">Abrir avatar →</span>
-          </a>
-        </div>
-        <div class="voz-danusa-row">
-          <button type="button" class="btn btn-outline" id="ouca-danusa" aria-label="Ouça a Dra. Danusa (voz por IA autorizada)">▶ Ouça a Dra. Danusa</button>
-        </div>
-        <p style="margin-top:1.25rem;text-align:center">
-          <a class="btn btn-outline" href="avatares/index.html">Ver todos os avatares</a>
-        </p>
-      </div>
-    </section>
-
-    <section id="procedimentos">
-      <div class="container">
-        <div class="section-head">
-          <h2>Procedimentos em destaque</h2>
-          <p>Conteúdo público de referência. Procedimentos íntimos são tratados apenas em consulta privada.</p>
-        </div>
-        <div class="grid grid-2 proc-grid">
-          <article class="card">
-            <div class="proc-media">
-              <img src="assets/flyer-botox-fullface.jpg" alt="Flyer Botox Full Face e sorriso gengival">
-            </div>
-            <h3>Botox Full Face &amp; sorriso gengival</h3>
-            <p>Harmonização facial e correção de sorriso gengival. Detalhes e indicação sob avaliação clínica.</p>
-            <a class="btn btn-gold" style="margin-top:1rem" href="procedimentos.html">Saiba mais</a>
-          </article>
-          <article class="card">
-            <h3>Consulta privada</h3>
-            <p>
-              Procedimentos íntimos e demais tratamentos personalizados exigem avaliação presencial.
-              Entre em contato pelo WhatsApp para agendar.
-            </p>
-            <ul>
-              <li>Avaliação individualizada</li>
-              <li>Orientação ética e confidencial</li>
-              <li>Sem exposição pública de imagens sensíveis</li>
-            </ul>
-            <a class="btn btn-whatsapp" style="margin-top:1rem" href="https://wa.me/5581997181046" target="_blank" rel="noopener">Agendar pelo WhatsApp</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-alt" id="livros">
-      <div class="container">
-        <div class="section-head">
-          <h2>Livros &amp; Formação</h2>
-        </div>
-        <p style="text-align:center">
-          <a class="btn btn-gold" href="livros.html">Livros &amp; Formação</a>
-        </p>
-      </div>
-    </section>
-
-    <section id="videos">
-      <div class="container">
-        <div class="section-head">
-          <h2>Galeria de vídeos</h2>
-          <p>Conteúdo visual clínico e institucional.</p>
-        </div>
-        <div class="grid video-grid" id="video-preview-grid">
-          <!-- Prefill 6 cards; videos.html shows all 12 -->
-        </div>
-        <p style="margin-top:1.25rem;text-align:center">
-          <a class="btn btn-teal" href="videos.html">Abrir galeria completa</a>
-        </p>
-      </div>
-    </section>
-
-    <section class="section-alt" id="contato">
-      <div class="container">
-        <div class="section-head">
-          <h2>Contato</h2>
-          <p>Fale com a Clínica D'Moura.</p>
-        </div>
-        <div class="grid grid-3">
-          <article class="card">
-            <h3>WhatsApp</h3>
-            <p><a href="https://wa.me/5581997181046" target="_blank" rel="noopener">(81) 99718-1046</a></p>
-          </article>
-          <article class="card">
-            <h3>E-mail</h3>
-            <p><a href="mailto:diretoria@clinicadmoura.company">diretoria@clinicadmoura.company</a></p>
-          </article>
-          <article class="card">
-            <h3>CNPJ</h3>
-            <p>60.412.110/0001-92</p>
-          </article>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <h4>Clínica D'Moura · Instituto DMAP</h4>
-          <p>Atendimento em Recife (Santo Amaro), Caruaru (Maurício de Nassau) e Garanhuns (Boa Vista).</p>
-        </div>
-        <div>
-          <h4>Navegação</h4>
-          <ul>
-            <li><a href="avatares/index.html">Avatares</a></li>
-            <li><a href="procedimentos.html">Procedimentos</a></li>
-            <li><a href="livros.html">Livros</a></li>
-            <li><a href="videos.html">Vídeos</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Institucional</h4>
-          <ul>
-            <li><a href="mailto:diretoria@clinicadmoura.company">diretoria@clinicadmoura.company</a></li>
-            <li>CNPJ 60.412.110/0001-92</li>
-            <li><a href="https://wa.me/5581997181046" target="_blank" rel="noopener">WhatsApp (81) 99718-1046</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© Clínica D'Moura / Instituto DMAP</span>
-        <span>Conteúdo clínico sensível não é publicado nesta vitrine.</span>
+        <button class="btn btn-gold" id="gps-btn" style="width:100%;justify-content:center;margin-bottom:12px">📍 Usar minha localização</button>
+        <div id="units"></div>
       </div>
     </div>
-  </footer>
+    <div class="card ana-box">
+      <h3>Assistente IA — Ana, recepção da Clínica D'Moura</h3>
+      <p>A Ana responde sobre procedimentos, unidades, avaliação, vídeos, livros e avatares, e te passa direto para a equipe no WhatsApp.</p>
+      <div class="row"><button class="btn btn-teal" id="abrir-ana">💬 Falar com a Ana</button>
+      <button class="btn" data-ask="Onde ficam as unidades?">Onde ficam as unidades?</button>
+      <button class="btn" data-ask="Quero agendar uma avaliação">Quero agendar</button>
+      <button class="btn" data-ask="O que é o Botox Full Face?">Botox Full Face</button></div>
+    </div>
+  </section>
 
-  <script>
-    (function () {
-      function normalize(data) {
-        if (Array.isArray(data)) return data;
-        if (data && Array.isArray(data.videos)) return data.videos;
-        return [];
-      }
-      async function render() {
-        const grid = document.getElementById('video-preview-grid');
-        if (!grid) return;
-        let items = [];
-        try {
-          const res = await fetch('videos/manifest.json');
-          if (res.ok) items = normalize(await res.json());
-        } catch (_) {}
-        items = items.filter(v => v && v.safe !== false && v.public_gallery !== false).slice(0, 6);
-        if (!items.length) {
-          grid.innerHTML = '<p class="notice">Galeria de vídeos em breve.</p>';
-          return;
-        }
-        grid.innerHTML = items.map(v => {
-          const file = v.file || (v.id + '.mp4');
-          const poster = v.poster ? ('videos/' + v.poster) : '';
-          const posterAttr = poster ? ` poster="${poster}"` : '';
-          const tag = v.tag || 'vídeo';
-          return `<article class="card video-card" data-id="${v.id || ''}">
-            <video controls playsinline preload="none"${posterAttr}>
-              <source src="videos/${file}" type="video/mp4">
-            </video>
-            <div class="tag">${tag}</div>
-            <h3>${v.title || v.id}</h3>
-          </article>`;
-        }).join('');
-      }
-      render();
-    })();
-  </script>
-  <script>
-    (function () {
-      var btn = document.getElementById('ouca-danusa'); if (!btn) return;
-      var audio = null;
-      btn.addEventListener('click', function () {
-        if (audio && !audio.paused) { audio.pause(); audio.currentTime = 0; btn.textContent = '▶ Ouça a Dra. Danusa'; return; }
-        audio = audio || new Audio('assets/voz-danusa/apresentacao/01.mp3');
-        audio.onended = function () { btn.textContent = '▶ Ouça a Dra. Danusa'; };
-        audio.play().then(function () { btn.textContent = '■ Parar'; }, function () {});
-      });
-    })();
-  </script>
-  <script src="assets/gps-unidades.js" defer></script>
-  <script src="assets/ana/ana.js" defer></script>
+  <section class="tab" id="tab-avaliacoes">
+    <div class="sec-h"><p class="kick">Parte 5 · Avaliações</p><h2>Avalie a Clínica D'Moura</h2><p class="mut">Sua opinião ajuda outros pacientes. Escolha as estrelas e envie seu comentário para a equipe pelo WhatsApp.</p></div>
+    <div class="card" style="max-width:620px">
+      <div class="stars" id="stars" role="radiogroup" aria-label="Nota de 1 a 5"></div>
+      <p><label>Unidade<br><select id="rv-unit" style="width:100%;padding:10px;border-radius:10px;background:#0a1626;color:#fff;border:1px solid rgba(148,163,184,.25)"><option>Recife — Santo Amaro</option><option>Caruaru — Maurício de Nassau</option><option>Garanhuns — Boa Vista</option></select></label></p>
+      <p><label>Comentário<br><textarea id="rv-txt" rows="4" placeholder="Conte como foi seu atendimento"></textarea></label></p>
+      <div class="row"><button class="btn btn-teal" id="rv-send">Enviar avaliação pelo WhatsApp</button></div>
+    </div>
+  </section>
+</main>
+<footer>Clínica D'Moura &amp; Instituto DMAP · Anderclay Pereira · CNPJ 60.412.110/0001-92 · <a href="mailto:diretoria@clinicadmoura.company">diretoria@clinicadmoura.company</a> · (81) 99718-1046<br>As informações do site não substituem a avaliação presencial com profissional habilitado.</footer>
+<a class="wa-float" href="https://wa.me/5581997181046?text=Ol%C3%A1!%20Vim%20pelo%20site." target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg></a>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="assets/app.js"></script>
+<script src="assets/ana/ana.js" defer></script>
 </body>
 </html>
