@@ -332,7 +332,7 @@
       var audio = null;
       btn.addEventListener('click', function () {
         if (audio && !audio.paused) { audio.pause(); audio.currentTime = 0; btn.textContent = '▶ Ouça a Dra. Danusa'; return; }
-        audio = audio || new Audio('assets/voz-danusa/avatares-danusa/01.mp3');
+        audio = audio || new Audio('assets/voz-danusa/apresentacao/01.mp3');
         audio.onended = function () { btn.textContent = '▶ Ouça a Dra. Danusa'; };
         audio.play().then(function () { btn.textContent = '■ Parar'; }, function () {});
       });

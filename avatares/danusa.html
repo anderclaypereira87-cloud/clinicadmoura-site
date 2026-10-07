@@ -318,6 +318,10 @@
                         <i class="fa-solid fa-volume-high"></i>
                         <span>Ouvir Apresentação da Dra. Danusa</span>
                     </button>
+                    <button id="btn-ouca-apresentacao" type="button" class="w-full mt-2 py-2.5 px-4 rounded border border-slate-700 font-semibold text-xs tracking-wider uppercase flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-play"></i>
+                        <span>Ouça a apresentação</span>
+                    </button>
                 </div>
 
                 <!-- Live Subtitles & Telemetry -->
@@ -927,5 +931,18 @@ Regras de Resposta:
         });
     </script>
     <script src="../assets/avatares/avatar-falante.js" data-pessoa="danusa" data-alvo="#avatar-frame svg"></script>
+<script>
+(function () {
+  var b = document.getElementById('btn-ouca-apresentacao'); if (!b) return;
+  var lbl = b.querySelector('span'), a = null;
+  b.addEventListener('click', function () {
+    if (a && !a.paused) { a.pause(); a.currentTime = 0; lbl.textContent = 'Ouça a apresentação'; return; }
+    try { if (window.vozDanusa) window.vozDanusa.parar(); if (window.speechSynthesis) speechSynthesis.cancel(); } catch (_) {}
+    a = a || new Audio('../assets/voz-danusa/apresentacao/01.mp3');
+    a.onended = function () { lbl.textContent = 'Ouça a apresentação'; };
+    a.play().then(function () { lbl.textContent = 'Parar apresentação'; }, function () {});
+  });
+})();
+</script>
 </body>
 </html>

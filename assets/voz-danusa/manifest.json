@@ -38,6 +38,13 @@
       "tts_text": "Como biomédica esteta no Instituto Dê Map e na Clínica Dê Moura, meu compromisso é aliar tecnologia e biossegurança. Para o seu caso, combinamos triagem individualizada e bioestimuladores de alta performance. Gostaria de agendar uma consulta presencial de avaliação?",
       "whisper_wer": 0.026,
       "take": "danusa_02_t0 (r2)"
+    },
+    {
+      "text": "Olá! Eu sou a Dra. Danusa Moura, biomédica esteta, integrante do Instituto DMap e à frente da Clínica D'Moura. Aqui, cada paciente é cuidado por inteiro. Trabalho com harmonização facial, estética corporal e saúde íntima feminina, sempre unindo ciência, tecnologia e biossegurança. Tudo começa com uma avaliação presencial e uma triagem individualizada, para entender o que você precisa e buscar resultados naturais, do seu jeito. Atendemos em Recife, Caruaru e Garanhuns. Vai ser um prazer te receber. Agende sua avaliação pelo WhatsApp!",
+      "file": "apresentacao/01.mp3",
+      "page": "index.html, avatares/danusa.html, videos.html",
+      "source": "apresentação aprovada pelo usuário em 2026-10-07",
+      "duration_s": 52.7
     }
   ]
 }
