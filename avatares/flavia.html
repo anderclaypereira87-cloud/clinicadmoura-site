@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dra. Flávia - Avatar Interativo de Estética e Cosmetologia</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter & Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        rosegold: {
+                            300: '#f4c2c2',
+                            400: '#e8a5a5',
+                            500: '#d88383',
+                            600: '#c26262',
+                            700: '#9e4343'
+                        },
+                        champagne: {
+                            300: '#f7e7ce',
+                            400: '#ebd2b0',
+                            500: '#dfbc92',
+                            600: '#c49a68'
+                        },
+                        plum: {
+                            800: '#1d0e1e',
+                            900: '#140815',
+                            950: '#0b030c'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Keyframe Animations */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 0.3; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+        @keyframes speak-wave {
+            0%, 100% { height: 8px; }
+            50% { height: 28px; }
+        }
+        @keyframes avatar-breathe {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-4px) scale(1.008); }
+        }
+        @keyframes mouth-talk {
+            0%, 100% { transform: scaleY(0.2); }
+            50% { transform: scaleY(1.1); }
+        }
+
+        .avatar-container {
+            animation: avatar-breathe 4s ease-in-out infinite;
+        }
+        .speaking .ring-glow {
+            animation: pulse-ring 1.5s infinite ease-in-out;
+            box-shadow: 0 0 35px rgba(216, 131, 131, 0.6);
+        }
+        .mouth-overlay {
+            transform-origin: center top;
+            transition: transform 0.1s ease;
+        }
+        .speaking .mouth-anim {
+            animation: mouth-talk 0.22s infinite alternate ease-in-out;
+        }
+        .wave-bar {
+            animation: speak-wave 1s infinite ease-in-out;
+        }
+        .wave-bar:nth-child(2) { animation-delay: 0.15s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.45s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.6s; }
+
+        /* Glassmorphism elements */
+        .glass-panel {
+            background: rgba(20, 8, 21, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(216, 131, 131, 0.25);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(20, 8, 21, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(216, 131, 131, 0.3);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(216, 131, 131, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-plum-950 text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-rosegold-500 selection:text-plum-950">
+
+    <!-- Header / Brand Banner -->
+    <header class="border-b border-rosegold-500/20 bg-plum-900/90 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- Aesthetic Clinic Logo Emblem -->
+                <div class="w-10 h-10 rounded-full border border-rosegold-500/50 bg-plum-800 flex items-center justify-center text-rosegold-400 shadow-md">
+                    <i class="fa-solid fa-sparkles text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg md:text-xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-rosegold-300 via-rosegold-400 to-champagne-300">
+                        DRA. FLÁVIA
+                    </h1>
+                    <p class="text-xs text-slate-400 font-medium tracking-wide">
+                        CLÍNICA DE ESTÉTICA AVANÇADA, COSMETOLOGIA & RECONSTRUÇÃO CAPILAR
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <span id="ai-status" class="hidden md:inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Dra. Flávia Online
+                </span>
+                <button id="toggle-settings" title="Configurações da API" class="px-3 py-1.5 rounded-lg bg-plum-800 hover:bg-plum-700 text-rosegold-400 border border-rosegold-500/30 text-sm flex items-center gap-2 transition">
+                    <i class="fa-solid fa-gear"></i>
+                    <span class="hidden sm:inline">Configurações</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modal for Custom API Settings -->
+    <div id="settings-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-panel max-w-md w-full rounded-2xl p-6 relative border border-rosegold-500/30 shadow-2xl">
+            <button id="close-settings" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-serif font-bold text-rosegold-400 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-sliders"></i> Configurações da IA
+            </h3>
+            <p class="text-xs text-slate-300 mb-4">
+                O aplicativo utiliza a chave Gemini embutida por padrão. Se desejar usar sua própria chave de API para chamadas Gemini personalizadas:
+            </p>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Chave da API Gemini (Opcional):</label>
+                    <input type="password" id="custom-api-key" placeholder="AIzaSy..." class="w-full bg-plum-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:border-rosegold-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Voz da Dra. Flávia (Gemini TTS):</label>
+                    <select id="voice-select" class="w-full bg-plum-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:border-rosegold-500 focus:outline-none">
+                        <option value="Aoede" selected>Aoede (Feminina Fluida, Elegante & Suave)</option>
+                        <option value="Kore">Kore (Feminina Neutra & Calma)</option>
+                        <option value="Leda">Leda (Feminina Jovem & Didática)</option>
+                        <option value="Callirrhoe">Callirrhoe (Feminina Acolhedora)</option>
+                        <option value="Despina">Despina (Feminina Aveludada & Profissional)</option>
+                    </select>
+                </div>
+                <div class="pt-2 flex justify-end gap-2">
+                    <button id="save-settings" class="px-4 py-2 bg-rosegold-500 hover:bg-rosegold-600 text-plum-950 font-semibold rounded-lg text-sm transition">
+                        Salvar e Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 py-6 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- LEFT COLUMN: Speaking Avatar Box (Lg: 5 cols) -->
+        <section class="lg:col-span-5 flex flex-col items-center">
+            <div class="w-full glass-panel rounded-3xl p-6 flex flex-col items-center relative overflow-hidden shadow-2xl border border-rosegold-500/30">
+                
+                <!-- Background Glow Effect -->
+                <div class="absolute -top-24 -left-24 w-60 h-60 bg-rosegold-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-champagne-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Avatar Status Badge -->
+                <div class="w-full flex justify-between items-center mb-4 z-10">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-rosegold-400 animate-pulse"></span>
+                        <span id="speaking-indicator-text" class="text-xs uppercase tracking-widest text-rosegold-300 font-semibold">
+                            Dra. Flávia Pronta
+                        </span>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 rounded-md bg-rosegold-500/10 text-rosegold-300 border border-rosegold-500/20 font-mono">
+                        Estética & Cosmetologia
+                    </span>
+                </div>
+
+                <!-- Avatar Circle Container -->
+                <div id="avatar-frame" class="relative my-4 avatar-container flex justify-center items-center">
+                    
+                    <!-- Outer Glowing Pulse Ring -->
+                    <div class="ring-glow absolute inset-0 rounded-full border-2 border-rosegold-500/40 transform scale-110 pointer-events-none"></div>
+
+                    <!-- Audio Visualizer Wave Overlay Around Avatar -->
+                    <div id="wave-container" class="absolute -bottom-3 flex items-end justify-center gap-1.5 z-20 h-8 opacity-0 transition-opacity duration-300">
+                        <span class="wave-bar w-1.5 bg-rosegold-400 rounded-full"></span>
+                        <span class="wave-bar w-1.5 bg-rosegold-400 rounded-full"></span>
+                        <span class="wave-bar w-1.5 bg-champagne-300 rounded-full"></span>
+                        <span class="wave-bar w-1.5 bg-rosegold-400 rounded-full"></span>
+                        <span class="wave-bar w-1.5 bg-rosegold-400 rounded-full"></span>
+                    </div>
+
+                    <!-- Avatar Portrait Visual Component -->
+                    <div class="w-56 h-56 sm:w-64 sm:h-64 rounded-full overflow-hidden border-4 border-rosegold-400/80 shadow-2xl relative bg-plum-900 group">
+                        <!-- Stylized SVG Representation of Dra. Flávia -->
+                        <svg viewBox="0 0 300 300" class="w-full h-full object-cover">
+                            <defs>
+                                <linearGradient id="coatGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#ffffff"/>
+                                    <stop offset="100%" stop-color="#f3e8ee"/>
+                                </linearGradient>
+                                <linearGradient id="skinGradFlavia" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#fbe3d5"/>
+                                    <stop offset="100%" stop-color="#e2b9a1"/>
+                                </linearGradient>
+                                <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#4a2e1b"/>
+                                    <stop offset="50%" stop-color="#2c1a0e"/>
+                                    <stop offset="100%" stop-color="#180e07"/>
+                                </linearGradient>
+                                <linearGradient id="roseAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#e8a5a5"/>
+                                    <stop offset="100%" stop-color="#c26262"/>
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- Background in Avatar -->
+                            <rect width="300" height="300" fill="#140815" />
+                            <!-- Elegant Clinic Interior Silhouette -->
+                            <circle cx="150" cy="150" r="135" fill="none" stroke="#e8a5a5" stroke-width="2" opacity="0.2"/>
+                            <path d="M 40 200 Q 150 160 260 200" fill="none" stroke="#ebd2b0" stroke-width="1.5" opacity="0.15" />
+
+                            <!-- Professional Lab Coat & Shoulders -->
+                            <path d="M 45 300 C 55 220, 95 195, 150 195 C 205 195, 245 220, 255 300 Z" fill="url(#coatGrad)" />
+                            <!-- Rose Gold Top Underneath -->
+                            <path d="M 115 200 L 150 250 L 185 200 Z" fill="url(#roseAccent)" />
+                            
+                            <!-- Coat Lapels -->
+                            <polygon points="105,195 130,280 150,280 120,195" fill="#e2d4dc" />
+                            <polygon points="195,195 170,280 150,280 180,195" fill="#e2d4dc" />
+
+                            <!-- Aesthetician Badge -->
+                            <rect x="75" y="240" width="22" height="30" rx="3" fill="#ffffff" stroke="#c26262" stroke-width="1"/>
+                            <line x1="79" y1="247" x2="93" y2="247" stroke="#c26262" stroke-width="2"/>
+                            <line x1="79" y1="253" x2="89" y2="253" stroke="#999" stroke-width="1"/>
+
+                            <!-- Neck -->
+                            <rect x="135" y="155" width="30" height="42" rx="6" fill="url(#skinGradFlavia)" />
+
+                            <!-- Head & Face -->
+                            <path d="M 110 105 C 110 50, 190 50, 190 105 C 190 150, 170 170, 150 170 C 130 170, 110 150, 110 105 Z" fill="url(#skinGradFlavia)" />
+
+                            <!-- Hair (Elegant Long Dark Brunette Waves) -->
+                            <path d="M 102 110 C 95 60, 120 30, 150 30 C 180 30, 205 60, 198 110 C 215 150, 210 220, 190 260 C 180 220, 195 150, 190 110 C 180 60, 120 60, 110 110 C 105 150, 120 220, 110 260 C 90 220, 85 150, 102 110 Z" fill="url(#hairGrad)" />
+                            
+                            <!-- Face Side Bangs -->
+                            <path d="M 110 85 Q 135 75 148 95 Q 120 100 110 85 Z" fill="#2c1a0e" />
+                            <path d="M 190 85 Q 165 75 152 95 Q 180 100 190 85 Z" fill="#2c1a0e" />
+
+                            <!-- Eyes with Eyeliner -->
+                            <ellipse cx="133" cy="110" rx="7.5" ry="5" fill="#ffffff" />
+                            <circle cx="133" cy="110" r="3.2" fill="#2d1d13" />
+                            <path d="M 124 107 Q 133 103 142 107" stroke="#111" stroke-width="2" fill="none" />
+
+                            <ellipse cx="167" cy="110" rx="7.5" ry="5" fill="#ffffff" />
+                            <circle cx="167" cy="110" r="3.2" fill="#2d1d13" />
+                            <path d="M 158 107 Q 167 103 176 107" stroke="#111" stroke-width="2" fill="none" />
+
+                            <!-- Delicate Eyebrows -->
+                            <path d="M 123 101 Q 133 96 142 100" stroke="#331e11" stroke-width="2.2" fill="none" stroke-linecap="round" />
+                            <path d="M 158 100 Q 167 96 177 101" stroke="#331e11" stroke-width="2.2" fill="none" stroke-linecap="round" />
+
+                            <!-- Nose -->
+                            <path d="M 150 108 L 147 125 L 153 125" stroke="#c0937a" stroke-width="1.8" fill="none" stroke-linecap="round" />
+
+                            <!-- Rosy Cheeks Accent -->
+                            <circle cx="125" cy="128" r="8" fill="#e8a5a5" opacity="0.35" />
+                            <circle cx="175" cy="128" r="8" fill="#e8a5a5" opacity="0.35" />
+
+                            <!-- Mouth Base with Rosy Lips -->
+                            <path d="M 137 145 Q 150 152 163 145" stroke="#b04f58" stroke-width="3" fill="none" stroke-linecap="round" />
+                            
+                            <!-- Animated Lip Overlay for Speaking -->
+                            <g id="animated-mouth" class="mouth-overlay">
+                                <ellipse id="mouth-aperture" cx="150" cy="147" rx="9" ry="1" fill="#691a22" />
+                            </g>
+                        </svg>
+
+                        <!-- Overlay Badge on Image -->
+                        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-plum-950/85 backdrop-blur px-3 py-0.5 rounded-full border border-rosegold-500/40 text-[10px] text-rosegold-300 font-semibold tracking-wider uppercase">
+                            Dra. Flávia
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Intro / Audio Greeting Controller -->
+                <div class="w-full text-center mt-2 z-10">
+                    <h2 class="text-xl font-serif font-bold text-white">Dra. Flávia</h2>
+                    <p class="text-xs text-rosegold-300 font-medium mb-3">Esteticista & Cosmetóloga Especialista</p>
+                    
+                    <!-- Quick Play Intro Audio Button -->
+                    <button id="btn-play-intro" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-rosegold-600 via-rosegold-500 to-champagne-400 hover:from-rosegold-500 hover:to-champagne-300 text-plum-950 font-bold text-sm shadow-lg flex items-center justify-center gap-2 transition transform active:scale-98">
+                        <i class="fa-solid fa-volume-high"></i>
+                        <span>Ouvir Apresentação da Dra. Flávia</span>
+                    </button>
+                </div>
+
+                <!-- Live Subtitles / Avatar Speech Display Box -->
+                <div class="w-full mt-4 bg-plum-900/90 border border-slate-800 rounded-2xl p-4 text-sm text-slate-200 min-h-[90px] flex flex-col justify-between shadow-inner">
+                    <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1 border-b border-slate-800 pb-1">
+                        <span class="flex items-center gap-1 font-semibold text-rosegold-400">
+                            <i class="fa-solid fa-comment-dots"></i> Fala da Dra. Flávia
+                        </span>
+                        <span id="audio-state-tag" class="text-slate-500">Aguardando</span>
+                    </div>
+                    <p id="avatar-speech-text" class="italic text-slate-300 leading-relaxed font-sans text-xs sm:text-sm">
+                        "Olá! Sou a Dra. Flávia. Sou esteticista e cosmetóloga, especialista em redução de gordura corporal, harmonização de contornos e reconstrução capilar. Como posso ajudar na sua transformação hoje?"
+                    </p>
+                    <div class="mt-2 flex justify-end gap-2 text-xs">
+                        <button id="btn-repeat-audio" title="Repetir Áudio" class="p-1.5 rounded text-slate-400 hover:text-rosegold-400 hover:bg-plum-800 transition">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                        <button id="btn-stop-audio" title="Parar Áudio" class="p-1.5 rounded text-slate-400 hover:text-rose-400 hover:bg-plum-800 transition">
+                            <i class="fa-solid fa-stop"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- RIGHT COLUMN: Interactive Chat & Protocol Diagnostic Guide (Lg: 7 cols) -->
+        <section class="lg:col-span-7 space-y-6">
+            
+            <!-- Question Launcher & Chat Card -->
+            <div class="glass-panel rounded-3xl p-6 border border-rosegold-500/30 shadow-xl flex flex-col h-[520px]">
+                
+                <!-- Card Header -->
+                <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
+                    <div>
+                        <h3 class="text-base font-serif font-bold text-rosegold-400 flex items-center gap-2">
+                            <i class="fa-solid fa-spa"></i> Consultório de Estética Virtual
+                        </h3>
+                        <p class="text-xs text-slate-400">Tire suas dúvidas sobre gordura localizada, reconstrução capilar e cosmetologia</p>
+                    </div>
+                    <span class="text-xs bg-plum-800 text-slate-300 px-2.5 py-1 rounded-full border border-slate-700">
+                        IA de Estética Avançada
+                    </span>
+                </div>
+
+                <!-- Chat History Window -->
+                <div id="chat-history" class="flex-1 overflow-y-auto space-y-3 pr-2 mb-4">
+                    <!-- Doctor Initial Message -->
+                    <div class="flex gap-3">
+                        <div class="w-8 h-8 rounded-full bg-rosegold-500/20 border border-rosegold-500/50 flex items-center justify-center text-rosegold-400 shrink-0 text-xs font-bold">
+                            DF
+                        </div>
+                        <div class="bg-plum-800 border border-rosegold-500/20 rounded-2xl p-3.5 text-xs sm:text-sm text-slate-200 max-w-[85%] shadow">
+                            <p class="font-semibold text-rosegold-400 mb-1">Dra. Flávia</p>
+                            Olá! Seja muito bem-vindo(a) ao meu consultório virtual. Trabalho com protocolos personalizados de estética corporal para redução de gordura e celulite, reconstrução de fibra capilar e cosmetologia facial avançada. Qual o seu foco de cuidado hoje?
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Suggested Topics Pill Bar -->
+                <div class="mb-3">
+                    <p class="text-[11px] text-slate-400 uppercase font-semibold tracking-wider mb-2 flex items-center gap-1">
+                        <i class="fa-solid fa-wand-magic-sparkles text-rosegold-400"></i> Dúvidas Frequentes:
+                    </p>
+                    <div class="flex flex-wrap gap-1.5 max-h-20 overflow-y-auto">
+                        <button class="quick-btn text-xs bg-plum-800 hover:bg-rosegold-500/20 text-slate-300 hover:text-rosegold-300 border border-slate-700 hover:border-rosegold-500/40 rounded-lg px-2.5 py-1 transition">
+                            Como funciona a Reconstrução Capilar?
+                        </button>
+                        <button class="quick-btn text-xs bg-plum-800 hover:bg-rosegold-500/20 text-slate-300 hover:text-rosegold-300 border border-slate-700 hover:border-rosegold-500/40 rounded-lg px-2.5 py-1 transition">
+                            Melhores tratamentos para Gordura Localizada
+                        </button>
+                        <button class="quick-btn text-xs bg-plum-800 hover:bg-rosegold-500/20 text-slate-300 hover:text-rosegold-300 border border-slate-700 hover:border-rosegold-500/40 rounded-lg px-2.5 py-1 transition">
+                            O que faz uma Cosmetóloga?
+                        </button>
+                        <button class="quick-btn text-xs bg-plum-800 hover:bg-rosegold-500/20 text-slate-300 hover:text-rosegold-300 border border-slate-700 hover:border-rosegold-500/40 rounded-lg px-2.5 py-1 transition">
+                            Drenagem Linfática vs Massagem Modeladora
+                        </button>
+                        <button class="quick-btn text-xs bg-plum-800 hover:bg-rosegold-500/20 text-slate-300 hover:text-rosegold-300 border border-slate-700 hover:border-rosegold-500/40 rounded-lg px-2.5 py-1 transition">
+                            Cuidados em casa para queda de cabelo
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Input Field & Voice Controls -->
+                <form id="chat-form" class="flex gap-2">
+                    <div class="relative flex-1">
+                        <input type="text" id="user-input" placeholder="Pergunte à Dra. Flávia sobre gordura, cabelos ou cosmetologia..." required class="w-full bg-plum-900 border border-slate-700 focus:border-rosegold-500 rounded-xl py-3 pl-4 pr-10 text-xs sm:text-sm text-white focus:outline-none placeholder-slate-500 shadow-inner">
+                        <button type="button" id="btn-mic" title="Falar por voz" class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-slate-400 hover:text-rosegold-400 transition">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                    </div>
+                    <button type="submit" id="btn-send" class="bg-rosegold-500 hover:bg-rosegold-600 text-plum-950 font-bold px-5 py-3 rounded-xl transition flex items-center justify-center shadow-lg">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+
+            </div>
+
+            <!-- Interactive Aesthetic Specializations Guide -->
+            <div class="glass-panel rounded-3xl p-5 border border-rosegold-500/30">
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="text-sm font-serif font-bold text-rosegold-400 flex items-center gap-2">
+                        <i class="fa-solid fa-gem"></i> Guia de Tratamentos Especiais
+                    </h4>
+                    <span class="text-[11px] text-slate-400">Selecione uma área de foco</span>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <button class="specialty-btn text-left p-3 rounded-xl bg-plum-900 hover:bg-plum-800 border border-slate-800 hover:border-rosegold-500/50 transition group" data-category="Reconstrução Capilar" data-query="Quais são os procedimentos de Reconstrução Capilar e Terapia do Couro Cabeludo que você realiza?">
+                        <div class="flex items-center justify-between text-xs font-bold text-rosegold-400 group-hover:text-rosegold-300">
+                            <span>1. Capilar</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Haste capilar, alopécia, microagulhamento e restauração de brilho.</p>
+                    </button>
+
+                    <button class="specialty-btn text-left p-3 rounded-xl bg-plum-900 hover:bg-plum-800 border border-slate-800 hover:border-rosegold-500/50 transition group" data-category="Gordura Localizada" data-query="Como funciona o protocolo para eliminação de gordura localizada e remodelação corporal?">
+                        <div class="flex items-center justify-between text-xs font-bold text-rosegold-400 group-hover:text-rosegold-300">
+                            <span>2. Gordura & Lipo</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Ultrassom, ultracavitação, criolipólise e remodelagem do abdômen.</p>
+                    </button>
+
+                    <button class="specialty-btn text-left p-3 rounded-xl bg-plum-900 hover:bg-plum-800 border border-slate-800 hover:border-rosegold-500/50 transition group" data-category="Cosmetologia Avançada" data-query="O que é Cosmetologia aplicada e como criar uma rotina de skincare com ativos concentrados?">
+                        <div class="flex items-center justify-between text-xs font-bold text-rosegold-400 group-hover:text-rosegold-300">
+                            <span>3. Cosmetologia</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Peelings, dermocosméticos, antioxidantes e limpeza profunda.</p>
+                    </button>
+
+                    <button class="specialty-btn text-left p-3 rounded-xl bg-plum-900 hover:bg-plum-800 border border-slate-800 hover:border-rosegold-500/50 transition group" data-category="Firmadora & Drenagem" data-query="Quais técnicas reduzem a celulite, a flacidez da pele e o inchaço corporal?">
+                        <div class="flex items-center justify-between text-xs font-bold text-rosegold-400 group-hover:text-rosegold-300">
+                            <span>4. Firmadora & Drenagem</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Radiofrequência, drenagem método exclusivo e estímulo de colágeno.</p>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-plum-900/80 py-4 mt-6">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between text-xs text-slate-400 gap-2">
+            <div class="flex items-center gap-2">
+                <span class="font-serif font-semibold text-rosegold-400">Dra. Flávia Estética & Cosmetologia</span>
+                <span>• Corporal, Capilar e Harmonização Cutânea</span>
+            </div>
+            <p class="text-slate-500 text-[11px]">
+                Nota: As orientações prestadas pela Dra. Flávia são de caráter educativo. Consulte uma avaliação presencial para diagnósticos personalizados.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        /**
+         * Dra. Flávia Avatar Application Engine
+         * Handles:
+         * - Gemini 3 Flash Text Generation for Cosmetologist & Aesthetic Specialist persona
+         * - Gemini 2.5 Flash TTS for realistic female voice output
+         * - Audio visualizer & mouth animation synchronization
+         * - Fallback Web Speech API when offline
+         */
+
+        // State Management
+        let currentApiKey = ""; // Embedded runtime key handled by Canvas platform
+        let isSpeaking = false;
+        let currentAudioSource = null;
+        let audioContext = null;
+
+        const SYSTEM_PROMPT = `Você é a Dra. Flávia, uma conceituada Esteticista e Cosmetóloga especialista em Estética Corporal (perda de gordura localizada, celulite, flacidez), Reconstrução Capilar (terapia do couro cabeludo, fortalecimento dos fios, eflúvio e alopécia) e Cosmetologia Avançada.
+Sua postura é extremamente elegante, simpática, acolhedora, segura e didática.
+Sempre responda em Português do Brasil com tom sofisticado, porém acessível para o paciente.
+Sua especialização abrange:
+1. Reconstrução Capilar: Terapia capilar, microagulhamento com ativos de crescimento, detox do couro cabeludo, laser de baixa frequência, tratamento para fios danificados por química.
+2. Perda de Gordura Localizada & Corporal: Ultrassom cavitacional, criolipólise, radiofrequência firmadora, drenagem linfática, massagem modeladora e enzimas cosmetológicas.
+3. Cosmetologia & Facial: Prescrição de dermocosméticos, peelings químicos e de diamantes, limpeza de pele profunda e estímulo à produção de colágeno.
+Mantenha suas respostas concisas e objetivas (máximo 2 a 3 parágrafos curtos) para garantir uma reprodução perfeita em áudio no avatar.`;
+
+        // Initial Greeting Text
+        const INTRO_TEXT = "Olá! Eu sou a Dra. Flávia, Esteticista e Cosmetóloga. Sou especialista em tratamentos para redução de gordura localizada, remodelação corporal e reconstrução capilar profunda. Em que posso te orientar hoje?";
+
+        // DOM Elements
+        const avatarFrame = document.getElementById('avatar-frame');
+        const mouthAperture = document.getElementById('mouth-aperture');
+        const waveContainer = document.getElementById('wave-container');
+        const speakingIndicatorText = document.getElementById('speaking-indicator-text');
+        const avatarSpeechText = document.getElementById('avatar-speech-text');
+        const audioStateTag = document.getElementById('audio-state-tag');
+
+        const chatHistory = document.getElementById('chat-history');
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        const btnSend = document.getElementById('btn-send');
+        const btnMic = document.getElementById('btn-mic');
+
+        const btnPlayIntro = document.getElementById('btn-play-intro');
+        const btnRepeatAudio = document.getElementById('btn-repeat-audio');
+        const btnStopAudio = document.getElementById('btn-stop-audio');
+
+        const settingsModal = document.getElementById('settings-modal');
+        const toggleSettingsBtn = document.getElementById('toggle-settings');
+        const closeSettingsBtn = document.getElementById('close-settings');
+        const saveSettingsBtn = document.getElementById('save-settings');
+        const customApiKeyInput = document.getElementById('custom-api-key');
+        const voiceSelect = document.getElementById('voice-select');
+
+        let lastDoctorSpeech = INTRO_TEXT;
+
+        // Initialize Audio Context on user interaction
+        function getAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            return audioContext;
+        }
+
+        // Settings Modal Handlers
+        toggleSettingsBtn.addEventListener('click', () => settingsModal.classList.remove('hidden'));
+        closeSettingsBtn.addEventListener('click', () => settingsModal.classList.add('hidden'));
+        saveSettingsBtn.addEventListener('click', () => {
+            currentApiKey = customApiKeyInput.value.trim();
+            settingsModal.classList.add('hidden');
+        });
+
+        /**
+         * Converts Int16 PCM array buffer from Gemini TTS API into a browser-playable WAV Blob
+         */
+        function pcmToWav(pcm16Data, sampleRate = 24000) {
+            const numChannels = 1;
+            const byteRate = sampleRate * numChannels * 2;
+            const blockAlign = numChannels * 2;
+            const dataSize = pcm16Data.length * 2;
+            const buffer = new ArrayBuffer(44 + dataSize);
+            const view = new DataView(buffer);
+
+            // RIFF header
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + dataSize, true);
+            writeString(view, 8, 'WAVE');
+            
+            // Subchunk 1 (fmt )
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true); // PCM Format
+            view.setUint16(22, numChannels, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, byteRate, true);
+            view.setUint16(32, blockAlign, true);
+            view.setUint16(34, 16, true); // Bits per sample
+            
+            // Subchunk 2 (data)
+            writeString(view, 36, 'data');
+            view.setUint32(40, dataSize, true);
+
+            // Write PCM audio data
+            let offset = 44;
+            for (let i = 0; i < pcm16Data.length; i++, offset += 2) {
+                view.setInt16(offset, pcm16Data[i], true);
+            }
+
+            return new Blob([buffer], { type: 'audio/wav' });
+        }
+
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        }
+
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        /**
+         * Starts visual talking animations on Dra. Flávia avatar
+         */
+        function startSpeakingAnimation() {
+            isSpeaking = true;
+            avatarFrame.classList.add('speaking');
+            waveContainer.classList.remove('opacity-0');
+            speakingIndicatorText.innerText = "Dra. Flávia Falando...";
+            audioStateTag.innerText = "Reproduzindo Áudio";
+            audioStateTag.className = "text-rosegold-400 font-medium animate-pulse";
+        }
+
+        /**
+         * Stops visual talking animations
+         */
+        function stopSpeakingAnimation() {
+            isSpeaking = false;
+            avatarFrame.classList.remove('speaking');
+            waveContainer.classList.add('opacity-0');
+            speakingIndicatorText.innerText = "Dra. Flávia Pronta";
+            audioStateTag.innerText = "Aguardando";
+            audioStateTag.className = "text-slate-500";
+            if (mouthAperture) {
+                mouthAperture.setAttribute('ry', '1');
+            }
+        }
+
+        /**
+         * Stop any playing audio
+         */
+        function stopAudio() {
+            if (currentAudioSource) {
+                try {
+                    currentAudioSource.stop();
+                } catch(e) {}
+                currentAudioSource = null;
+            }
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            stopSpeakingAnimation();
+        }
+
+        /**
+         * Generate TTS via Gemini API (`gemini-2.5-flash-preview-tts`) with Web Speech API fallback
+         */
+        async function speakText(text) {
+            stopAudio();
+            startSpeakingAnimation();
+            avatarSpeechText.innerText = `"${text}"`;
+            lastDoctorSpeech = text;
+
+            const voiceName = voiceSelect.value || "Aoede";
+            const apiKey = currentApiKey; // Can be empty string for platform runtime injection
+
+            const payload = {
+                contents: [{
+                    parts: [{ text: `Fale em português do Brasil com uma voz feminina extremamente elegante, aveludada, clara e profissional de uma Dra. Esteticista especialista: ${text}` }]
+                }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: { voiceName: voiceName }
+                        }
+                    }
+                }
+            };
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Gemini TTS API HTTP Error ${response.status}`);
+                }
+
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const base64Audio = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType || "";
+
+                if (base64Audio) {
+                    let sampleRate = 24000;
+                    const match = mimeType.match(/rate=(\d+)/);
+                    if (match && match[1]) {
+                        sampleRate = parseInt(match[1], 10);
+                    }
+
+                    const arrayBuffer = base64ToArrayBuffer(base64Audio);
+                    const pcm16 = new Int16Array(arrayBuffer);
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    const audioUrl = URL.createObjectURL(wavBlob);
+
+                    const audio = new Audio(audioUrl);
+                    
+                    // Lip animation trigger on mouth graphic
+                    const mouthInterval = setInterval(() => {
+                        if (!isSpeaking) {
+                            clearInterval(mouthInterval);
+                            return;
+                        }
+                        const randomHeight = Math.floor(Math.random() * 7) + 2;
+                        if (mouthAperture) mouthAperture.setAttribute('ry', randomHeight);
+                    }, 120);
+
+                    audio.onended = () => {
+                        clearInterval(mouthInterval);
+                        stopSpeakingAnimation();
+                    };
+
+                    audio.onerror = () => {
+                        clearInterval(mouthInterval);
+                        fallbackWebSpeech(text);
+                    };
+
+                    audio.play().catch(() => fallbackWebSpeech(text));
+                    return;
+                } else {
+                    throw new Error("Formato de áudio indisponível na resposta da API");
+                }
+            } catch (err) {
+                console.warn("Gemini TTS endpoint fallbacked to Web Speech API:", err);
+                fallbackWebSpeech(text);
+            }
+        }
+
+        /**
+         * Fallback native SpeechSynthesis if TTS API is throttled or offline
+         */
+        function fallbackWebSpeech(text) {
+            if (!('speechSynthesis' in window)) {
+                stopSpeakingAnimation();
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'pt-BR';
+            utterance.rate = 0.95;
+            utterance.pitch = 1.05; // Voice tuning for female aesthetician tone
+
+            // Try finding female Portuguese voice
+            const voices = window.speechSynthesis.getVoices();
+            const ptVoice = voices.find(v => v.lang.includes('pt') && (v.name.includes('Female') || v.name.includes('Maria') || v.name.includes('Helena') || v.name.includes('Luciana') || v.name.includes('Google')));
+            if (ptVoice) utterance.voice = ptVoice;
+
+            const mouthInterval = setInterval(() => {
+                if (!isSpeaking) {
+                    clearInterval(mouthInterval);
+                    return;
+                }
+                const randomHeight = Math.floor(Math.random() * 6) + 2;
+                if (mouthAperture) mouthAperture.setAttribute('ry', randomHeight);
+            }, 130);
+
+            utterance.onend = () => {
+                clearInterval(mouthInterval);
+                stopSpeakingAnimation();
+            };
+
+            utterance.onerror = () => {
+                clearInterval(mouthInterval);
+                stopSpeakingAnimation();
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        /**
+         * Generate AI Answer from Dra. Flávia using `gemini-3-flash-preview`
+         */
+        async function askDraFlavia(questionText) {
+            appendUserMessage(questionText);
+            userInput.value = '';
+
+            // Show Thinking Indicator
+            const doctorThinkingMsg = appendDoctorMessage("Dra. Flávia está analisando sua dúvida...");
+            speakingIndicatorText.innerText = "Dra. Flávia Pensando...";
+
+            const apiKey = currentApiKey;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [
+                    {
+                        role: "user",
+                        parts: [{ text: questionText }]
+                    }
+                ],
+                systemInstruction: {
+                    parts: [{ text: SYSTEM_PROMPT }]
+                }
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP Error ${response.status}`);
+                }
+
+                const data = await response.json();
+                const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (replyText) {
+                    doctorThinkingMsg.innerHTML = `<p class="font-semibold text-rosegold-400 mb-1">Dra. Flávia</p>${formatMarkdown(replyText)}`;
+                    chatHistory.scrollTop = chatHistory.scrollHeight;
+                    speakText(replyText);
+                } else {
+                    throw new Error("Sem texto gerado");
+                }
+
+            } catch (err) {
+                console.error("Erro na geração da IA:", err);
+                const fallbackReply = `Na estética avançada, combinamos a tecnologia da cosmetologia com tratamentos focados em gordura localizada e reconstrução dos fios capilares. Recomendo passar por uma avaliação individualizada para definir o melhor protocolo!`;
+                doctorThinkingMsg.innerHTML = `<p class="font-semibold text-rosegold-400 mb-1">Dra. Flávia</p>${fallbackReply}`;
+                speakText(fallbackReply);
+            }
+        }
+
+        // Helper UI Chat Append Functions
+        function appendUserMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'flex gap-3 justify-end';
+            msgDiv.innerHTML = `
+                <div class="bg-rosegold-500/10 border border-rosegold-500/30 rounded-2xl p-3 text-xs sm:text-sm text-slate-100 max-w-[85%] shadow">
+                    <p class="font-semibold text-rosegold-300 mb-0.5 text-[11px]">Você</p>
+                    ${escapeHtml(text)}
+                </div>
+            `;
+            chatHistory.appendChild(msgDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        function appendDoctorMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'flex gap-3';
+            msgDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-rosegold-500/20 border border-rosegold-500/50 flex items-center justify-center text-rosegold-400 shrink-0 text-xs font-bold">
+                    DF
+                </div>
+                <div class="doctor-msg-content bg-plum-800 border border-rosegold-500/20 rounded-2xl p-3.5 text-xs sm:text-sm text-slate-200 max-w-[85%] shadow">
+                    <p class="font-semibold text-rosegold-400 mb-1">Dra. Flávia</p>
+                    ${text}
+                </div>
+            `;
+            chatHistory.appendChild(msgDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+            return msgDiv.querySelector('.doctor-msg-content');
+        }
+
+        function formatMarkdown(text) {
+            return text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/\n/g, '<br>');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Form Submit
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = userInput.value.trim();
+            if (query) askDraFlavia(query);
+        });
+
+        // Quick Buttons Click
+        document.querySelectorAll('.quick-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                askDraFlavia(btn.innerText.trim());
+            });
+        });
+
+        // Specialty Region Buttons Click
+        document.querySelectorAll('.specialty-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const query = btn.getAttribute('data-query');
+                if (query) askDraFlavia(query);
+            });
+        });
+
+        // Audio Controls Buttons
+        btnPlayIntro.addEventListener('click', () => {
+            getAudioContext();
+            speakText(INTRO_TEXT);
+        });
+
+        btnRepeatAudio.addEventListener('click', () => {
+            getAudioContext();
+            if (lastDoctorSpeech) speakText(lastDoctorSpeech);
+        });
+
+        btnStopAudio.addEventListener('click', () => {
+            stopAudio();
+        });
+
+        // Speech Recognition (Microphone input)
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'pt-BR';
+            recognition.continuous = false;
+
+            btnMic.addEventListener('click', () => {
+                try {
+                    recognition.start();
+                    btnMic.classList.add('text-rose-500', 'animate-pulse');
+                } catch(e) {
+                    recognition.stop();
+                    btnMic.classList.remove('text-rose-500', 'animate-pulse');
+                }
+            });
+
+            recognition.onresult = (event) => {
+                btnMic.classList.remove('text-rose-500', 'animate-pulse');
+                const transcript = event.results[0][0].transcript;
+                if (transcript) {
+                    userInput.value = transcript;
+                    askDraFlavia(transcript);
+                }
+            };
+
+            recognition.onerror = () => {
+                btnMic.classList.remove('text-rose-500', 'animate-pulse');
+            };
+
+            recognition.onend = () => {
+                btnMic.classList.remove('text-rose-500', 'animate-pulse');
+            };
+        } else {
+            btnMic.style.display = 'none';
+        }
+
+        // Preload Web Speech voices
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = () => {
+                window.speechSynthesis.getVoices();
+            };
+        }
+
+        // Window Load Handler
+        window.addEventListener('load', () => {
+            avatarSpeechText.innerText = `"${INTRO_TEXT}"`;
+        });
+    </script>
+</body>
+</html>

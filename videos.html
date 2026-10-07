@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeria de Vídeos | Clínica D'Moura</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="assets/ana/ana.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html">
+        <img src="assets/logo-dmoura-clinica.jpg" alt="Clínica D'Moura">
+        <div class="brand-text">
+          <strong>Clínica D'Moura</strong>
+          <span>Vídeos</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="avatares/index.html">Avatares</a></li>
+        <li><a href="procedimentos.html">Procedimentos</a></li>
+        <li><a href="livros.html">Livros</a></li>
+        <li><a href="videos.html" class="active">Vídeos</a></li>
+        <li><a class="btn btn-whatsapp" href="https://wa.me/5581997181046" target="_blank" rel="noopener">WhatsApp</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-hero">
+      <div class="breadcrumb"><a href="index.html">Início</a> · Vídeos</div>
+      <h1>Galeria de vídeos</h1>
+      <p>
+        Conteúdo educativo e institucional da Clínica D'Moura.
+        Players com controles nativos; posters do manifesto em <code>videos/manifest.json</code>.
+      </p>
+    </div>
+
+    <div class="notice">
+      <strong>Privacidade:</strong> apenas vídeos marcados como públicos (<code>safe: true</code>).
+      Material clínico íntimo não é publicado nesta galeria.
+    </div>
+
+    <div class="grid grid-auto" id="video-grid" style="padding-bottom:3rem"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border:0;padding-top:0">
+      <span>© Clínica D'Moura / Instituto DMAP</span>
+      <a href="mailto:diretoria@clinicadmoura.company">diretoria@clinicadmoura.company</a>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      function normalize(data) {
+        if (Array.isArray(data)) return data;
+        if (data && Array.isArray(data.videos)) return data.videos;
+        return [];
+      }
+
+      function cardHTML(v, base) {
+        const file = v.file || (v.id + '.mp4');
+        const poster = v.poster ? base + v.poster : '';
+        const posterAttr = poster ? ' poster="' + poster + '"' : '';
+        const tag = v.tag || v.id || 'vídeo';
+        const dur = v.duration_sec ? (' · ' + v.duration_sec + 's') : '';
+        return (
+          '<article class="card video-card" data-id="' + (v.id || '') + '">' +
+            '<video controls playsinline preload="metadata"' + posterAttr + '>' +
+              '<source src="' + base + file + '" type="video/mp4">' +
+            '</video>' +
+            '<div class="tag">' + tag + dur + '</div>' +
+            '<h3>' + (v.title || v.id || file) + '</h3>' +
+            '<p>' + (v.description || 'Conteúdo clínico / institucional.') + '</p>' +
+          '</article>'
+        );
+      }
+
+      async function render() {
+        const grid = document.getElementById('video-grid');
+        let items = [];
+        try {
+          const res = await fetch('videos/manifest.json');
+          if (res.ok) items = normalize(await res.json());
+        } catch (_) {}
+        items = items.filter(function (v) { return v && v.safe !== false && v.public_gallery !== false; });
+        if (!items.length) {
+          grid.innerHTML = '<p class="notice">Nenhum vídeo no manifesto ainda.</p>';
+          return;
+        }
+        grid.innerHTML = items.map(function (v) { return cardHTML(v, 'videos/'); }).join('');
+      }
+
+      render();
+    })();
+  </script>
+  <script src="assets/voz-danusa/voz-danusa.js"></script>
+  <script>
+    /* Fala de boas-vindas (Web Speech API): tom caloroso, frases curtas, pt-BR */
+    (function () {
+      if (!('speechSynthesis' in window)) return;
+      var FALA = 'Oi! Que bom ter você aqui. ' +
+        'Essa é a galeria de vídeos da Clínica D\'Moura. ' +
+        'É só escolher um vídeo e dar o play. ' +
+        'Bateu alguma dúvida? Chama a gente no WhatsApp, tá?';
+      var CHAVE = 'dmoura_videos_boasvindas';
+      var synth = window.speechSynthesis;
+
+      function escolherVoz() {
+        var vozes = synth.getVoices().filter(function (v) {
+          return /^pt[-_]BR/i.test(v.lang);
+        });
+        var preferidas = [/natural/i, /online/i, /google/i, /francisca/i, /thalita/i, /luciana/i, /antonio/i];
+        for (var i = 0; i < preferidas.length; i++) {
+          var achou = vozes.find(function (v) { return preferidas[i].test(v.name); });
+          if (achou) return achou;
+        }
+        return vozes[0] || null;
+      }
+
+      function falar() {
+        try { if (sessionStorage.getItem(CHAVE)) return; sessionStorage.setItem(CHAVE, '1'); } catch (_) {}
+        var u = new SpeechSynthesisUtterance(FALA);
+        u.lang = 'pt-BR';
+        var voz = escolherVoz();
+        if (voz) u.voice = voz;
+        u.rate = 1.0;
+        u.pitch = 1.05;
+        synth.cancel();
+        if (window.vozDanusa) window.vozDanusa.falar(FALA, function () { synth.speak(u); });
+        else synth.speak(u);
+      }
+
+      /* Navegadores só liberam áudio após um toque/clique; a fala sai na primeira interação, fora dos vídeos. */
+      function primeiraInteracao(e) {
+        if (e.target && e.target.closest && e.target.closest('video')) return;
+        document.removeEventListener('pointerdown', primeiraInteracao);
+        document.removeEventListener('keydown', primeiraInteracao);
+        if (synth.getVoices().length) falar();
+        else synth.addEventListener('voiceschanged', falar, { once: true });
+      }
+      document.addEventListener('pointerdown', primeiraInteracao);
+      document.addEventListener('keydown', primeiraInteracao);
+
+      /* Não falar por cima de um vídeo */
+      document.addEventListener('play', function (e) {
+        if (e.target && e.target.tagName === 'VIDEO') synth.cancel();
+      }, true);
+    })();
+  </script>
+  <script src="assets/ana/ana.js" defer></script>
+</body>
+</html>

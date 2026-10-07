@@ -1,0 +1,48 @@
+/* avatar-falante.css — moldura do avatar com foto real + aviso da Sarah + miniaturas do índice.
+   Paleta da marca: --dm-bg #0A1A22, --dm-gold #D9A54A, --dm-teal #12A4A6, --dm-silver #CED0CE, --dm-text #F3EEE4 */
+.af-caixa {
+  --dm-bg: #0A1A22; --dm-gold: #D9A54A; --dm-teal: #12A4A6; --dm-silver: #CED0CE; --dm-text: #F3EEE4;
+  position: relative; width: 100%; height: 100%; max-width: 100%;
+  border-radius: 50%; overflow: hidden; background: var(--dm-bg);
+  transition: box-shadow .25s ease;
+}
+.af-caixa.af-anel { box-shadow: 0 0 0 3px var(--dm-gold), 0 18px 30px rgba(0, 0, 0, .55); }
+.af-caixa.af-anel.af-falando { box-shadow: 0 0 0 3px var(--dm-teal), 0 0 26px rgba(18, 164, 166, .55), 0 18px 30px rgba(0, 0, 0, .55); }
+.af-caixa:not(.af-anel).af-falando { box-shadow: inset 0 0 0 3px rgba(18, 164, 166, .9); }
+.af-caixa-retrato {
+  width: 100%; max-width: 380px; height: auto; aspect-ratio: 380 / 420; margin: 0 auto;
+  border-radius: 20px; box-shadow: 0 0 0 2px var(--dm-gold), 0 18px 30px rgba(0, 0, 0, .5);
+}
+.af-caixa-retrato.af-falando { box-shadow: 0 0 0 2px var(--dm-teal), 0 0 26px rgba(18, 164, 166, .5), 0 18px 30px rgba(0, 0, 0, .5); }
+.af-canvas { display: block; width: 100%; height: 100%; }
+.af-tag {
+  position: absolute; top: 8%; left: 50%; transform: translateX(-50%);
+  padding: 2px 10px; border-radius: 999px; font: 600 11px/1.6 system-ui, sans-serif; letter-spacing: .04em;
+  background: rgba(10, 26, 34, .88); color: #F3EEE4; border: 1px solid #D9A54A; pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) { .af-caixa { transition: none; } }
+
+/* Aviso na página da Sarah: a Ana assumiu a recepção */
+.af-aviso {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 12px 16px; border-radius: 16px;
+  background: #0A1A22; color: #F3EEE4; border: 1px solid rgba(217, 165, 74, .55);
+  font: 400 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.af-aviso p { flex: 1 1 240px; margin: 0; min-width: 0; }
+.af-aviso strong { color: #D9A54A; }
+.af-ana-icone {
+  width: 36px; height: 36px; border-radius: 50%; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #0A1A22; color: #D9A54A; font-weight: 800; font-size: 16px; border: 2px solid #D9A54A;
+}
+.af-aviso a {
+  flex: none; padding: 8px 14px; border-radius: 999px; font-weight: 700; text-decoration: none;
+  background: #D9A54A; color: #0A1A22;
+}
+.af-aviso a:hover, .af-aviso a:focus-visible { filter: brightness(1.08); outline: 2px solid #12A4A6; outline-offset: 2px; }
+
+/* Índice de avatares: miniatura da foto no lugar das iniciais */
+.avatar-card .icon.af-icone-foto { padding: 0; overflow: hidden; border: 2px solid #D9A54A; }
+.avatar-card .icon.af-icone-foto img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; }

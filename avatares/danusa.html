@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dra. Danusa Moura - Biomedicina Estética & Instituto DMap</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dmap: {
+                            950: '#0c0f17',
+                            900: '#141a29',
+                            850: '#1c2438',
+                            800: '#26324d',
+                            blue: '#3b52a4',
+                            bluelight: '#5c74c7',
+                            gold: '#d4af37',
+                            warm: '#f3e8de',
+                            rose: '#c88a8a',
+                            slate: '#94a3b8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes pulse-ring-dmap {
+            0% { transform: scale(0.98); opacity: 0.6; }
+            50% { transform: scale(1.03); opacity: 0.2; }
+            100% { transform: scale(0.98); opacity: 0.6; }
+        }
+        @keyframes speak-wave {
+            0%, 100% { height: 6px; }
+            50% { height: 26px; }
+        }
+        @keyframes avatar-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .avatar-container {
+            animation: avatar-float 5s ease-in-out infinite;
+        }
+        .speaking .ring-glow {
+            animation: pulse-ring-dmap 2s infinite ease-in-out;
+            box-shadow: 0 0 35px rgba(59, 82, 164, 0.35);
+        }
+        .mouth-overlay {
+            transform-origin: center top;
+            transition: transform 0.1s ease;
+        }
+        .wave-bar {
+            animation: speak-wave 1.2s infinite ease-in-out;
+        }
+        .wave-bar:nth-child(2) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.4s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.6s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.8s; }
+
+        .dmap-panel {
+            background: rgba(20, 26, 41, 0.88);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #0c0f17; }
+        ::-webkit-scrollbar-thumb { background: #26324d; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b52a4; }
+    </style>
+    <link rel="stylesheet" href="../assets/avatares/avatar-falante.css">
+</head>
+<body class="bg-dmap-950 text-slate-200 min-h-screen font-sans flex flex-col justify-between selection:bg-dmap-blue selection:text-white">
+
+    <!-- Header / Branding Navigation -->
+    <header class="border-b border-dmap-gold/20 bg-dmap-900/95 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-md border border-dmap-gold/40 bg-dmap-850 flex items-center justify-center text-dmap-gold shadow-lg">
+                    <i class="fa-solid fa-sparkles text-lg"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-base md:text-lg font-serif font-bold text-white tracking-wider">
+                            DRA. DANUSA MOURA
+                        </h1>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-dmap-blue/20 text-dmap-bluelight border border-dmap-blue/40 font-mono tracking-wider uppercase">
+                            Instituto DMap
+                        </span>
+                    </div>
+                    <p class="text-xs text-dmap-slate font-medium">
+                        Biomedicina Estética • Rosto, Corpo & Saúde Íntima
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <span class="hidden lg:flex items-center gap-2 px-3 py-1 rounded bg-emerald-950/60 text-emerald-400 border border-emerald-500/30 text-xs font-mono">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Clínica D'Moura Ativa
+                </span>
+                <button id="toggle-settings" title="Ajustes do Avatar e Voz" class="px-3.5 py-2 rounded bg-dmap-850 hover:bg-dmap-800 text-dmap-slate hover:text-dmap-gold border border-slate-700/60 text-xs font-semibold flex items-center gap-2 transition">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span class="hidden sm:inline">Voz & API IA</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modal: Settings -->
+    <div id="settings-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="dmap-panel max-w-md w-full rounded-lg p-6 relative shadow-2xl border border-dmap-gold/30">
+            <button id="close-settings" class="absolute top-4 right-4 text-dmap-slate hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-base font-serif font-bold text-dmap-gold mb-1 flex items-center gap-2 uppercase tracking-wider">
+                <i class="fa-solid fa-gear"></i> Configurações do Avatar
+            </h3>
+            <p class="text-xs text-dmap-slate mb-5 leading-relaxed">
+                Ajuste a chave de inteligência artificial Gemini e selecione o perfil de voz sintetizada.
+            </p>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Chave de API Gemini (Opcional):</label>
+                    <input type="password" id="custom-api-key" placeholder="AIzaSy..." class="w-full bg-dmap-950 border border-slate-700 rounded p-2.5 text-xs text-white focus:border-dmap-blue focus:outline-none font-mono">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Voz Sintetizada Dra. Danusa (Gemini TTS):</label>
+                    <select id="voice-select" class="w-full bg-dmap-950 border border-slate-700 rounded p-2.5 text-xs text-white focus:border-dmap-blue focus:outline-none">
+                        <option value="Aoede" selected>Aoede (Feminina Calma & Acolhedora)</option>
+                        <option value="Kore">Kore (Feminina Serena & Suave)</option>
+                        <option value="Despina">Despina (Feminina Elegante)</option>
+                        <option value="Callirrhoe">Callirrhoe (Feminina Comunicativa)</option>
+                    </select>
+                </div>
+                <div class="pt-3 flex justify-end">
+                    <button id="save-settings" class="px-5 py-2 bg-dmap-blue hover:bg-indigo-600 text-white font-bold rounded text-xs tracking-wider uppercase transition">
+                        Salvar Preferências
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Workspace -->
+    <main class="max-w-7xl mx-auto px-4 md:px-6 py-6 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- LEFT COLUMN: Avatar & Profile Card (Lg: 5 cols) -->
+        <section class="lg:col-span-5 flex flex-col items-center">
+            <div class="w-full dmap-panel rounded-lg p-6 flex flex-col items-center relative overflow-hidden shadow-2xl">
+                
+                <!-- Background Glow -->
+                <div class="absolute top-0 right-0 w-48 h-48 bg-dmap-blue/15 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Status Header -->
+                <div class="w-full flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-dmap-gold animate-pulse"></span>
+                        <span id="speaking-indicator-text" class="text-[11px] font-mono uppercase tracking-widest text-dmap-gold font-semibold">
+                            Dra. Danusa Moura • Online
+                        </span>
+                    </div>
+                    <span class="text-[10px] font-mono text-dmap-slate bg-dmap-850 px-2 py-0.5 rounded border border-slate-700">
+                        Biomédica Esteta
+                    </span>
+                </div>
+
+                <!-- Avatar Portrait Frame -->
+                <div id="avatar-frame" class="relative my-2 avatar-container flex justify-center items-center">
+                    
+                    <!-- Outer Ring Glow -->
+                    <div class="ring-glow absolute inset-0 rounded-full border border-dmap-gold/40 transform scale-105 pointer-events-none"></div>
+
+                    <!-- Audio Visualizer Waves -->
+                    <div id="wave-container" class="absolute -bottom-2 flex items-end justify-center gap-1 z-20 h-7 opacity-0 transition-opacity duration-300">
+                        <span class="wave-bar w-1 bg-dmap-gold rounded-sm"></span>
+                        <span class="wave-bar w-1 bg-dmap-bluelight rounded-sm"></span>
+                        <span class="wave-bar w-1 bg-dmap-gold rounded-sm"></span>
+                        <span class="wave-bar w-1 bg-dmap-bluelight rounded-sm"></span>
+                        <span class="wave-bar w-1 bg-dmap-gold rounded-sm"></span>
+                    </div>
+
+                    <!-- Custom SVG Avatar: Dra. Danusa Moura (Blond Wavy Hair, Warm Smile, Royal Blue Blazer) -->
+                    <div class="w-56 h-56 sm:w-60 sm:h-60 rounded-full overflow-hidden border-2 border-dmap-gold/60 shadow-2xl relative bg-dmap-950">
+                        <svg viewBox="0 0 300 300" class="w-full h-full object-cover">
+                            <defs>
+                                <!-- Wood Panel Background Gradient -->
+                                <linearGradient id="bgWood" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#3d2a1d"/>
+                                    <stop offset="50%" stop-color="#24170f"/>
+                                    <stop offset="100%" stop-color="#120b07"/>
+                                </linearGradient>
+                                <!-- Royal Blue Blazer Gradient -->
+                                <linearGradient id="blazerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#4c65b8"/>
+                                    <stop offset="100%" stop-color="#283a80"/>
+                                </linearGradient>
+                                <!-- White Top Texture -->
+                                <linearGradient id="topGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#ffffff"/>
+                                    <stop offset="100%" stop-color="#e2ded8"/>
+                                </linearGradient>
+                                <!-- Warm Skin Gradient -->
+                                <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#f5ceb3"/>
+                                    <stop offset="100%" stop-color="#dd9f7f"/>
+                                </linearGradient>
+                                <!-- Blonde Hair Highlight Gradient -->
+                                <linearGradient id="blondeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#f7e1a1"/>
+                                    <stop offset="40%" stop-color="#dfb66d"/>
+                                    <stop offset="80%" stop-color="#a67c3b"/>
+                                    <stop offset="100%" stop-color="#5c3f1a"/>
+                                </linearGradient>
+                                <linearGradient id="blondeStreak" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#fff5cc"/>
+                                    <stop offset="100%" stop-color="#e3be76"/>
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- Clinic Wood Background with Warm Light Streaks -->
+                            <rect width="300" height="300" fill="url(#bgWood)" />
+                            <!-- Wood Slats Effect -->
+                            <line x1="60" y1="0" x2="60" y2="300" stroke="#523928" stroke-width="2" opacity="0.6"/>
+                            <line x1="120" y1="0" x2="120" y2="300" stroke="#523928" stroke-width="2" opacity="0.6"/>
+                            <line x1="180" y1="0" x2="180" y2="300" stroke="#523928" stroke-width="2" opacity="0.6"/>
+                            <line x1="240" y1="0" x2="240" y2="300" stroke="#523928" stroke-width="2" opacity="0.6"/>
+                            <circle cx="150" cy="110" r="120" fill="#d4af37" opacity="0.08" />
+
+                            <!-- Royal Blue Tailored Blazer & Shoulders -->
+                            <path d="M 35 300 C 45 200, 90 180, 150 180 C 210 180, 255 200, 265 300 Z" fill="url(#blazerGrad)" />
+                            <!-- Inner Cream Textured Knit Top -->
+                            <path d="M 115 180 L 150 235 L 185 180 Z" fill="url(#topGrad)" />
+                            <path d="M 125 180 L 150 220 L 175 180 Z" fill="#d9d2c9" opacity="0.4" />
+
+                            <!-- Fine Gold Necklace & Pendant -->
+                            <path d="M 132 170 Q 150 182 168 170" stroke="#d4af37" stroke-width="1.8" fill="none" />
+                            <circle cx="150" cy="180" r="3" fill="#d4af37" />
+
+                            <!-- Neck -->
+                            <rect x="132" y="135" width="36" height="50" rx="6" fill="url(#skinGrad)" />
+
+                            <!-- Face Shape -->
+                            <path d="M 108 95 C 108 42, 192 42, 192 95 C 192 142, 172 160, 150 160 C 128 160, 108 142, 108 95 Z" fill="url(#skinGrad)" />
+
+                            <!-- Blonde Hair Back layer -->
+                            <path d="M 85 100 C 75 40, 120 15, 150 15 C 180 15, 225 40, 215 100 C 228 140, 220 190, 205 235 C 195 190, 205 130, 195 95 C 185 45, 115 45, 105 95 C 95 130, 105 190, 95 235 C 80 190, 72 140, 85 100 Z" fill="url(#blondeGrad)" />
+
+                            <!-- Front Wavy Side-Swept Blonde Hair Layer -->
+                            <path d="M 92 80 Q 120 20 150 20 Q 190 20 208 75 C 220 115, 215 160, 200 195 Q 188 150, 192 105 C 180 50, 130 50, 110 80 Z" fill="url(#blondeStreak)" />
+                            <path d="M 88 105 Q 98 145 108 185 Q 115 145 106 105 Z" fill="url(#blondeStreak)" />
+
+                            <!-- Eyes: Warm Brown, Expressive -->
+                            <ellipse cx="132" cy="98" rx="8" ry="5" fill="#ffffff" />
+                            <circle cx="132" cy="98" r="3.5" fill="#2d1a0e" />
+                            <circle cx="133" cy="97" r="1.2" fill="#ffffff" />
+                            <path d="M 122 95 Q 132 90 142 95" stroke="#1c0f08" stroke-width="2" fill="none" />
+
+                            <ellipse cx="168" cy="98" rx="8" ry="5" fill="#ffffff" />
+                            <circle cx="168" cy="98" r="3.5" fill="#2d1a0e" />
+                            <circle cx="169" cy="97" r="1.2" fill="#ffffff" />
+                            <path d="M 158 95 Q 168 90 178 95" stroke="#1c0f08" stroke-width="2" fill="none" />
+
+                            <!-- Eyebrows: Soft Arch Brown -->
+                            <path d="M 120 88 Q 132 83 143 87" stroke="#4a2e18" stroke-width="2.2" fill="none" stroke-linecap="round" />
+                            <path d="M 157 87 Q 168 83 180 88" stroke="#4a2e18" stroke-width="2.2" fill="none" stroke-linecap="round" />
+
+                            <!-- Nose -->
+                            <path d="M 150 96 L 147 113 L 153 113" stroke="#aa6f4c" stroke-width="1.8" fill="none" stroke-linecap="round" />
+
+                            <!-- Warm Rosy Cheek Smile Lines -->
+                            <circle cx="122" cy="116" r="7" fill="#c85e50" opacity="0.22" />
+                            <circle cx="178" cy="116" r="7" fill="#c85e50" opacity="0.22" />
+
+                            <!-- Warm Radiant Lips & Teeth Smile -->
+                            <path d="M 134 133 Q 150 144 166 133" stroke="#a84846" stroke-width="3" fill="#ffffff" stroke-linecap="round" />
+                            <path d="M 137 133 Q 150 138 163 133" fill="#ffffff" />
+
+                            <!-- Animated Mouth Aperture Overlay -->
+                            <g id="animated-mouth" class="mouth-overlay">
+                                <ellipse id="mouth-aperture" cx="150" cy="136" rx="9" ry="1" fill="#4d1717" />
+                            </g>
+
+                            <!-- Fine Earrings -->
+                            <circle cx="106" cy="108" r="2.5" fill="#d4af37" />
+                            <circle cx="194" cy="108" r="2.5" fill="#d4af37" />
+                        </svg>
+
+                        <!-- Badge Overlay -->
+                        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-dmap-950/90 border border-dmap-gold/40 px-3 py-0.5 rounded text-[9px] font-mono text-dmap-gold uppercase tracking-wider shadow">
+                            Dra. Danusa Moura
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Intro Action Button -->
+                <div class="w-full text-center mt-3">
+                    <h2 class="text-base font-serif font-bold text-white tracking-wide">Dra. Danusa Moura</h2>
+                    <p class="text-xs text-dmap-slate mb-3">Biomédica Esteta • Instituto DMap & Clínica D'Moura</p>
+                    
+                    <button id="btn-play-intro" class="w-full py-2.5 px-4 rounded bg-dmap-850 hover:bg-dmap-800 text-dmap-gold border border-dmap-gold/30 font-semibold text-xs tracking-wider uppercase transition flex items-center justify-center gap-2 shadow">
+                        <i class="fa-solid fa-volume-high"></i>
+                        <span>Ouvir Apresentação da Dra. Danusa</span>
+                    </button>
+                </div>
+
+                <!-- Live Subtitles & Telemetry -->
+                <div class="w-full mt-4 bg-dmap-950 border border-slate-800 rounded p-4 text-xs text-slate-300 min-h-[95px] flex flex-col justify-between shadow-inner">
+                    <div class="flex items-center justify-between text-[10px] font-mono text-dmap-slate mb-1 border-b border-slate-800/80 pb-1">
+                        <span class="flex items-center gap-1 font-semibold text-dmap-gold uppercase tracking-wider">
+                            <i class="fa-solid fa-quote-left"></i> Pronunciamento
+                        </span>
+                        <span id="audio-state-tag" class="text-slate-500">Pronto</span>
+                    </div>
+                    <p id="avatar-speech-text" class="text-slate-300 leading-relaxed font-sans text-xs italic">
+                        "Olá! Sou a Dra. Danusa Moura, biomédica esteta integrante do Instituto DMap e à frente da Clínica D'Moura. Minha missão é cuidar de você por inteiro, unindo ciência e tecnologia na harmonização facial, estética corporal e saúde íntima feminina. Como posso te ajudar hoje?"
+                    </p>
+                    <div class="mt-2 flex justify-end gap-2 text-xs">
+                        <button id="btn-repeat-audio" title="Repetir Áudio" class="p-1 rounded text-slate-400 hover:text-dmap-gold transition">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                        <button id="btn-stop-audio" title="Parar Áudio" class="p-1 rounded text-slate-400 hover:text-rose-400 transition">
+                            <i class="fa-solid fa-square"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- RIGHT COLUMN: Interactive AI Consultation Console (Lg: 7 cols) -->
+        <section class="lg:col-span-7 space-y-6">
+            
+            <!-- Chat Card -->
+            <div class="dmap-panel rounded-lg p-6 border border-dmap-gold/25 shadow-xl flex flex-col h-[520px]">
+                
+                <!-- Terminal Header -->
+                <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+                    <div>
+                        <h3 class="text-xs font-serif font-bold text-dmap-gold uppercase tracking-widest flex items-center gap-2">
+                            <i class="fa-solid fa-stethoscope"></i> Canal de Atendimento & Triagem Estética
+                        </h3>
+                        <p class="text-[11px] text-dmap-slate">Consultoria virtual personalizada com a Dra. Danusa Moura</p>
+                    </div>
+                    <span class="text-[10px] bg-dmap-blue/20 text-dmap-bluelight border border-dmap-blue/40 px-2.5 py-1 rounded font-mono">
+                        Ecossistema DMap
+                    </span>
+                </div>
+
+                <!-- Chat History Log -->
+                <div id="chat-history" class="flex-1 overflow-y-auto space-y-3 pr-2 mb-4">
+                    <div class="flex gap-3">
+                        <div class="w-7 h-7 rounded bg-dmap-gold/20 border border-dmap-gold/40 flex items-center justify-center text-dmap-gold shrink-0 text-[10px] font-bold font-mono">
+                            DD
+                        </div>
+                        <div class="bg-dmap-850 border border-slate-800 rounded-md p-3.5 text-xs text-slate-200 max-w-[90%] shadow-sm">
+                            <p class="font-bold text-dmap-gold mb-1 text-[11px] uppercase tracking-wider">Dra. Danusa Moura</p>
+                            Seja muito bem-vindo(a)! No Instituto DMap e na Clínica D'Moura, desenvolvemos protocolos personalizados focados na sua beleza natural e bem-estar integral. Você busca cuidados para o **rosto**, para o **corpo** (como firmeza pós-emagrecimento) ou **saúde estética íntima**?
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preset Topics -->
+                <div class="mb-3">
+                    <p class="text-[10px] text-dmap-slate uppercase font-semibold tracking-wider mb-1.5 flex items-center gap-1 font-mono">
+                        <i class="fa-solid fa-sparkles text-dmap-gold"></i> Dúvidas Mais Frequentes:
+                    </p>
+                    <div class="flex flex-wrap gap-1.5 max-h-20 overflow-y-auto">
+                        <button class="quick-btn text-[11px] bg-dmap-850 hover:bg-dmap-800 text-slate-300 hover:text-dmap-gold border border-slate-800 hover:border-dmap-gold/40 rounded px-2.5 py-1 transition font-medium">
+                            Qual o melhor bioestimulador para firmeza do bumbum após emagrecer?
+                        </button>
+                        <button class="quick-btn text-[11px] bg-dmap-850 hover:bg-dmap-800 text-slate-300 hover:text-dmap-gold border border-slate-800 hover:border-dmap-gold/40 rounded px-2.5 py-1 transition font-medium">
+                            Como funciona a ninfoplastia a laser sem cortes?
+                        </button>
+                        <button class="quick-btn text-[11px] bg-dmap-850 hover:bg-dmap-800 text-slate-300 hover:text-dmap-gold border border-slate-800 hover:border-dmap-gold/40 rounded px-2.5 py-1 transition font-medium">
+                            Bioestimulador facial (Sculptra/Radiesse) dá hematoma ou roxo?
+                        </button>
+                        <button class="quick-btn text-[11px] bg-dmap-850 hover:bg-dmap-800 text-slate-300 hover:text-dmap-gold border border-slate-800 hover:border-dmap-gold/40 rounded px-2.5 py-1 transition font-medium">
+                            Qual a diferença entre Botox e Preenchimento com Ácido Hialurônico?
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Input Console -->
+                <form id="chat-form" class="flex gap-2">
+                    <div class="relative flex-1">
+                        <input type="text" id="user-input" placeholder="Pergunte à Dra. Danusa sobre procedimentos, cuidados e agendamentos..." required class="w-full bg-dmap-950 border border-slate-800 focus:border-dmap-gold rounded py-2.5 pl-3.5 pr-10 text-xs text-white focus:outline-none placeholder-slate-600 shadow-inner">
+                        <button type="button" id="btn-mic" title="Falar por voz" class="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-dmap-gold transition">
+                            <i class="fa-solid fa-microphone text-xs"></i>
+                        </button>
+                    </div>
+                    <button type="submit" id="btn-send" class="bg-dmap-blue hover:bg-indigo-600 text-white font-bold px-4 py-2.5 rounded transition flex items-center justify-center text-xs tracking-wider uppercase">
+                        <i class="fa-solid fa-paper-plane mr-1"></i> Enviar
+                    </button>
+                </form>
+
+            </div>
+
+            <!-- Pillars of Expertise -->
+            <div class="dmap-panel rounded-lg p-5 border border-dmap-gold/20">
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="text-xs font-serif font-bold text-dmap-gold uppercase tracking-widest flex items-center gap-2">
+                        <i class="fa-solid fa-heart-pulse"></i> Áreas de Especialidade da Dra. Danusa Moura
+                    </h4>
+                    <span class="text-[10px] text-dmap-slate font-mono">Clique para consultar</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <button class="specialty-btn text-left p-3 rounded bg-dmap-950 hover:bg-dmap-850 border border-slate-800 hover:border-dmap-gold/40 transition group" data-query="Explique os tratamentos de Harmonização Facial e Bioestimuladores de Colágeno (Sculptra e Radiesse) para o rosto.">
+                        <div class="flex items-center justify-between text-xs font-bold text-dmap-gold group-hover:text-amber-300">
+                            <span>1. Harmonização Facial</span>
+                            <i class="fa-solid fa-angle-right text-[10px]"></i>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Sculptra, Radiesse, Botox, Ácido Hialurônico e Fios de PDO.</p>
+                    </button>
+
+                    <button class="specialty-btn text-left p-3 rounded bg-dmap-950 hover:bg-dmap-850 border border-slate-800 hover:border-dmap-gold/40 transition group" data-query="Como funciona a Bioestimulação Glútea e o combate à flacidez corporal, principalmente após usar canetas de emagrecimento ou perda de peso?">
+                        <div class="flex items-center justify-between text-xs font-bold text-dmap-gold group-hover:text-amber-300">
+                            <span>2. Estética Corporal</span>
+                            <i class="fa-solid fa-angle-right text-[10px]"></i>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Bioestimulação de glúteos, firmeza muscular/cutânea e enzimas redutoras.</p>
+                    </button>
+
+                    <button class="specialty-btn text-left p-3 rounded bg-dmap-950 hover:bg-dmap-850 border border-slate-800 hover:border-dmap-gold/40 transition group" data-query="Quais são os procedimentos de Saúde e Estética Íntima Feminina oferecidos pela Dra. Danusa (ninfoplastia a laser, clareamento, regeneração tecidual)?">
+                        <div class="flex items-center justify-between text-xs font-bold text-dmap-gold group-hover:text-amber-300">
+                            <span>3. Estética Íntima Feminina</span>
+                            <i class="fa-solid fa-angle-right text-[10px]"></i>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Ninfoplastia sem cortes a laser, estímulo de colágeno e clareamento íntimo.</p>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 bg-dmap-950 py-4 mt-6">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-[11px] text-dmap-slate gap-2">
+            <div class="flex items-center gap-2">
+                <span class="font-serif font-bold text-dmap-gold uppercase tracking-wider">Dra. Danusa Moura</span>
+                <span>• Instituto DMap & Clínica D'Moura</span>
+            </div>
+            <p class="text-slate-500 font-mono text-[10px]">
+                Aviso: Canal educativo e informativo de triagem para tratamentos estéticos e regenerativos.
+            </p>
+        </div>
+    </footer>
+
+    <script src="../assets/voz-danusa/voz-danusa.js"></script>
+    <script>
+        /**
+         * Dra. Danusa Moura - Interactive Avatar Engine & AI Assistant
+         * Persona: Warm, expert, reassuring, highly qualified Biomedicina Esteta.
+         * Core Pillars: Facial, Corporal (specialized in gluteal biostimulation post-weight loss) and Female Intimate Aesthetics.
+         */
+
+        let currentApiKey = "";
+        let isSpeaking = false;
+        let currentAudioSource = null;
+        let audioContext = null;
+
+        const SYSTEM_PROMPT = `Você é a Dra. Danusa Moura, renomada Biomédica Esteta altamente qualificada, integrante do Instituto DMap e fundadora da Clínica D'Moura.
+Seu tom de voz deve ser ACOLHEDOR, EMPÁTICO, CIENTÍFICO, DIDÁTICO e REASSEGURADOR ("Atendimento Humanizado e Seguro").
+
+Suas áreas de atuação principal são:
+1. Harmonização e Estética Facial: Bioestimuladores de colágeno (Sculptra e Radiesse), Toxina Botulínica (Botox), Preenchimentos com Ácido Hialurônico, Fios de PDO e Skincare Avançado.
+2. Estética Corporal e Bioestimulação Glútea: Foco em firmeza e contorno dos glúteos, especialmente para pacientes que passaram por processo de emagrecimento ou usaram canetas emagrecedoras (como Ozempic/Mounjaro/Saxenda) e ficaram com flacidez na região. Uso de enzimas redutoras e mesoterapia.
+3. Saúde e Estética Íntima Feminina: Ninfoplastia e rejuvenescimento a laser minimamente invasivo (sem cortes), estímulo de colágeno íntimo, clareamento e restauração do bem-estar e autoestima feminina.
+4. Orientações Pré e Pós-Procedimento: Esclarecer dúvidas sobre hematomas, roxos transitórios, cuidados prévios e acompanhamento para máxima segurança.
+
+Regras de Resposta:
+- Seja calorosa e acolhedora, tratando o paciente com carinho e extrema competência técnica.
+- Responda em no máximo 2 a 3 parágrafos concisos para garantir fluidez no áudio do avatar.
+- Sempre destaque a união entre ciência, alta tecnologia e segurança no Instituto DMap e Clínica D'Moura.`;
+
+        const INTRO_TEXT = "Olá! Sou a Dra. Danusa Moura, biomédica esteta integrante do Instituto DMap e à frente da Clínica D'Moura. Minha missão é cuidar de você por inteiro, unindo ciência e tecnologia na harmonização facial, estética corporal e saúde íntima feminina. Como posso te ajudar hoje?";
+
+        // DOM Elements
+        const avatarFrame = document.getElementById('avatar-frame');
+        const mouthAperture = document.getElementById('mouth-aperture');
+        const waveContainer = document.getElementById('wave-container');
+        const speakingIndicatorText = document.getElementById('speaking-indicator-text');
+        const avatarSpeechText = document.getElementById('avatar-speech-text');
+        const audioStateTag = document.getElementById('audio-state-tag');
+
+        const chatHistory = document.getElementById('chat-history');
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        const btnMic = document.getElementById('btn-mic');
+
+        const btnPlayIntro = document.getElementById('btn-play-intro');
+        const btnRepeatAudio = document.getElementById('btn-repeat-audio');
+        const btnStopAudio = document.getElementById('btn-stop-audio');
+
+        const settingsModal = document.getElementById('settings-modal');
+        const toggleSettingsBtn = document.getElementById('toggle-settings');
+        const closeSettingsBtn = document.getElementById('close-settings');
+        const saveSettingsBtn = document.getElementById('save-settings');
+        const customApiKeyInput = document.getElementById('custom-api-key');
+        const voiceSelect = document.getElementById('voice-select');
+
+        let lastDoctorSpeech = INTRO_TEXT;
+
+        function getAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            return audioContext;
+        }
+
+        toggleSettingsBtn.addEventListener('click', () => settingsModal.classList.remove('hidden'));
+        closeSettingsBtn.addEventListener('click', () => settingsModal.classList.add('hidden'));
+        saveSettingsBtn.addEventListener('click', () => {
+            currentApiKey = customApiKeyInput.value.trim();
+            settingsModal.classList.add('hidden');
+        });
+
+        // Convert PCM array buffer from Gemini TTS API into playable WAV Blob
+        function pcmToWav(pcm16Data, sampleRate = 24000) {
+            const numChannels = 1;
+            const byteRate = sampleRate * numChannels * 2;
+            const blockAlign = numChannels * 2;
+            const dataSize = pcm16Data.length * 2;
+            const buffer = new ArrayBuffer(44 + dataSize);
+            const view = new DataView(buffer);
+
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + dataSize, true);
+            writeString(view, 8, 'WAVE');
+            
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);
+            view.setUint16(22, numChannels, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, byteRate, true);
+            view.setUint16(32, blockAlign, true);
+            view.setUint16(34, 16, true);
+            
+            writeString(view, 36, 'data');
+            view.setUint32(40, dataSize, true);
+
+            let offset = 44;
+            for (let i = 0; i < pcm16Data.length; i++, offset += 2) {
+                view.setInt16(offset, pcm16Data[i], true);
+            }
+
+            return new Blob([buffer], { type: 'audio/wav' });
+        }
+
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        }
+
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        function startSpeakingAnimation() {
+            isSpeaking = true;
+            avatarFrame.classList.add('speaking');
+            waveContainer.classList.remove('opacity-0');
+            speakingIndicatorText.innerText = "Dra. Danusa Moura • Falando";
+            audioStateTag.innerText = "Reproduzindo Áudio";
+            audioStateTag.className = "text-dmap-gold font-mono font-medium animate-pulse";
+        }
+
+        function stopSpeakingAnimation() {
+            isSpeaking = false;
+            avatarFrame.classList.remove('speaking');
+            waveContainer.classList.add('opacity-0');
+            speakingIndicatorText.innerText = "Dra. Danusa Moura • Online";
+            audioStateTag.innerText = "Pronto";
+            audioStateTag.className = "text-slate-500 font-mono";
+            if (mouthAperture) {
+                mouthAperture.setAttribute('ry', '1');
+            }
+        }
+
+        function stopAudio() {
+            if (window.AvatarFalante) window.AvatarFalante.parar();
+            if (currentAudioSource) {
+                try {
+                    currentAudioSource.stop();
+                } catch(e) {}
+                currentAudioSource = null;
+            }
+            if (window.vozDanusa) window.vozDanusa.parar();
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            stopSpeakingAnimation();
+        }
+
+        async function speakText(text) {
+            stopAudio();
+            startSpeakingAnimation();
+            avatarSpeechText.innerText = `"${text}"`;
+            lastDoctorSpeech = text;
+
+            if (window.vozDanusa && window.vozDanusa.temClip(text)) {
+                const clipMouth = setInterval(() => {
+                    if (!isSpeaking) { clearInterval(clipMouth); return; }
+                    if (mouthAperture) mouthAperture.setAttribute('ry', Math.floor(Math.random() * 6) + 2);
+                }, 120);
+                window.vozDanusa.falar(text, (t) => { clearInterval(clipMouth); fallbackWebSpeech(t); }, {
+                    onend: () => { clearInterval(clipMouth); stopSpeakingAnimation(); },
+                    onaudio: (a) => { if (window.AvatarFalante && window.AvatarFalante.ativo()) window.AvatarFalante.conectarAudio(a); }
+                });
+                return;
+            }
+            if (window.AvatarFalante && window.AvatarFalante.ativo()) { fallbackWebSpeech(text); return; } // avatar com foto: voz pt-BR do aparelho + boca sincronizada
+
+            const voiceName = voiceSelect.value || "Aoede";
+            const apiKey = currentApiKey;
+
+            const payload = {
+                contents: [{
+                    parts: [{ text: `Fale em português do Brasil com tom acolhedor, simpático, profissional e muito claro de uma biomédica esteta experiente: ${text}` }]
+                }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: { voiceName: voiceName }
+                        }
+                    }
+                }
+            };
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Gemini TTS Error HTTP ${response.status}`);
+                }
+
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const base64Audio = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType || "";
+
+                if (base64Audio) {
+                    let sampleRate = 24000;
+                    const match = mimeType.match(/rate=(\d+)/);
+                    if (match && match[1]) {
+                        sampleRate = parseInt(match[1], 10);
+                    }
+
+                    const arrayBuffer = base64ToArrayBuffer(base64Audio);
+                    const pcm16 = new Int16Array(arrayBuffer);
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    const audioUrl = URL.createObjectURL(wavBlob);
+
+                    const audio = new Audio(audioUrl);
+                    
+                    const mouthInterval = setInterval(() => {
+                        if (!isSpeaking) {
+                            clearInterval(mouthInterval);
+                            return;
+                        }
+                        const randomHeight = Math.floor(Math.random() * 6) + 2;
+                        if (mouthAperture) mouthAperture.setAttribute('ry', randomHeight);
+                    }, 120);
+
+                    audio.onended = () => {
+                        clearInterval(mouthInterval);
+                        stopSpeakingAnimation();
+                    };
+
+                    audio.onerror = () => {
+                        clearInterval(mouthInterval);
+                        fallbackWebSpeech(text);
+                    };
+
+                    audio.play().catch(() => fallbackWebSpeech(text));
+                    return;
+                } else {
+                    throw new Error("Sem dados de áudio");
+                }
+            } catch (err) {
+                console.warn("Utilizando sintese de voz nativa Web Speech:", err);
+                fallbackWebSpeech(text);
+            }
+        }
+
+        function fallbackWebSpeech(text) {
+            if (window.AvatarFalante && window.AvatarFalante.ativo()) { window.AvatarFalante.falar(text, { onend: stopSpeakingAnimation }); return; }
+            if (!('speechSynthesis' in window)) {
+                stopSpeakingAnimation();
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'pt-BR';
+            utterance.rate = 0.95;
+            utterance.pitch = 1.05;
+
+            const voices = window.speechSynthesis.getVoices();
+            const ptVoice = voices.find(v => v.lang.includes('pt') && (v.name.includes('Luciana') || v.name.includes('Maria') || v.name.includes('Google') || v.name.includes('Female')));
+            if (ptVoice) utterance.voice = ptVoice;
+
+            const mouthInterval = setInterval(() => {
+                if (!isSpeaking) {
+                    clearInterval(mouthInterval);
+                    return;
+                }
+                const randomHeight = Math.floor(Math.random() * 5) + 2;
+                if (mouthAperture) mouthAperture.setAttribute('ry', randomHeight);
+            }, 125);
+
+            utterance.onend = () => {
+                clearInterval(mouthInterval);
+                stopSpeakingAnimation();
+            };
+
+            utterance.onerror = () => {
+                clearInterval(mouthInterval);
+                stopSpeakingAnimation();
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        async function askDraDanusa(questionText) {
+            appendUserMessage(questionText);
+            userInput.value = '';
+
+            const doctorThinkingMsg = appendDoctorMessage("Consultando protocolos estéticos DMap...");
+            speakingIndicatorText.innerText = "Dra. Danusa • Elaborando resposta";
+
+            const apiKey = currentApiKey;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [
+                    {
+                        role: "user",
+                        parts: [{ text: questionText }]
+                    }
+                ],
+                systemInstruction: {
+                    parts: [{ text: SYSTEM_PROMPT }]
+                }
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (replyText) {
+                    doctorThinkingMsg.innerHTML = `<p class="font-bold text-dmap-gold mb-1 text-[11px] uppercase tracking-wider">Dra. Danusa Moura</p>${formatMarkdown(replyText)}`;
+                    chatHistory.scrollTop = chatHistory.scrollHeight;
+                    speakText(replyText);
+                } else {
+                    throw new Error("Resposta ausente");
+                }
+
+            } catch (err) {
+                console.error("Erro na consulta com Dra. Danusa:", err);
+                const fallbackReply = `Como biomédica esteta no Instituto DMap e na Clínica D'Moura, meu compromisso é aliar tecnologia e biossegurança. Para o seu caso, combinamos triagem individualizada e bioestimuladores de alta performance. Gostaria de agendar uma consulta presencial de avaliação?`;
+                doctorThinkingMsg.innerHTML = `<p class="font-bold text-dmap-gold mb-1 text-[11px] uppercase tracking-wider">Dra. Danusa Moura</p>${fallbackReply}`;
+                speakText(fallbackReply);
+            }
+        }
+
+        function appendUserMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'flex gap-3 justify-end';
+            msgDiv.innerHTML = `
+                <div class="bg-dmap-950 border border-dmap-gold/30 rounded-md p-3 text-xs text-slate-100 max-w-[85%] shadow-sm">
+                    <p class="font-semibold text-dmap-gold mb-0.5 text-[10px] uppercase font-mono">Você</p>
+                    ${escapeHtml(text)}
+                </div>
+            `;
+            chatHistory.appendChild(msgDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        function appendDoctorMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'flex gap-3';
+            msgDiv.innerHTML = `
+                <div class="w-7 h-7 rounded bg-dmap-gold/20 border border-dmap-gold/40 flex items-center justify-center text-dmap-gold shrink-0 text-[10px] font-bold font-mono">
+                    DD
+                </div>
+                <div class="doctor-msg-content bg-dmap-850 border border-slate-800 rounded-md p-3.5 text-xs text-slate-200 max-w-[90%] shadow-sm">
+                    <p class="font-bold text-dmap-gold mb-1 text-[11px] uppercase tracking-wider">Dra. Danusa Moura</p>
+                    ${text}
+                </div>
+            `;
+            chatHistory.appendChild(msgDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+            return msgDiv.querySelector('.doctor-msg-content');
+        }
+
+        function formatMarkdown(text) {
+            return text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/\n/g, '<br>');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = userInput.value.trim();
+            if (query) askDraDanusa(query);
+        });
+
+        document.querySelectorAll('.quick-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                askDraDanusa(btn.innerText.trim());
+            });
+        });
+
+        document.querySelectorAll('.specialty-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const query = btn.getAttribute('data-query');
+                if (query) askDraDanusa(query);
+            });
+        });
+
+        btnPlayIntro.addEventListener('click', () => {
+            getAudioContext();
+            speakText(INTRO_TEXT);
+        });
+
+        btnRepeatAudio.addEventListener('click', () => {
+            getAudioContext();
+            if (lastDoctorSpeech) speakText(lastDoctorSpeech);
+        });
+
+        btnStopAudio.addEventListener('click', () => {
+            stopAudio();
+        });
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'pt-BR';
+            recognition.continuous = false;
+
+            btnMic.addEventListener('click', () => {
+                try {
+                    recognition.start();
+                    btnMic.classList.add('text-dmap-gold', 'animate-pulse');
+                } catch(e) {
+                    recognition.stop();
+                    btnMic.classList.remove('text-dmap-gold', 'animate-pulse');
+                }
+            });
+
+            recognition.onresult = (event) => {
+                btnMic.classList.remove('text-dmap-gold', 'animate-pulse');
+                const transcript = event.results[0][0].transcript;
+                if (transcript) {
+                    userInput.value = transcript;
+                    askDraDanusa(transcript);
+                }
+            };
+
+            recognition.onerror = () => btnMic.classList.remove('text-dmap-gold', 'animate-pulse');
+            recognition.onend = () => btnMic.classList.remove('text-dmap-gold', 'animate-pulse');
+        } else {
+            btnMic.style.display = 'none';
+        }
+
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = () => {
+                window.speechSynthesis.getVoices();
+            };
+        }
+
+        window.addEventListener('load', () => {
+            avatarSpeechText.innerText = `"${INTRO_TEXT}"`;
+        });
+    </script>
+    <script src="../assets/avatares/avatar-falante.js" data-pessoa="danusa" data-alvo="#avatar-frame svg"></script>
+</body>
+</html>

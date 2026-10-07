@@ -1,0 +1,127 @@
+/* Ana — recepcionista virtual da Clínica D'Moura (widget flutuante).
+   Escopo: tudo sob #ana-root, prefixo .ana-. Paleta proposta só para o widget. */
+#ana-root {
+  --dm-gold: #D9A54A;
+  --dm-teal: #12A4A6;
+  --dm-bg: #0A1A22;
+  --dm-text: #F3EEE4;
+  --dm-bubble: #143440;   /* fundo da fala da Ana */
+  --dm-muted: #B9C6CB;    /* texto secundário */
+  --dm-line: rgba(217, 165, 74, 0.35);
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2147483000;
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--dm-text);
+  -webkit-font-smoothing: antialiased;
+}
+#ana-root *, #ana-root *::before, #ana-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
+#ana-root button, #ana-root input, #ana-root select, #ana-root textarea { font: inherit; color: inherit; }
+#ana-root a { text-decoration: none; transition: none; }
+#ana-root :focus-visible { outline: 3px solid var(--dm-teal); outline-offset: 2px; }
+
+/* Botão flutuante */
+#ana-root .ana-launcher {
+  display: inline-flex; align-items: center; gap: 10px;
+  min-height: 52px; padding: 8px 18px 8px 8px;
+  border: 0; border-radius: 999px; cursor: pointer;
+  background: var(--dm-gold); color: var(--dm-bg); font-weight: 700;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+#ana-root .ana-launcher:hover { filter: brightness(1.06); }
+#ana-root .ana-avatar {
+  width: 36px; height: 36px; border-radius: 50%; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--dm-bg); color: var(--dm-gold); font-weight: 800; font-size: 16px;
+  border: 2px solid var(--dm-gold);
+}
+#ana-root.ana-open .ana-launcher { display: none; }
+
+/* Painel */
+#ana-root .ana-panel {
+  display: none; flex-direction: column;
+  width: 380px; max-width: calc(100vw - 32px);
+  height: 600px; max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px);
+  background: var(--dm-bg); color: var(--dm-text);
+  border: 1px solid var(--dm-line); border-radius: 18px; overflow: hidden;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+}
+#ana-root.ana-open .ana-panel { display: flex; }
+
+#ana-root .ana-head {
+  display: flex; align-items: center; gap: 10px; padding: 12px 12px 12px 14px;
+  border-bottom: 1px solid var(--dm-line);
+  background: linear-gradient(180deg, rgba(18, 164, 166, 0.14), rgba(10, 26, 34, 0));
+}
+#ana-root .ana-title { flex: 1; min-width: 0; }
+#ana-root .ana-title strong { display: block; font-size: 16px; color: var(--dm-text); }
+#ana-root .ana-title span { display: block; font-size: 12.5px; color: var(--dm-muted); }
+#ana-root .ana-icon-btn {
+  width: 40px; height: 40px; flex: none; border-radius: 10px; cursor: pointer;
+  background: transparent; border: 1px solid var(--dm-line); color: var(--dm-text);
+  display: inline-flex; align-items: center; justify-content: center; font-size: 18px;
+}
+#ana-root .ana-icon-btn:hover { border-color: var(--dm-gold); color: var(--dm-gold); }
+#ana-root .ana-icon-btn[aria-pressed="true"] { color: var(--dm-gold); }
+
+#ana-root .ana-log {
+  flex: 1; overflow-y: auto; overflow-x: hidden; padding: 14px; display: flex; flex-direction: column; gap: 10px;
+  overscroll-behavior: contain;
+}
+#ana-root .ana-msg { max-width: 88%; padding: 10px 12px; border-radius: 14px; white-space: pre-line; overflow-wrap: anywhere; }
+#ana-root .ana-msg.ana-bot { align-self: flex-start; background: var(--dm-bubble); border-top-left-radius: 4px; }
+#ana-root .ana-msg.ana-user { align-self: flex-end; background: var(--dm-gold); color: var(--dm-bg); border-top-right-radius: 4px; font-weight: 600; }
+#ana-root .ana-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+#ana-root .ana-action {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 40px;
+  padding: 8px 12px; border-radius: 10px; border: 0; cursor: pointer; font-weight: 700; font-size: 14px;
+  background: var(--dm-teal); color: var(--dm-bg); text-align: center;
+}
+#ana-root .ana-action.ana-gold { background: var(--dm-gold); color: var(--dm-bg); }
+#ana-root .ana-action.ana-ghost { background: transparent; color: var(--dm-text); border: 1px solid var(--dm-teal); }
+#ana-root .ana-action:hover { filter: brightness(1.08); }
+
+#ana-root .ana-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 12px 0; border-top: 1px solid var(--dm-line); }
+#ana-root .ana-chip {
+  min-height: 34px; padding: 6px 11px; border-radius: 999px; cursor: pointer; font-size: 13.5px; font-weight: 600;
+  background: transparent; color: var(--dm-text); border: 1px solid var(--dm-teal);
+}
+#ana-root .ana-chip:hover { background: var(--dm-teal); color: var(--dm-bg); }
+
+#ana-root .ana-form-row { display: flex; gap: 8px; padding: 10px 12px 6px; }
+#ana-root .ana-input {
+  flex: 1; min-width: 0; min-height: 44px; padding: 10px 12px; border-radius: 12px;
+  background: #0F2630; border: 1px solid var(--dm-line); color: var(--dm-text);
+}
+#ana-root .ana-input::placeholder { color: var(--dm-muted); opacity: 1; }
+#ana-root .ana-send {
+  min-width: 72px; min-height: 44px; border-radius: 12px; border: 0; cursor: pointer;
+  background: var(--dm-gold); color: var(--dm-bg); font-weight: 800;
+}
+#ana-root .ana-foot { padding: 0 12px 10px; font-size: 12px; color: var(--dm-muted); }
+#ana-root .ana-foot a { color: var(--dm-gold); text-decoration: underline; }
+
+/* Formulário "Me ligue" dentro do chat */
+#ana-root .ana-callback { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+#ana-root .ana-callback label { font-size: 13.5px; color: var(--dm-text); display: flex; flex-direction: column; gap: 4px; }
+#ana-root .ana-callback .ana-check { flex-direction: row; align-items: flex-start; gap: 8px; }
+#ana-root .ana-callback .ana-check input { width: 20px; height: 20px; margin-top: 1px; flex: none; accent-color: var(--dm-gold); }
+#ana-root .ana-callback input[type="text"], #ana-root .ana-callback input[type="tel"], #ana-root .ana-callback select {
+  min-height: 42px; padding: 8px 10px; border-radius: 10px; width: 100%;
+  background: #0F2630; border: 1px solid var(--dm-line); color: var(--dm-text);
+}
+#ana-root .ana-callback select option { background: var(--dm-bg); color: var(--dm-text); }
+#ana-root .ana-error { color: #FFB4A8; font-size: 13px; min-height: 1em; }
+#ana-root .ana-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (max-width: 480px) {
+  #ana-root { right: 12px; bottom: 12px; }
+  #ana-root .ana-panel { width: calc(100vw - 24px); max-width: calc(100vw - 24px); height: calc(100vh - 24px); height: calc(100dvh - 24px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #ana-root .ana-panel { animation: ana-in 0.18s ease-out; }
+  @keyframes ana-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+}

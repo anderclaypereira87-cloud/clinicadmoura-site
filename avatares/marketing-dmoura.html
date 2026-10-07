@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipe de Marketing & Tráfego Pago | Clínica D'Moura</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            navy: '#0b1329',
+                            darkNavy: '#050914',
+                            cardNavy: '#101a36',
+                            gold: '#d4af37',
+                            goldLight: '#fef08a',
+                            purple: '#a855f7',
+                            cyan: '#0ea5e9',
+                            emerald: '#10b981'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @keyframes subtleBreathing {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-3px) scale(1.002); }
+        }
+        
+        @keyframes eyeBlinking {
+            0%, 94%, 98%, 100% { transform: scaleY(1); }
+            96% { transform: scaleY(0.08); }
+        }
+
+        @keyframes neonPulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(14, 165, 233, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.4); }
+        }
+
+        .avatar-breathing {
+            animation: subtleBreathing 4.5s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+
+        .eye-blink-anim {
+            animation: eyeBlinking 5.2s infinite;
+            transform-origin: center 30%;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFFFFF 0%, #FEF08A 45%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .neon-gradient-text {
+            background: linear-gradient(135deg, #38BDF8 0%, #A855F7 50%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-panel {
+            background: rgba(16, 26, 54, 0.88);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(5, 9, 20, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(168, 85, 247, 0.4);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 175, 55, 0.7);
+        }
+    </style>
+</head>
+<body class="bg-brand-darkNavy text-slate-100 font-sans min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-brand-purple selection:text-white">
+
+    <header class="w-full glass-panel sticky top-0 z-40 border-b border-purple-500/20 px-4 py-3 sm:px-8">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+            
+            <!-- Branding Header -->
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-600 via-pink-500 to-amber-400 flex items-center justify-center p-0.5 shadow-lg">
+                    <div class="w-full h-full bg-brand-darkNavy rounded-[14px] flex items-center justify-center">
+                        <i class="fa-solid fa-chart-line text-brand-gold text-lg"></i>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="font-display font-bold text-lg sm:text-xl tracking-wider gold-gradient-text uppercase">CLÍNICA D'MOURA</h1>
+                    <p class="text-[10px] sm:text-xs text-purple-200/90 font-medium tracking-tight">Esquadrão de Marketing & Tráfego Pago • Performance e Aquisição</p>
+                </div>
+            </div>
+
+            <!-- Team Status & Audio Toggle -->
+            <div class="flex items-center gap-3">
+                <div class="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-950/80 border border-slate-800 text-xs">
+                    <span id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span id="statusText" class="text-slate-300 font-semibold">Time de Marketing Pronto</span>
+                </div>
+                
+                <button id="muteAudioBtn" title="Ativar/Desativar Som da Equipe" class="p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-brand-gold border border-slate-700 transition shadow hover:border-purple-500/50">
+                    <i class="fa-solid fa-volume-high text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- LEFT COLUMN: Interactive Avatar Stage & Character Tabs (7 cols) -->
+        <section class="lg:col-span-7 flex flex-col items-center justify-between relative rounded-3xl glass-panel p-5 sm:p-7 shadow-2xl border border-purple-500/20 min-h-[580px] overflow-hidden">
+            
+            <!-- Background Ambient Glow -->
+            <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-25">
+                <div id="glowBg" class="absolute -top-10 left-1/3 w-80 h-80 bg-purple-600/30 rounded-full blur-3xl transition-all duration-500"></div>
+                <div class="absolute bottom-0 right-10 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl"></div>
+            </div>
+
+            <!-- TEAM CHARACTER SELECTOR TABS -->
+            <div class="w-full z-10 grid grid-cols-3 gap-2 bg-slate-950/80 p-1.5 rounded-2xl border border-slate-800">
+                <button id="tab-dennys" onclick="selectMember('dennys')" class="flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md">
+                    <i class="fa-solid fa-bullhorn text-xs"></i>
+                    <span>Dennys</span>
+                </button>
+                <button id="tab-fabio" onclick="selectMember('fabio')" class="flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all hover:bg-slate-900">
+                    <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
+                    <span>Fábio</span>
+                </button>
+                <button id="tab-jonas" onclick="selectMember('jonas')" class="flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all hover:bg-slate-900">
+                    <i class="fa-solid fa-chart-pie text-xs"></i>
+                    <span>Jonas</span>
+                </button>
+            </div>
+
+            <!-- Active Character Badge Info -->
+            <div class="w-full flex items-center justify-between mt-3 z-10 px-1">
+                <div class="flex items-center gap-2">
+                    <span id="activeBadgeRole" class="text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                        Estrategista de Tráfego
+                    </span>
+                    <span id="activeBadgeGlasses" class="text-[10px] bg-amber-500/20 text-brand-gold px-2 py-0.5 rounded-md font-medium">
+                        👓 Usa Óculos
+                    </span>
+                </div>
+                <span id="activeBadgeAge" class="text-xs text-slate-400 font-medium">
+                    Experiente & Criativo
+                </span>
+            </div>
+
+            <!-- AVATAR STAGE CONTAINER -->
+            <div id="avatarStage" class="avatar-breathing relative w-72 h-72 sm:w-80 sm:h-80 md:w-88 md:h-88 flex items-center justify-center my-2 transition-all duration-300">
+                
+                <!-- Audio Wave Glow Ring -->
+                <div id="speakingGlow" class="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/30 to-cyan-400/20 opacity-0 transition-opacity duration-300 scale-105 pointer-events-none"></div>
+
+                <!-- ==================== SVG AVATAR 1: DENNYS ==================== -->
+                <!-- Characteristics: Uses glasses, chubby face ("gordinho"), friendly, homosexual, stylish shirt -->
+                <svg id="svg-dennys" viewBox="0 0 400 400" class="w-full h-full filter drop-shadow-[0_16px_24px_rgba(0,0,0,0.6)]">
+                    <defs>
+                        <linearGradient id="dennysHairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#2d1b0f"/>
+                            <stop offset="100%" stop-color="#120a05"/>
+                        </linearGradient>
+                        <linearGradient id="dennysSkinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#ffebd9"/>
+                            <stop offset="70%" stop-color="#f5c7a9"/>
+                            <stop offset="100%" stop-color="#e2a582"/>
+                        </linearGradient>
+                        <linearGradient id="dennysShirtGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#7e22ce"/>
+                            <stop offset="100%" stop-color="#3b0764"/>
+                        </linearGradient>
+                        <linearGradient id="glassesGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#fef08a"/>
+                            <stop offset="100%" stop-color="#d4af37"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Hair back -->
+                    <path d="M 115 150 C 100 220 110 300 130 350 L 270 350 C 290 300 300 220 285 150 Z" fill="url(#dennysHairGrad)"/>
+
+                    <!-- Torso / Trendy Outfit (Purple Shirt with stylish collar) -->
+                    <g id="bodyOutfit-dennys">
+                        <path d="M 100 395 C 115 270 145 235 200 235 C 255 235 285 270 300 395 Z" fill="url(#dennysShirtGrad)"/>
+                        <!-- Inner V-Neck -->
+                        <path d="M 170 235 L 200 280 L 230 235 Z" fill="#18181b"/>
+                        <!-- Neck (Chubbier) -->
+                        <path d="M 160 190 L 240 190 L 240 240 L 160 240 Z" fill="url(#dennysSkinGrad)"/>
+                        <path d="M 160 220 C 200 235 200 235 240 220 L 240 240 L 160 240 Z" fill="#d97706" opacity="0.2"/>
+                        <!-- Stylish Necklace / Lanyard Badge -->
+                        <path d="M 175 240 L 200 310 L 225 240" fill="none" stroke="#d4af37" stroke-width="2"/>
+                        <rect x="188" y="308" width="24" height="32" rx="3" fill="#0f172a" stroke="#d4af37" stroke-width="1"/>
+                        <text x="192" y="322" font-size="6" font-weight="bold" fill="#ffffff">META</text>
+                    </g>
+
+                    <!-- Face & Head (Rounder / Chubby Jawline) -->
+                    <g id="headGroup-dennys">
+                        <circle cx="120" cy="175" r="14" fill="url(#dennysSkinGrad)"/>
+                        <circle cx="280" cy="175" r="14" fill="url(#dennysSkinGrad)"/>
+                        
+                        <!-- Chubby Round Face Structure -->
+                        <path d="M 124 135 C 120 65 280 65 276 135 C 276 200 252 238 200 238 C 148 238 124 200 124 135 Z" fill="url(#dennysSkinGrad)"/>
+                        <!-- Soft Cheeks / Smile lines -->
+                        <path d="M 132 175 Q 140 200 160 208" fill="none" stroke="#e2a582" stroke-width="2.5" opacity="0.5"/>
+                        <path d="M 268 175 Q 260 200 240 208" fill="none" stroke="#e2a582" stroke-width="2.5" opacity="0.5"/>
+
+                        <!-- Light Groomed Stubble -->
+                        <path d="M 140 180 C 145 220 170 236 200 236 C 230 236 255 220 260 180 C 255 228 230 234 200 234 C 170 234 145 228 140 180 Z" fill="#3a2312" opacity="0.25"/>
+
+                        <!-- Eyebrows -->
+                        <path d="M 148 122 Q 168 114 188 122" fill="none" stroke="#2d1b0f" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M 212 122 Q 232 114 252 122" fill="none" stroke="#2d1b0f" stroke-width="4" stroke-linecap="round"/>
+
+                        <!-- Expressive Eyes -->
+                        <g class="eye-blink-anim">
+                            <ellipse cx="168" cy="138" rx="13" ry="8" fill="#ffffff"/>
+                            <circle cx="169" cy="138" r="6" fill="#3a2312"/>
+                            <circle cx="167" cy="136" r="2" fill="#ffffff"/>
+                            <ellipse cx="232" cy="138" rx="13" ry="8" fill="#ffffff"/>
+                            <circle cx="231" cy="138" r="6" fill="#3a2312"/>
+                            <circle cx="229" cy="136" r="2" fill="#ffffff"/>
+                        </g>
+
+                        <!-- Dennys' Stylish Modern Glasses -->
+                        <g id="glasses-dennys">
+                            <rect x="144" y="120" width="48" height="34" rx="10" fill="rgba(255,255,255,0.05)" stroke="url(#glassesGoldGrad)" stroke-width="3"/>
+                            <rect x="208" y="120" width="48" height="34" rx="10" fill="rgba(255,255,255,0.05)" stroke="url(#glassesGoldGrad)" stroke-width="3"/>
+                            <path d="M 192 128 Q 200 125 208 128" fill="none" stroke="url(#glassesGoldGrad)" stroke-width="3"/>
+                            <line x1="144" y1="128" x2="122" y2="126" stroke="url(#glassesGoldGrad)" stroke-width="2.5"/>
+                            <line x1="256" y1="128" x2="278" y2="126" stroke="url(#glassesGoldGrad)" stroke-width="2.5"/>
+                            <line x1="150" y1="124" x2="162" y2="148" stroke="#ffffff" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>
+                            <line x1="214" y1="124" x2="226" y2="148" stroke="#ffffff" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>
+                        </g>
+
+                        <!-- Nose -->
+                        <path d="M 200 138 L 196 166 Q 200 170 204 166" fill="none" stroke="#d97706" stroke-width="2" opacity="0.5"/>
+
+                        <!-- Mouth (Lip sync target) -->
+                        <g id="mouthGroup-dennys">
+                            <path class="mouthPath" d="M 174 198 Q 200 212 226 198 Q 200 204 174 198 Z" fill="#b91c1c" stroke="#7f1d1d" stroke-width="1"/>
+                            <path class="teethPath" d="M 178 199 Q 200 202 222 199 Q 200 200 178 199 Z" fill="#ffffff" opacity="0.9"/>
+                        </g>
+
+                        <!-- Modern Quiff Hair -->
+                        <path d="M 124 135 C 118 70 150 35 200 32 C 250 35 282 70 276 135 C 270 90 250 48 200 45 C 150 48 130 90 124 135 Z" fill="url(#dennysHairGrad)"/>
+                        <path d="M 140 60 Q 200 25 260 55 C 230 40 170 42 140 60 Z" fill="#4a3222"/>
+                    </g>
+                </svg>
+
+                <!-- ==================== SVG AVATAR 2: FABIO ==================== -->
+                <!-- Characteristics: Black/Dark skin tone, NO glasses, stylish beard/haircut, homosexual, confident charismatic vibe -->
+                <svg id="svg-fabio" viewBox="0 0 400 400" class="w-full h-full hidden filter drop-shadow-[0_16px_24px_rgba(0,0,0,0.6)]">
+                    <defs>
+                        <linearGradient id="fabioSkinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#673ab7" stop-opacity="0"/>
+                            <stop offset="0%" stop-color="#6d4c41"/>
+                            <stop offset="50%" stop-color="#4e342e"/>
+                            <stop offset="100%" stop-color="#3e2723"/>
+                        </linearGradient>
+                        <linearGradient id="fabioHairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1c1917"/>
+                            <stop offset="100%" stop-color="#000000"/>
+                        </linearGradient>
+                        <linearGradient id="fabioSuitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#0284c7"/>
+                            <stop offset="100%" stop-color="#0f172a"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Torso / Tailored Jacket & Gold Chain -->
+                    <g id="bodyOutfit-fabio">
+                        <path d="M 100 395 C 115 265 145 230 200 230 C 255 230 285 265 300 395 Z" fill="url(#fabioSuitGrad)"/>
+                        <!-- Inner Black Shirt -->
+                        <path d="M 165 230 L 200 290 L 235 230 Z" fill="#09090b"/>
+                        <!-- Gold Cuban Link Chain -->
+                        <path d="M 172 235 Q 200 280 228 235" fill="none" stroke="#d4af37" stroke-width="3.5" stroke-dasharray="6 3"/>
+                        <!-- Neck -->
+                        <path d="M 168 185 L 232 185 L 232 235 L 168 235 Z" fill="url(#fabioSkinGrad)"/>
+                    </g>
+
+                    <!-- Head & Face (Handsome Sharp Jawline, Dark Skin) -->
+                    <g id="headGroup-fabio">
+                        <circle cx="126" cy="170" r="12" fill="url(#fabioSkinGrad)"/>
+                        <circle cx="274" cy="170" r="12" fill="url(#fabioSkinGrad)"/>
+
+                        <path d="M 130 130 C 130 65 270 65 270 130 C 270 190 245 230 200 230 C 155 230 130 190 130 130 Z" fill="url(#fabioSkinGrad)"/>
+
+                        <!-- Well-Defined Stylish Beard & Mustache -->
+                        <path d="M 132 165 C 134 218 158 232 200 232 C 242 232 266 218 268 165 C 268 190 245 228 200 228 C 155 228 132 190 132 165 Z" fill="#120c0a"/>
+                        <path d="M 172 190 Q 200 182 228 190 Q 200 200 172 190 Z" fill="#120c0a"/>
+
+                        <!-- Sharp Eyebrows -->
+                        <path d="M 148 120 Q 168 110 188 116" fill="none" stroke="#000000" stroke-width="4.5" stroke-linecap="round"/>
+                        <path d="M 212 116 Q 232 110 252 120" fill="none" stroke="#000000" stroke-width="4.5" stroke-linecap="round"/>
+
+                        <!-- NO GLASSES for Fabio - Deep Captivating Dark Eyes -->
+                        <g class="eye-blink-anim">
+                            <ellipse cx="168" cy="134" rx="13" ry="8.5" fill="#ffffff"/>
+                            <circle cx="169" cy="134" r="6.5" fill="#1c1917"/>
+                            <circle cx="167" cy="132" r="2" fill="#ffffff"/>
+                            
+                            <ellipse cx="232" cy="134" rx="13" ry="8.5" fill="#ffffff"/>
+                            <circle cx="231" cy="134" r="6.5" fill="#1c1917"/>
+                            <circle cx="229" cy="132" r="2" fill="#ffffff"/>
+                        </g>
+
+                        <!-- Nose Structure -->
+                        <path d="M 200 134 L 194 164 Q 200 168 206 164" fill="none" stroke="#271c19" stroke-width="2.5"/>
+
+                        <!-- Mouth (Lip sync target) -->
+                        <g id="mouthGroup-fabio">
+                            <path class="mouthPath" d="M 174 196 Q 200 210 226 196 Q 200 202 174 196 Z" fill="#9f1239" stroke="#4c0519" stroke-width="1"/>
+                            <path class="teethPath" d="M 178 197 Q 200 200 222 197 Q 200 198 178 197 Z" fill="#ffffff" opacity="0.95"/>
+                        </g>
+
+                        <!-- Fresh Fade Haircut / Dark Taper Fade -->
+                        <path d="M 130 120 C 124 70 152 35 200 32 C 248 35 276 70 270 120 C 265 80 245 42 200 40 C 155 42 135 80 130 120 Z" fill="url(#fabioHairGrad)"/>
+                        <path d="M 136 70 Q 200 28 264 70 Q 200 48 136 70 Z" fill="#1c1917"/>
+                    </g>
+                </svg>
+
+                <!-- ==================== SVG AVATAR 3: JONAS ==================== -->
+                <!-- Characteristics: Uses glasses, younger look ("mais novo"), trendy haircut, tech-savvy vibe -->
+                <svg id="svg-jonas" viewBox="0 0 400 400" class="w-full h-full hidden filter drop-shadow-[0_16px_24px_rgba(0,0,0,0.6)]">
+                    <defs>
+                        <linearGradient id="jonasSkinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#fff1f2"/>
+                            <stop offset="70%" stop-color="#fecdd3"/>
+                            <stop offset="100%" stop-color="#fda4af"/>
+                        </linearGradient>
+                        <linearGradient id="jonasHairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#451a03"/>
+                            <stop offset="100%" stop-color="#180e04"/>
+                        </linearGradient>
+                        <linearGradient id="jonasHoodieGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#0d9488"/>
+                            <stop offset="100%" stop-color="#115e59"/>
+                        </linearGradient>
+                        <linearGradient id="blackGlassesGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#334155"/>
+                            <stop offset="100%" stop-color="#0f172a"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Torso / Tech Hoodie Outfit -->
+                    <g id="bodyOutfit-jonas">
+                        <path d="M 100 395 C 115 265 145 235 200 235 C 255 235 285 265 300 395 Z" fill="url(#jonasHoodieGrad)"/>
+                        <!-- Hoodie Drawstrings -->
+                        <path d="M 182 245 L 182 310" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M 218 245 L 218 310" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+                        <!-- Neck -->
+                        <path d="M 172 190 L 228 190 L 228 240 L 172 240 Z" fill="url(#jonasSkinGrad)"/>
+                    </g>
+
+                    <!-- Youthful Head & Face -->
+                    <g id="headGroup-jonas">
+                        <circle cx="128" cy="170" r="11" fill="url(#jonasSkinGrad)"/>
+                        <circle cx="272" cy="170" r="11" fill="url(#jonasSkinGrad)"/>
+
+                        <!-- Youthful Slimmer Face Shape -->
+                        <path d="M 134 130 C 134 70 266 70 266 130 C 266 185 242 224 200 224 C 158 224 134 185 134 130 Z" fill="url(#jonasSkinGrad)"/>
+
+                        <!-- Young Clean Eyebrows -->
+                        <path d="M 150 120 Q 168 114 186 120" fill="none" stroke="#451a03" stroke-width="3.5" stroke-linecap="round"/>
+                        <path d="M 214 120 Q 232 114 250 120" fill="none" stroke="#451a03" stroke-width="3.5" stroke-linecap="round"/>
+
+                        <!-- Young Bright Eyes -->
+                        <g class="eye-blink-anim">
+                            <ellipse cx="168" cy="136" rx="12" ry="8" fill="#ffffff"/>
+                            <circle cx="169" cy="136" r="6" fill="#0284c7"/>
+                            <circle cx="167" cy="134" r="2" fill="#ffffff"/>
+                            
+                            <ellipse cx="232" cy="136" rx="12" ry="8" fill="#ffffff"/>
+                            <circle cx="231" cy="136" r="6" fill="#0284c7"/>
+                            <circle cx="229" cy="134" r="2" fill="#ffffff"/>
+                        </g>
+
+                        <!-- Jonas' Modern Matte Black Glasses -->
+                        <g id="glasses-jonas">
+                            <rect x="145" y="121" width="46" height="32" rx="6" fill="rgba(255,255,255,0.05)" stroke="url(#blackGlassesGrad)" stroke-width="3.5"/>
+                            <rect x="209" y="121" width="46" height="32" rx="6" fill="rgba(255,255,255,0.05)" stroke="url(#blackGlassesGrad)" stroke-width="3.5"/>
+                            <line x1="191" y1="128" x2="209" y2="128" stroke="url(#blackGlassesGrad)" stroke-width="3.5"/>
+                            <line x1="145" y1="128" x2="127" y2="126" stroke="url(#blackGlassesGrad)" stroke-width="2.5"/>
+                            <line x1="255" y1="128" x2="273" y2="126" stroke="url(#blackGlassesGrad)" stroke-width="2.5"/>
+                        </g>
+
+                        <!-- Small Youthful Nose -->
+                        <path d="M 200 136 L 197 162 Q 200 165 203 162" fill="none" stroke="#fda4af" stroke-width="2.5"/>
+
+                        <!-- Mouth (Lip sync target) -->
+                        <g id="mouthGroup-jonas">
+                            <path class="mouthPath" d="M 176 194 Q 200 208 224 194 Q 200 200 176 194 Z" fill="#e11d48" stroke="#881337" stroke-width="1"/>
+                            <path class="teethPath" d="M 180 195 Q 200 198 220 195 Q 200 196 180 195 Z" fill="#ffffff" opacity="0.95"/>
+                        </g>
+
+                        <!-- Trendy Youthful Hair (Messy Fringe / Textured Cut) -->
+                        <path d="M 130 120 C 122 65 150 35 200 32 C 250 35 278 65 270 120 C 265 80 248 48 200 45 C 152 48 135 80 130 120 Z" fill="url(#jonasHairGrad)"/>
+                        <path d="M 145 50 Q 185 85 210 50 Q 235 90 260 55 C 230 40 170 38 145 50 Z" fill="#682d09"/>
+                    </g>
+                </svg>
+
+            </div>
+
+            <!-- Subtitle & Real-Time Audio Equalizer -->
+            <div class="w-full mt-2 glass-panel rounded-2xl p-3.5 border border-purple-500/20 text-center relative overflow-hidden min-h-[80px] flex items-center justify-center shadow-lg">
+                <p id="teamSubtitles" class="text-xs sm:text-sm text-purple-100 font-medium italic transition-all duration-200">
+                    "Fala! Eu sou o Dennys, estrategista de tráfego da D'Moura. Bora escalar as campanhas e encher a agenda do DMAP e da Clínica D'Moura?"
+                </p>
+                <!-- Audio Wave Visualizer -->
+                <div id="equalizer" class="absolute bottom-1 flex items-center gap-1.5 opacity-0 transition-opacity duration-300">
+                    <span class="w-1 h-3 bg-brand-purple rounded-full animate-bounce"></span>
+                    <span class="w-1 h-5 bg-brand-cyan rounded-full animate-bounce delay-75"></span>
+                    <span class="w-1 h-2 bg-brand-gold rounded-full animate-bounce delay-150"></span>
+                    <span class="w-1 h-4 bg-brand-purple rounded-full animate-bounce delay-100"></span>
+                </div>
+            </div>
+
+            <!-- Quick Action Preset Buttons -->
+            <div class="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
+                <button onclick="triggerPreset('meta_ads')" class="px-2.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 hover:border-purple-500/50 text-[11px] font-semibold text-slate-200 transition flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-brands fa-meta text-cyan-400"></i> Meta Ads
+                </button>
+                <button onclick="triggerPreset('google_ads')" class="px-2.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 hover:border-purple-500/50 text-[11px] font-semibold text-slate-200 transition flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-brands fa-google text-amber-400"></i> Google Ads
+                </button>
+                <button onclick="triggerPreset('copy_criativa')" class="px-2.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 hover:border-purple-500/50 text-[11px] font-semibold text-slate-200 transition flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-solid fa-pen-nib text-pink-400"></i> Copy & Criativos
+                </button>
+                <button onclick="triggerPreset('roi_metricas')" class="px-2.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 hover:border-purple-500/50 text-[11px] font-semibold text-slate-200 transition flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-solid fa-chart-line text-emerald-400"></i> ROI & Métricas
+                </button>
+            </div>
+        </section>
+
+        <!-- RIGHT COLUMN: Interactive Chat Hub & Live Campaign KPIs (5 cols) -->
+        <section class="lg:col-span-5 flex flex-col h-full min-h-[580px] glass-panel rounded-3xl p-5 border border-purple-500/20 shadow-2xl justify-between">
+            
+            <div class="border-b border-slate-800 pb-3 mb-3">
+                <div class="flex items-center justify-between mb-2">
+                    <h2 id="chatMemberTitle" class="font-display font-bold text-base text-slate-100 flex items-center gap-2">
+                        <i class="fa-solid fa-comments text-brand-purple"></i> Conversar com Dennys
+                    </h2>
+                    <button onclick="clearChat()" class="text-xs text-slate-400 hover:text-slate-200 transition p-1.5 rounded-lg hover:bg-slate-800" title="Limpar bate-papo">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+
+                <!-- Live Clinic Campaign Metrics Bar -->
+                <div class="grid grid-cols-3 gap-2 bg-slate-950/70 p-2 rounded-2xl border border-slate-800/80 text-center">
+                    <div>
+                        <p class="text-[9px] uppercase tracking-wider text-slate-400">CPL Médio</p>
+                        <p class="text-xs sm:text-sm font-bold text-emerald-400">R$ 14,20</p>
+                    </div>
+                    <div>
+                        <p class="text-[9px] uppercase tracking-wider text-slate-400">ROAS Cirúrgico</p>
+                        <p class="text-xs sm:text-sm font-bold text-brand-gold">11.8x</p>
+                    </div>
+                    <div>
+                        <p class="text-[9px] uppercase tracking-wider text-slate-400">Agendamentos</p>
+                        <p class="text-xs sm:text-sm font-bold text-cyan-400">+142/mês</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="chatHistory" class="flex-1 overflow-y-auto space-y-3 pr-1 mb-3 max-h-[380px] text-xs sm:text-sm">
+                <!-- Initial Welcome Message from Dennys -->
+                <div class="flex items-start gap-2.5">
+                    <div id="chatAvatarIcon" class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 flex items-center justify-center text-white font-extrabold text-xs shrink-0 shadow">
+                        D
+                    </div>
+                    <div id="chatInitialBubble" class="bg-slate-800/90 border border-slate-700/80 p-3 rounded-2xl rounded-tl-none text-slate-200 leading-relaxed shadow">
+                        Fala aí! Aqui é o <strong>Dennys</strong>. Sou responsável pela estratégia de tráfego pago da Clínica D'Moura junto com o <strong>Fábio</strong> no decolar de criativos e o <strong>Jonas</strong> no tracking de alta precisão. Em que podemos otimizar o marketing hoje?
+                    </div>
+                </div>
+            </div>
+
+            <form id="chatForm" onsubmit="handleUserSubmit(event)" class="space-y-2">
+                <div class="relative flex items-center">
+                    <input type="text" id="userInput" placeholder="Pergunte sobre Meta Ads, copy, ROI de Blefaroplastia..." 
+                        class="w-full bg-slate-950/90 border border-slate-700 focus:border-purple-500 rounded-2xl py-3 pl-3.5 pr-24 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none transition shadow-inner">
+                    
+                    <div class="absolute right-2 flex items-center gap-1.5">
+                        <!-- Microphone Voice Input Button -->
+                        <button type="button" id="micBtn" onclick="toggleVoiceRecognition()" title="Falar pelo microfone"
+                            class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-purple-400 transition border border-slate-700">
+                            <i class="fa-solid fa-microphone text-xs"></i>
+                        </button>
+                        
+                        <!-- Submit Button -->
+                        <button type="submit" id="sendBtn" title="Enviar mensagem"
+                            class="p-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold hover:brightness-110 transition shadow">
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Footer Info -->
+                <div class="flex items-center justify-between text-[10px] text-slate-400 px-1">
+                    <span class="flex items-center gap-1">
+                        <i class="fa-solid fa-robot text-purple-400"></i> Powered by Gemini 3 AI
+                    </span>
+                    <span class="text-purple-300 font-medium">Recife • Caruaru • Garanhuns</span>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full glass-panel border-t border-purple-500/20 py-3 px-6 text-center text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1.5">
+            <p>© 2026 Clínica D'Moura — Esquadrão de Marketing & Tráfego Pago</p>
+            <p class="text-purple-300/80">Dennys • Fábio • Jonas | Estratégia, Copywriting & Analytics</p>
+        </div>
+    </footer>
+
+    <script>
+        /* ===================================================================
+           STATE MANAGEMENT & TEAM MEMBER PROFILES
+           =================================================================== */
+        let currentMember = 'dennys';
+        let isSpeaking = false;
+        let speechSynth = window.speechSynthesis;
+        let isMuted = false;
+        let recognition = null;
+        let isListening = false;
+        let speechInterval = null;
+
+        // TEAM PROFILES DATA
+        const TEAM = {
+            dennys: {
+                name: 'Dennys',
+                role: 'Estrategista de Tráfego & Funil',
+                glasses: true,
+                ageInfo: 'Experiente & Estratégico',
+                chubby: true,
+                voiceName: 'Puck', // Gemini TTS upbeat male voice
+                webSpeechPitch: 1.05,
+                webSpeechRate: 1.0,
+                colorGradient: 'from-purple-600 to-indigo-600',
+                badgeRole: 'Estrategista de Tráfego',
+                greeting: "Fala! Eu sou o Dennys, estrategista de tráfego da D'Moura. Bora escalar as campanhas e encher a agenda do DMAP e da Clínica D'Moura?",
+                systemInstruction: `
+Você é o Dennys, especialista sênior em Tráfego Pago e Gestão de Mídia para a Clínica D'Moura (Recife, Caruaru e Garanhuns).
+Você faz parte da equipe de marketing junto com seus parceiros Fábio e Jonas.
+Características pessoais e de fala:
+- Você é homossexual, super estiloso, simpático, comunicativo, alto astral e carismático. Usa óculos marcantes e tem um visual muito moderno.
+- Fala de forma descontraída, inteligente e focada em resultados (CPL, ROAS, Meta Ads, TikTok Ads, escala de consultas de Blefaroplastia e Vias Lacrimais).
+- Demonstra enorme orgulho e parceria com Fábio (o gênio da copy e imagem) e Jonas (o mais novinho da turma, mestre do Google Ads e Tag Manager).
+- Responda sempre em primeira pessoa como Dennys em 2 parágrafos curtos, diretos e cheios de energia.
+`
+            },
+            fabio: {
+                name: 'Fábio',
+                role: 'Diretor de Criação & Copywriting',
+                glasses: false,
+                ageInfo: 'Sofisticado & Persuasivo',
+                chubby: false,
+                voiceName: 'Kore', // Gemini TTS firm/confident voice
+                webSpeechPitch: 0.9,
+                webSpeechRate: 1.02,
+                colorGradient: 'from-sky-500 to-blue-700',
+                badgeRole: 'Diretor de Criação & Copy',
+                greeting: "Olá querido! Sou o Fábio. Minha missão é transformar a autoridade do Dr. Henrique em criativos magnéticos!",
+                systemInstruction: `
+Você é o Fábio, Diretor de Criativos, Branding e Copywriting da Clínica D'Moura.
+Você faz parte da equipe de marketing com Dennys e Jonas.
+Características pessoais e de fala:
+- Você é homossexual, negro (pele escura impecável), não usa óculos, é muito charmoso, elegante, engraçado e exigente com a estética dos anúncios.
+- Fala com um tom envolvente, persuasivo e sofisticado, usando expressões como "meu bem", "querido", "maravilhoso", focando na psicologia do paciente de blefaroplastia (desejo de rejuvenescimento do olhar sem cicatrizes aparentes).
+- Elogia sempre o tráfego do Dennys e a precisão técnica do Jonas.
+- Responda sempre em primeira pessoa como Fábio em 2 parágrafos envolventes e cativantes.
+`
+            },
+            jonas: {
+                name: 'Jonas',
+                role: 'Google Ads & Tracking Specialist',
+                glasses: true,
+                ageInfo: 'Mais Novo & Tech Master',
+                chubby: false,
+                voiceName: 'Zephyr', // Gemini TTS bright youthful voice
+                webSpeechPitch: 1.15,
+                webSpeechRate: 1.05,
+                colorGradient: 'from-teal-500 to-emerald-600',
+                badgeRole: 'Google Ads & Tracking',
+                greeting: "E aí, beleza? Sou o Jonas, o mais novo da equipe! Cuido do Google Ads, Tag Manager e garanto que cada lead seja rastreado até a consulta.",
+                systemInstruction: `
+Você é o Jonas, Especialista em Google Ads, Web Analytics, Pixel e Tracking da Clínica D'Moura.
+Você é o membro mais jovem (mais novo) da equipe de marketing composta por Dennys, Fábio e você.
+Características pessoais e de fala:
+- Você é jovem, super conectado, usa óculos modernos de armação preta, ama dados, tabelas, conversão, fundo de funil e intenção de busca ("Cirurgião de pálpebras em Recife").
+- Fala com entusiasmo jovem, rápido, dinâmico, citando palavras como "dashboards", "conversão real", "GA4", "CTR" e "Intenção de Busca".
+- Tem grande admiração pelo Dennys (que puxa a estratégia geral) e pelo Fábio (que faz as capas e vídeos ficarem surreais).
+- Responda sempre em primeira pessoa como Jonas em 2 parágrafos curtos, ágeis e recheados de sacadas de tráfego de busca.
+`
+            }
+        };
+
+        function selectMember(memberKey) {
+            currentMember = memberKey;
+            const profile = TEAM[memberKey];
+
+            // Update Tabs styling
+            ['dennys', 'fabio', 'jonas'].forEach(key => {
+                const tab = document.getElementById(`tab-${key}`);
+                const svg = document.getElementById(`svg-${key}`);
+                if (key === memberKey) {
+                    tab.className = `flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-gradient-to-r ${TEAM[key].colorGradient} text-white shadow-md scale-102`;
+                    svg.classList.remove('hidden');
+                } else {
+                    tab.className = `flex items-center justify-center gap-2 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all hover:bg-slate-900`;
+                    svg.classList.add('hidden');
+                }
+            });
+
+            // Update Badges & Titles
+            document.getElementById('activeBadgeRole').innerText = profile.badgeRole;
+            document.getElementById('activeBadgeGlasses').innerText = profile.glasses ? '👓 Usa Óculos' : '✨ Sem Óculos';
+            document.getElementById('activeBadgeAge').innerText = profile.ageInfo;
+            document.getElementById('chatMemberTitle').innerHTML = `<i class="fa-solid fa-comments text-brand-purple"></i> Conversar com ${profile.name}`;
+            
+            // Update Chat Initial State
+            document.getElementById('chatAvatarIcon').innerText = profile.name[0];
+            document.getElementById('chatAvatarIcon').className = `w-8 h-8 rounded-full bg-gradient-to-r ${profile.colorGradient} flex items-center justify-center text-white font-extrabold text-xs shrink-0 shadow`;
+            document.getElementById('chatInitialBubble').innerHTML = profile.greeting;
+
+            // Speak greeting
+            speakText(profile.greeting);
+        }
+
+        /* ===================================================================
+           PCM16 TO WAV AUDIO DECODER (for Gemini 2.5 Flash TTS)
+           =================================================================== */
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        function pcmToWav(pcm16Array, sampleRate = 24000) {
+            const buffer = new ArrayBuffer(44 + pcm16Array.length * 2);
+            const view = new DataView(buffer);
+
+            const writeString = (v, offset, str) => {
+                for (let i = 0; i < str.length; i++) {
+                    v.setUint8(offset + i, str.charCodeAt(i));
+                }
+            };
+
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + pcm16Array.length * 2, true);
+            writeString(view, 8, 'WAVE');
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true); // PCM
+            view.setUint16(22, 1, true); // Mono
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * 2, true);
+            view.setUint16(32, 2, true);
+            view.setUint16(34, 16, true);
+            writeString(view, 36, 'data');
+            view.setUint32(40, pcm16Array.length * 2, true);
+
+            let offset = 44;
+            for (let i = 0; i < pcm16Array.length; i++, offset += 2) {
+                view.setInt16(offset, pcm16Array[i], true);
+            }
+
+            return new Blob([view], { type: 'audio/wav' });
+        }
+
+        /* ===================================================================
+           AVATAR ANIMATION & LIP-SYNC ENGINE
+           =================================================================== */
+        const MOUTH_SHAPES = {
+            closed: "M 176 198 Q 200 200 224 198 Q 200 200 176 198 Z",
+            smile: "M 174 196 Q 200 210 226 196 Q 200 202 174 196 Z",
+            talkSmall: "M 174 195 Q 200 212 226 195 Q 200 206 174 195 Z",
+            talkWide: "M 172 194 Q 200 218 228 194 Q 200 206 172 194 Z",
+            talkO: "M 182 192 Q 200 216 218 192 Q 200 206 182 192 Z"
+        };
+
+        function setMouthShape(shapeKey) {
+            const currentSvg = document.getElementById(`svg-${currentMember}`);
+            if (!currentSvg) return;
+
+            const mouthPath = currentSvg.querySelector('.mouthPath');
+            if (mouthPath && MOUTH_SHAPES[shapeKey]) {
+                mouthPath.setAttribute('d', MOUTH_SHAPES[shapeKey]);
+            }
+        }
+
+        function startLipSync() {
+            if (speechInterval) clearInterval(speechInterval);
+            isSpeaking = true;
+            document.getElementById('speakingGlow').style.opacity = '1';
+            document.getElementById('equalizer').style.opacity = '1';
+            document.getElementById('statusText').innerText = `${TEAM[currentMember].name} está falando...`;
+
+            const shapes = ['talkSmall', 'talkWide', 'talkO', 'smile'];
+
+            speechInterval = setInterval(() => {
+                if (!isSpeaking) {
+                    stopLipSync();
+                    return;
+                }
+                const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+                setMouthShape(randomShape);
+            }, 110);
+        }
+
+        function stopLipSync() {
+            isSpeaking = false;
+            if (speechInterval) clearInterval(speechInterval);
+            document.getElementById('speakingGlow').style.opacity = '0';
+            document.getElementById('equalizer').style.opacity = '0';
+            setMouthShape('smile');
+            document.getElementById('statusText').innerText = "Time de Marketing Pronto";
+        }
+
+        /* ===================================================================
+           TEXT TO SPEECH GENERATION (Gemini 2.5 Flash TTS + Web Speech)
+           =================================================================== */
+        async function speakText(text) {
+            if (isMuted) {
+                updateSubtitles(text);
+                return;
+            }
+
+            updateSubtitles(text);
+            startLipSync();
+
+            const profile = TEAM[currentMember];
+
+            // Try Gemini 2.5 Flash TTS API with persona voice
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{
+                        parts: [{ text: `Fale em português do Brasil com naturalidade e tom jovem/profissional: ${text}` }]
+                    }],
+                    generationConfig: {
+                        responseModalities: ["AUDIO"],
+                        speechConfig: {
+                            voiceConfig: {
+                                prebuiltVoiceConfig: { voiceName: profile.voiceName }
+                            }
+                        }
+                    }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    const part = result?.candidates?.[0]?.content?.parts?.[0];
+                    const audioData = part?.inlineData?.data;
+                    const mimeType = part?.inlineData?.mimeType;
+
+                    if (audioData) {
+                        const sampleRateMatch = mimeType ? mimeType.match(/rate=(\d+)/) : null;
+                        const sampleRate = sampleRateMatch ? parseInt(sampleRateMatch[1], 10) : 24000;
+                        const pcmBuffer = base64ToArrayBuffer(audioData);
+                        const pcm16 = new Int16Array(pcmBuffer);
+                        const wavBlob = pcmToWav(pcm16, sampleRate);
+                        const audioUrl = URL.createObjectURL(wavBlob);
+
+                        const audio = new Audio(audioUrl);
+                        audio.onended = () => stopLipSync();
+                        audio.onerror = () => fallbackWebSpeech(text, profile);
+                        await audio.play();
+                        return;
+                    }
+                }
+            } catch (err) {
+                console.warn("Gemini TTS API indisponível, ativando síntese local...", err);
+            }
+
+            fallbackWebSpeech(text, profile);
+        }
+
+        function fallbackWebSpeech(text, profile) {
+            if (!('speechSynthesis' in window)) {
+                setTimeout(() => stopLipSync(), text.length * 55);
+                return;
+            }
+
+            speechSynth.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'pt-BR';
+            utterance.pitch = profile.webSpeechPitch;
+            utterance.rate = profile.webSpeechRate;
+
+            const voices = speechSynth.getVoices();
+            const ptVoice = voices.find(v => v.lang.includes('pt') && (v.name.includes('Daniel') || v.name.includes('Google') || v.name.includes('Luciana')));
+            if (ptVoice) utterance.voice = ptVoice;
+
+            utterance.onstart = () => startLipSync();
+            utterance.onend = () => stopLipSync();
+            utterance.onerror = () => stopLipSync();
+
+            speechSynth.speak(utterance);
+        }
+
+        function updateSubtitles(text) {
+            const subElem = document.getElementById('teamSubtitles');
+            subElem.innerText = `"${text}"`;
+        }
+
+        /* ===================================================================
+           GEMINI 3 FLASH GENERATION FOR MARKETING TEAM CHAT
+           =================================================================== */
+        async function fetchGeminiResponse(userQuery) {
+            const profile = TEAM[currentMember];
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: profile.systemInstruction }]
+                }
+            };
+
+            let retries = 0;
+            const maxRetries = 3;
+            let delay = 1000;
+
+            while (retries < maxRetries) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        const answerText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                        if (answerText) return answerText.trim();
+                    }
+                } catch (err) {
+                    // Retry backoff
+                }
+                retries++;
+                await new Promise(r => setTimeout(r, delay));
+                delay *= 2;
+            }
+
+            return `Aqui é o ${profile.name}! Estamos ajustando a estratégia de tráfego e criativos para explodir os agendamentos da Clínica D'Moura. Como posso te apoiar nessa campanha?`;
+        }
+
+        /* ===================================================================
+           PRESETS & USER CHAT LOGIC
+           =================================================================== */
+        const PRESETS = {
+            meta_ads: {
+                dennys: "No Meta Ads, testamos CBO com públicos segmentados de Recife e Caruaru focando em mulheres de 35 a 65 anos para Blefaroplastia. Nosso CPL está incrível em R$ 14,20!",
+                fabio: "Para o Meta Ads, eu criei vídeos antes e depois que mostram a leveza do olhar sem parecer cirúrgico! A copy foca na autoestima renovada em poucas semanas.",
+                jonas: "No Meta Ads, eu configurei a API de Conversões (CAPI) via servidor para garantir 100% dos eventos de Lead rastreados sem perda por bloqueadores!"
+            },
+            google_ads: {
+                dennys: "O Google Ads pega a intenção pura! Palavras como 'Oftalmologista especialista em Blefaroplastia Recife' convertem com taxa acima de 18% na landing page.",
+                fabio: "No Google Ads, os títulos e extensões destacam a infraestrutura premium da Clínica D'Moura, o CRM/RQE do Dr. Henrique e o agendamento rápido via WhatsApp.",
+                jonas: "Google Ads é minha especialidade! Ajustamos lances por dispositivo e raio de localização em volta de Recife e Caruaru, reduzindo o custo por clique em 25%."
+            },
+            copy_criativa: {
+                dennys: "Copy boa atrai o paciente certo! O Fábio mata a pau nas manchetes que quebram o medo da anestesia e mostram a recuperação rápida.",
+                fabio: "Meu bem, criativo de saúde precisa ter elegância e empatia! A gente aborda a sensação de 'pálpebra pesada' e transforma em desejo de rejuvenescimento natural.",
+                jonas: "A copy se reflete nas métricas! Quando o Fábio ajustou a promessa nos anúncios, nosso CTR subiu de 2.1% para impressionantes 5.8%!"
+            },
+            roi_metricas: {
+                dennys: "Nosso ROAS cirúrgico atingiu 11.8x este mês. Cada R$ 1.000 investidos em anúncios geram mais de R$ 11.000 em cirurgias agendadas!",
+                fabio: "Métricas bonitas só importam se lotarem a sala de cirurgia do Dr. Henrique. E os criativos atuais estão entregando a maior taxa de conversão do ano!",
+                jonas: "Nosso dashboard no Looker Studio cruza dados do CRM da clínica com as plataformas de tráfego. Transparência total em tempo real!"
+            }
+        };
+
+        async function triggerPreset(type) {
+            const text = PRESETS[type][currentMember];
+            if (text) {
+                appendChatMessage(TEAM[currentMember].name, text);
+                await speakText(text);
+            }
+        }
+
+        async function handleUserSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('userInput');
+            const query = input.value.trim();
+            if (!query) return;
+
+            input.value = '';
+            appendChatMessage('Você', query);
+
+            updateSubtitles(`${TEAM[currentMember].name} está formulando a resposta...`);
+
+            const reply = await fetchGeminiResponse(query);
+            appendChatMessage(TEAM[currentMember].name, reply);
+            await speakText(reply);
+        }
+
+        function appendChatMessage(sender, text) {
+            const chatHistory = document.getElementById('chatHistory');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = "flex items-start gap-2.5 my-2.5";
+
+            const profile = TEAM[currentMember];
+
+            if (sender !== 'Você') {
+                msgDiv.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-r ${profile.colorGradient} flex items-center justify-center text-white font-extrabold text-xs shrink-0 shadow">${profile.name[0]}</div>
+                    <div class="bg-slate-800/90 border border-slate-700/80 p-3 rounded-2xl rounded-tl-none text-slate-200 leading-relaxed shadow">
+                        ${text}
+                    </div>
+                `;
+            } else {
+                msgDiv.innerHTML = `
+                    <div class="ml-auto flex items-start gap-2.5 flex-row-reverse">
+                        <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white font-extrabold text-xs shrink-0 shadow">U</div>
+                        <div class="bg-purple-950/40 border border-purple-500/30 p-3 rounded-2xl rounded-tr-none text-slate-100 leading-relaxed shadow">
+                            ${text}
+                        </div>
+                    </div>
+                `;
+            }
+
+            chatHistory.appendChild(msgDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        function clearChat() {
+            const profile = TEAM[currentMember];
+            const chatHistory = document.getElementById('chatHistory');
+            chatHistory.innerHTML = `
+                <div class="flex items-start gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-r ${profile.colorGradient} flex items-center justify-center text-white font-extrabold text-xs shrink-0 shadow">${profile.name[0]}</div>
+                    <div class="bg-slate-800/90 border border-slate-700/80 p-3 rounded-2xl rounded-tl-none text-slate-200 leading-relaxed shadow">
+                        Conversa reiniciada com <strong>${profile.name}</strong>. Como posso ajudar nas campanhas de tráfego e marketing da D'Moura?
+                    </div>
+                </div>
+            `;
+            updateSubtitles(`Conversa reiniciada com ${profile.name}. Como posso ajudar?`);
+        }
+
+        /* ===================================================================
+           VOICE RECOGNITION (MICROPHONE)
+           =================================================================== */
+        function initVoiceRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRec();
+                recognition.lang = 'pt-BR';
+                recognition.continuous = false;
+                recognition.interimResults = false;
+
+                recognition.onstart = () => {
+                    isListening = true;
+                    document.getElementById('micBtn').classList.add('text-purple-400', 'animate-pulse', 'border-purple-500');
+                    updateSubtitles("Ouvindo sua pergunta sobre tráfego/marketing...");
+                };
+
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    document.getElementById('userInput').value = transcript;
+                    handleUserSubmit(new Event('submit'));
+                };
+
+                recognition.onerror = () => stopListening();
+                recognition.onend = () => stopListening();
+            }
+        }
+
+        function toggleVoiceRecognition() {
+            if (!recognition) initVoiceRecognition();
+            if (!recognition) return;
+
+            if (isListening) {
+                recognition.stop();
+            } else {
+                recognition.start();
+            }
+        }
+
+        function stopListening() {
+            isListening = false;
+            const micBtn = document.getElementById('micBtn');
+            if (micBtn) micBtn.classList.remove('text-purple-400', 'animate-pulse', 'border-purple-500');
+        }
+
+        /* Mute Button Control Event */
+        document.getElementById('muteAudioBtn').addEventListener('click', () => {
+            isMuted = !isMuted;
+            const btn = document.getElementById('muteAudioBtn');
+            if (isMuted) {
+                btn.innerHTML = `<i class="fa-solid fa-volume-xmark text-sm text-slate-400"></i>`;
+                if (speechSynth) speechSynth.cancel();
+                stopLipSync();
+            } else {
+                btn.innerHTML = `<i class="fa-solid fa-volume-high text-sm text-brand-gold"></i>`;
+            }
+        });
+
+        /* Window Onload Setup */
+        window.onload = function() {
+            selectMember('dennys');
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+            }
+        };
+    </script>
+</body>
+</html>

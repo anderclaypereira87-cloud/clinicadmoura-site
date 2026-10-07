@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anderclay Pereira | Instituto DMAP & Ecossistema Empresarial</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              300: '#F3E5AB',
+              400: '#E5C158',
+              500: '#D4AF37',
+              600: '#B89220',
+              700: '#8C6A10',
+            },
+            navy: {
+              900: '#060B14',
+              800: '#0C1527',
+              700: '#14223D',
+              600: '#1F3257',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Cinzel', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Custom Glassmorphism and Custom Scrollbar Styles -->
+  <style>
+    body {
+      background-color: #060b14;
+      color: #f3f4f6;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #FFF0B3 0%, #D4AF37 50%, #AA7C11 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gold-border-gradient {
+      border-image: linear-gradient(135deg, #D4AF37, #4A3B10) 1;
+    }
+
+    .glass-card {
+      background: rgba(12, 21, 39, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(212, 175, 55, 0.18);
+    }
+
+    .glass-card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .glass-card-hover:hover {
+      border-color: rgba(212, 175, 55, 0.5);
+      box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.25);
+      transform: translateY(-3px);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #060b14;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f3257;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #d4af37;
+    }
+
+    /* Pulse Audio Wave Effect */
+    @keyframes barPulse {
+      0%, 100% { height: 6px; }
+      50% { height: 28px; }
+    }
+    .wave-bar {
+      width: 4px;
+      background: #d4af37;
+      border-radius: 2px;
+      display: inline-block;
+      margin: 0 2px;
+    }
+    .wave-active .wave-bar:nth-child(1) { animation: barPulse 0.6s infinite ease-in-out; }
+    .wave-active .wave-bar:nth-child(2) { animation: barPulse 0.8s infinite ease-in-out 0.1s; }
+    .wave-active .wave-bar:nth-child(3) { animation: barPulse 0.5s infinite ease-in-out 0.2s; }
+    .wave-active .wave-bar:nth-child(4) { animation: barPulse 0.9s infinite ease-in-out 0.15s; }
+    .wave-active .wave-bar:nth-child(5) { animation: barPulse 0.7s infinite ease-in-out 0.05s; }
+  </style>
+  <link rel="stylesheet" href="../assets/avatares/avatar-falante.css">
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+  <!-- Top Navigation Header -->
+  <header class="sticky top-0 z-50 glass-card border-b border-gold-500/20 px-4 lg:px-8 py-3.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <!-- Logo & Name -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full border border-gold-500/50 bg-navy-800 flex items-center justify-center text-gold-400 font-serif font-bold text-lg shadow-lg">
+          AP
+        </div>
+        <div>
+          <h1 class="font-serif text-lg font-bold tracking-wide text-white flex items-center gap-2">
+            ANDERCLAY PEREIRA
+            <span class="text-[10px] uppercase font-sans tracking-widest bg-gold-500/20 text-gold-400 px-2 py-0.5 rounded border border-gold-500/30">Executivo</span>
+          </h1>
+          <p class="text-xs text-gray-400">Gestão • Estratégia • Desenvolvimento Multidisciplinar</p>
+        </div>
+      </div>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <button onclick="scrollToSection('hero-avatar')" class="text-gray-300 hover:text-gold-400 transition">Avatar Interativo</button>
+        <button onclick="scrollToSection('dmap-section')" class="text-gray-300 hover:text-gold-400 transition">Instituto DMAP</button>
+        <button onclick="scrollToSection('ecosystem-section')" class="text-gray-300 hover:text-gold-400 transition">Ecossistema de Negócios</button>
+        <button onclick="scrollToSection('trajectory-section')" class="text-gray-300 hover:text-gold-400 transition">História R$ 26 ➔ R$ 1M</button>
+      </nav>
+
+      <!-- Contact / Status Action -->
+      <div class="flex items-center gap-3">
+        <a href="https://wa.me/5581999614322" target="_blank" class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-navy-900 font-bold px-4 py-2 rounded-lg text-xs uppercase tracking-wider transition shadow-md">
+          <i class="fa-brands font-bold fa-whatsapp text-sm"></i>
+          Contato Direto
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    
+    <!-- Hero / Avatar Live Presenter Section -->
+    <section id="hero-avatar" class="relative py-8 lg:py-12 px-4 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- Left Side: Interactive Human Business Avatar Display -->
+        <div class="lg:col-span-5 flex flex-col items-center">
+          <div class="relative w-full max-w-md aspect-[3/4] rounded-2xl glass-card p-4 overflow-hidden shadow-2xl border-2 border-gold-500/30 flex flex-col items-center justify-between">
+            
+            <!-- Badge & Controls -->
+            <div class="w-full flex justify-between items-center z-10">
+              <span id="avatar-status-tag" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                Avatar Ativo & Pronto
+              </span>
+              <button onclick="toggleGlasses()" title="Alternar Óculos" class="text-xs bg-navy-800 hover:bg-navy-700 text-gold-400 px-2.5 py-1 rounded border border-gold-500/20 transition">
+                <i class="fa-solid fa-glasses"></i> <span id="glasses-text">Com Óculos</span>
+              </button>
+            </div>
+
+            <!-- Canvas Rendered Human Avatar of Anderclay Pereira -->
+            <div class="relative w-full h-full flex items-center justify-center my-2">
+              <canvas id="avatarCanvas" width="380" height="420" class="w-full h-full object-contain cursor-pointer" onclick="triggerGreeting()"></canvas>
+              
+              <!-- Masonic Lapel Pin Badge Visual Overlay -->
+              <div class="absolute bottom-16 right-10 bg-gold-500/20 border border-gold-400/40 p-1.5 rounded-full text-gold-300 text-xs shadow" title="Insígnia de Gestão e Tradição">
+                <i class="fa-solid fa-compass-drafting"></i>
+              </div>
+            </div>
+
+            <!-- Audio Wave Visualizer & Subtitles Box -->
+            <div class="w-full z-10 bg-navy-900/90 rounded-xl p-3 border border-gold-500/20 backdrop-blur-md">
+              <div class="flex items-center justify-between mb-1.5">
+                <div class="flex items-center gap-2">
+                  <div id="waveContainer" class="wave-container flex items-center h-5">
+                    <span class="wave-bar"></span>
+                    <span class="wave-bar"></span>
+                    <span class="wave-bar"></span>
+                    <span class="wave-bar"></span>
+                    <span class="wave-bar"></span>
+                  </div>
+                  <span id="speechState" class="text-xs font-medium text-gold-400">Clique em qualquer tópico abaixo para ouvir Anderclay</span>
+                </div>
+                <button id="stopAudioBtn" onclick="stopAudio()" class="hidden text-xs text-red-400 hover:text-red-300 px-2 py-0.5 rounded bg-red-950/50 border border-red-800">
+                  <i class="fa-solid fa-stop"></i> Parar
+                </button>
+              </div>
+
+              <!-- Live Subtitle Output -->
+              <p id="avatarSubtitles" class="text-xs text-gray-300 italic min-h-[36px] line-clamp-2 leading-relaxed">
+                "Olá! Sou o avatar digital de Anderclay Pereira. Seja bem-vindo ao portal do Instituto DMAP e ao meu ecossistema empresarial."
+              </p>
+            </div>
+          </div>
+
+          <!-- Avatar Quick Action Buttons -->
+          <div class="flex flex-wrap justify-center gap-2 mt-4 w-full max-w-md">
+            <button onclick="speakTopic('intro')" class="flex-1 min-w-[120px] bg-navy-800 hover:bg-gold-500/20 text-gold-400 border border-gold-500/30 rounded-lg py-2 px-3 text-xs font-semibold transition flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-user-tie"></i> Quem é Anderclay
+            </button>
+            <button onclick="speakTopic('dmap_summary')" class="flex-1 min-w-[120px] bg-navy-800 hover:bg-gold-500/20 text-gold-400 border border-gold-500/30 rounded-lg py-2 px-3 text-xs font-semibold transition flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-graduation-cap"></i> Resumo DMAP
+            </button>
+            <button onclick="speakTopic('business_summary')" class="flex-1 min-w-[120px] bg-navy-800 hover:bg-gold-500/20 text-gold-400 border border-gold-500/30 rounded-lg py-2 px-3 text-xs font-semibold transition flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-briefcase"></i> Negócios & Clínicas
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Side: Headline Presentation & Navigation Tabs -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="space-y-3">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-semibold uppercase tracking-wider">
+              <i class="fa-solid fa-crown text-gold-400"></i> Apresentação Institucional Oficial
+            </div>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-white leading-tight">
+              Transformando Visão em <span class="gold-gradient-text">Negócios, Pessoas e Resultados</span>
+            </h2>
+            <p class="text-gray-300 leading-relaxed text-sm sm:text-base">
+              Acompanhe a explicação interativa conduzida pelo avatar hiper-realista de <strong>Anderclay Pereira</strong>. Descubra a estrutura do <strong>Instituto DMAP</strong>, a diversificação do nosso grupo empresarial e a visão estratégica que transforma talentos em desenvolvimento sustentável.
+            </p>
+          </div>
+
+          <!-- Quick Highlight Metrics Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="glass-card p-3 rounded-xl border border-gold-500/20 text-center">
+              <div class="text-2xl font-serif font-bold gold-gradient-text">DMAP</div>
+              <div class="text-[11px] text-gray-400 mt-0.5">Instituto Multidisciplinar</div>
+            </div>
+            <div class="glass-card p-3 rounded-xl border border-gold-500/20 text-center">
+              <div class="text-2xl font-serif font-bold gold-gradient-text">R$ 26 ➔ 1M</div>
+              <div class="text-[11px] text-gray-400 mt-0.5">Trajetória Real</div>
+            </div>
+            <div class="glass-card p-3 rounded-xl border border-gold-500/20 text-center">
+              <div class="text-2xl font-serif font-bold gold-gradient-text">5+</div>
+              <div class="text-[11px] text-gray-400 mt-0.5">Marcas & Unidades</div>
+            </div>
+            <div class="glass-card p-3 rounded-xl border border-gold-500/20 text-center">
+              <div class="text-2xl font-serif font-bold gold-gradient-text">360°</div>
+              <div class="text-[11px] text-gray-400 mt-0.5">Gestão Integrada</div>
+            </div>
+          </div>
+
+          <!-- Ask the Avatar Box (AI Chat Trigger) -->
+          <div class="glass-card rounded-xl p-4 border border-gold-500/30 space-y-3">
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gold-400 flex items-center gap-2">
+              <i class="fa-solid fa-comment-dots text-sm"></i> Faças suas Perguntas para o Avatar do Anderclay
+            </label>
+            <div class="flex gap-2">
+              <input type="text" id="userQuestion" placeholder="Ex: Como o Instituto DMAP gera valor para profissionais?" class="flex-grow bg-navy-900/90 border border-gold-500/30 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-gold-400 placeholder-gray-500" onkeydown="if(event.key==='Enter') askAvatarQuestion()">
+              <button onclick="askAvatarQuestion()" class="bg-gold-500 hover:bg-gold-400 text-navy-900 font-bold px-5 py-2.5 rounded-lg text-sm transition flex items-center gap-1.5 shrink-0">
+                <i class="fa-solid fa-paper-plane"></i> Perguntar
+              </button>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-1 text-[11px]">
+              <span class="text-gray-400">Sugestões:</span>
+              <button onclick="askAvatarPrompt('O que significa a sigla DMAP?')" class="text-gold-300 hover:underline">"O que é a sigla DMAP?"</button> •
+              <button onclick="askAvatarPrompt('Quais empresas pertencem ao grupo de Anderclay?')" class="text-gold-300 hover:underline">"Quais são suas empresas?"</button> •
+              <button onclick="askAvatarPrompt('Explique a trajetória de 26 reais para 1 milhão.')" class="text-gold-300 hover:underline">"História dos R$ 26"</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Instituto DMAP Deep Dive -->
+    <section id="dmap-section" class="py-12 px-4 bg-navy-800/40 border-y border-gold-500/10">
+      <div class="max-w-7xl mx-auto space-y-8">
+        
+        <div class="text-center space-y-2 max-w-3xl mx-auto">
+          <span class="text-xs uppercase font-bold tracking-widest text-gold-400">Desenvolvimento Multidisciplinar em Artes e Profissões</span>
+          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white">Tudo Sobre o <span class="gold-gradient-text">INSTITUTO DMAP</span></h2>
+          <p class="text-gray-300 text-sm">CNPJ: 60.412.110/0001-92 • O pilar de aceleração humana, educacional e profissional criado por Anderclay Pereira.</p>
+        </div>
+
+        <!-- DMAP Breakdown Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- D Card -->
+          <div class="glass-card glass-card-hover rounded-2xl p-6 border border-gold-500/30 flex flex-col justify-between cursor-pointer" onclick="speakTopic('dmap_d')">
+            <div class="space-y-4">
+              <div class="w-12 h-12 rounded-xl bg-gold-500/20 border border-gold-500/40 flex items-center justify-center text-2xl font-serif font-bold text-gold-400">
+                D
+              </div>
+              <h3 class="text-xl font-serif font-bold text-white">Desenvolvimento</h3>
+              <p class="text-gray-300 text-xs leading-relaxed">
+                Foco no crescimento contínuo do ser humano. Metodologia de aceleração individual e empresarial, capacitando indivíduos a superarem limitações técnicas e operacionais.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-gold-500/10 flex items-center justify-between text-gold-400 text-xs font-semibold">
+              <span>Ouvir explicação</span>
+              <i class="fa-solid fa-volume-high"></i>
+            </div>
+          </div>
+
+          <!-- M Card -->
+          <div class="glass-card glass-card-hover rounded-2xl p-6 border border-gold-500/30 flex flex-col justify-between cursor-pointer" onclick="speakTopic('dmap_m')">
+            <div class="space-y-4">
+              <div class="w-12 h-12 rounded-xl bg-gold-500/20 border border-gold-500/40 flex items-center justify-center text-2xl font-serif font-bold text-gold-400">
+                M
+              </div>
+              <h3 class="text-xl font-serif font-bold text-white">Multidisciplinar</h3>
+              <p class="text-gray-300 text-xs leading-relaxed">
+                Conexão entre diferentes áreas de conhecimento: saúde, gestão, comunicação, artes visuais e investimentos para formar visões 360° e soluções completas.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-gold-500/10 flex items-center justify-between text-gold-400 text-xs font-semibold">
+              <span>Ouvir explicação</span>
+              <i class="fa-solid fa-volume-high"></i>
+            </div>
+          </div>
+
+          <!-- A Card -->
+          <div class="glass-card glass-card-hover rounded-2xl p-6 border border-gold-500/30 flex flex-col justify-between cursor-pointer" onclick="speakTopic('dmap_a')">
+            <div class="space-y-4">
+              <div class="w-12 h-12 rounded-xl bg-gold-500/20 border border-gold-500/40 flex items-center justify-center text-2xl font-serif font-bold text-gold-400">
+                A
+              </div>
+              <h3 class="text-xl font-serif font-bold text-white">Artes & Visão</h3>
+              <p class="text-gray-300 text-xs leading-relaxed">
+                A valorização do design, da estética, da expressão cultural e da direção de arte como alavancas de posicionamento de alto valor no mercado moderno.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-gold-500/10 flex items-center justify-between text-gold-400 text-xs font-semibold">
+              <span>Ouvir explicação</span>
+              <i class="fa-solid fa-volume-high"></i>
+            </div>
+          </div>
+
+          <!-- P Card -->
+          <div class="glass-card glass-card-hover rounded-2xl p-6 border border-gold-500/30 flex flex-col justify-between cursor-pointer" onclick="speakTopic('dmap_p')">
+            <div class="space-y-4">
+              <div class="w-12 h-12 rounded-xl bg-gold-500/20 border border-gold-500/40 flex items-center justify-center text-2xl font-serif font-bold text-gold-400">
+                P
+              </div>
+              <h3 class="text-xl font-serif font-bold text-white">Profissões</h3>
+              <p class="text-gray-300 text-xs leading-relaxed">
+                Transformação prática do conhecimento acadêmico e técnico em oportunidades reais de mercado, empreendedorismo e rentabilidade sustentável.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-gold-500/10 flex items-center justify-between text-gold-400 text-xs font-semibold">
+              <span>Ouvir explicação</span>
+              <i class="fa-solid fa-volume-high"></i>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- DMAP Mission & Pillars Detail Banner -->
+        <div class="glass-card rounded-2xl p-6 lg:p-8 border border-gold-500/30 grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+          <div class="lg:col-span-2 space-y-3">
+            <h3 class="text-2xl font-serif font-bold text-white">O Propósito Central do Instituto DMAP</h3>
+            <p class="text-gray-300 text-sm leading-relaxed">
+              "Como conectar artes, profissões, conhecimento e oportunidades para transformar talento em desenvolvimento sustentável."
+            </p>
+            <p class="text-gray-400 text-xs leading-relaxed">
+              O Instituto atua como incubadora de talentos e centro de formação executiva, integrando pessoas com potencial e oferecendo caminhos claros de execução de negócios, branding, liderança e gestão financeira.
+            </p>
+          </div>
+          <div class="flex justify-center lg:justify-end">
+            <button onclick="speakTopic('dmap_mission')" class="w-full lg:w-auto bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-navy-900 font-bold px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2">
+              <i class="fa-solid fa-play"></i> Ouvir Manifesto DMAP
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: Ecosystem & Everything Anderclay Does -->
+    <section id="ecosystem-section" class="py-12 px-4 max-w-7xl mx-auto space-y-8">
+      
+      <div class="text-center space-y-2 max-w-3xl mx-auto">
+        <span class="text-xs uppercase font-bold tracking-widest text-gold-400">Diversificação & Excelência Operacional</span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white">Tudo o que <span class="gold-gradient-text">Anderclay Pereira Faz</span></h2>
+        <p class="text-gray-300 text-sm">Um ecossistema multisetorial integrado sob princípios rígidos de gestão, estratégia e desenvolvimento contínuo.</p>
+      </div>
+
+      <!-- Business Units Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Unit 1: Clínica D'Moura Saúde -->
+        <div class="glass-card glass-card-hover rounded-2xl p-6 border border-gold-500/20 space-y-4 cursor-pointer" onclick="speakTopic('unit_dmoura')">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-lg bg-gold-500/20 border border-gold-500/40 flex items-center justify-center text-gold-400">
+              <i class="fa-solid fa-user-doctor text-lg"></i>
+            </div>
+            <span class="text-[10px] uppercase font-bold bg-gold-500/20 text-gold-400 px-2.5 py-1 rounded-full border border-gold-500/30">Saúde & Bem-Estar</span>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white">Clínica D'Moura Saúde</h3>
+          <p class="text-gray-300 text-xs leading-relaxed">
+            Estrutura médica e clínica de excelência focada em atendimento humanizado, saúde preventiva, estética avançada e gestão de saúde de alto padrão executivo.
+          </p>
+          <div class="text-xs text-gold-400 font-semibold flex items-center gap-2 pt-2">
+            <span>Ver Detalhes do Avatar</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </div>
+        </div>
+
+        <!-- Unit 2: Invest Group Finance -->
+        <div class="glass-card glass-card-hover rounded-2xl p-6 border border-gold-500/20 space-y-4 cursor-pointer" onclick="speakTopic('unit_invest')">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-lg bg-gold-500/20 border border-gold-500/40 flex items-center justify-center text-gold-400">
+              <i class="fa-solid fa-chart-line text-lg"></i>
+            </div>
+            <span class="text-[10px] uppercase font-bold bg-gold-500/20 text-gold-400 px-2.5 py-1 rounded-full border border-gold-500/30">Finanças & Capital</span>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white">Invest Group Finance</h3>
+          <p class="text-gray-300 text-xs leading-relaxed">
+            Consultoria de inteligência financeira, estruturação de capital, alocação estratégica e aceleração de rentabilidade para negócios e investidores.
+          </p>
+          <div class="text-xs text-gold-400 font-semibold flex items-center gap-2 pt-2">
+            <span>Ver Detalhes do Avatar</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </div>
+        </div>
+
+        <!-- Unit 3: Tecnologia & Soluções -->
+        <div class="glass-card glass-card-hover rounded-2xl p-6 border border-gold-500/20 space-y-4 cursor-pointer" onclick="speakTopic('unit_tech')">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-lg bg-gold-500/20 border border-gold-500/40 flex items-center justify-center text-gold-400">
+              <i class="fa-solid fa-microchip text-lg"></i>
+            </div>
+            <span class="text-[10px] uppercase font-bold bg-gold-500/20 text-gold-400 px-2.5 py-1 rounded-full border border-gold-500/30">Inovação Digital</span>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white">Tecnologia & Soluções</h3>
+          <p class="text-gray-300 text-xs leading-relaxed">
+            Desenvolvimento de ecossistemas digitais, automação de processos, integração de sistemas inteligentes e soluções de alta eficiência tecnológica.
+          </p>
+          <div class="text-xs text-gold-400 font-semibold flex items-center gap-2 pt-2">
+            <span>Ver Detalhes do Avatar</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </div>
+        </div>
+
+        <!-- Unit 4: HP Studio -->
+        <div class="glass-card glass-card-hover rounded-2xl p-6 border border-gold-500/20 space-y-4 cursor-pointer" onclick="speakTopic('unit_hp')">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-lg bg-gold-500/20 border border-gold-500/40 flex items-center justify-center text-gold-400">
+              <i class="fa-solid fa-podcast text-lg"></i>
+            </div>
+            <span class="text-[10px] uppercase font-bold bg-gold-500/20 text-gold-400 px-2.5 py-1 rounded-full border border-gold-500/30">Mídia & Audiovisual</span>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white">HP Studio</h3>
+          <p class="text-gray-300 text-xs leading-relaxed">
+            Estúdio multimídia para produção audiovisual de alto padrão, podcasts corporativos, direção de arte e branding para marcas de prestígio.
+          </p>
+          <div class="text-xs text-gold-400 font-semibold flex items-center gap-2 pt-2">
+            <span>Ver Detalhes do Avatar</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </div>
+        </div>
+
+        <!-- Unit 5: Consultoria em Gestão e Estratégia -->
+        <div class="glass-card glass-card-hover rounded-2xl p-6 border border-gold-500/20 space-y-4 cursor-pointer" onclick="speakTopic('unit_consulting')">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-lg bg-gold-500/20 border border-gold-500/40 flex items-center justify-center text-gold-400">
+              <i class="fa-solid fa-sitemap text-lg"></i>
+            </div>
+            <span class="text-[10px] uppercase font-bold bg-gold-500/20 text-gold-400 px-2.5 py-1 rounded-full border border-gold-500/30">Estratégia Executiva</span>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white">Gestão & Mentoria de Negócios</h3>
+          <p class="text-gray-300 text-xs leading-relaxed">
+            Acompanhamento direto para empresários e líderes. Reestruturação organizacional, governança, modelos de escala e liderança transformacional.
+          </p>
+          <div class="text-xs text-gold-400 font-semibold flex items-center gap-2 pt-2">
+            <span>Ver Detalhes do Avatar</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </div>
+        </div>
+
+        <!-- Unit 6: Grupo Empresarial AP -->
+        <div class="glass-card glass-card-hover rounded-2xl p-6 border border-gold-500/20 space-y-4 cursor-pointer" onclick="speakTopic('unit_holding')">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-lg bg-gold-500/20 border border-gold-500/40 flex items-center justify-center text-gold-400">
+              <i class="fa-solid fa-building-columns text-lg"></i>
+            </div>
+            <span class="text-[10px] uppercase font-bold bg-gold-500/20 text-gold-400 px-2.5 py-1 rounded-full border border-gold-500/30">Holding do Grupo</span>
+          </div>
+          <h3 class="text-xl font-serif font-bold text-white">Grupo Empresarial Anderclay</h3>
+          <p class="text-gray-300 text-xs leading-relaxed">
+            Governança central que une todas as vertentes de negócios, otimizando recursos, potencializando sinergias e garantindo a visão de longevidade.
+          </p>
+          <div class="text-xs text-gold-400 font-semibold flex items-center gap-2 pt-2">
+            <span>Ver Detalhes do Avatar</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: Trajectory R$ 26 to R$ 1 Million -->
+    <section id="trajectory-section" class="py-12 px-4 bg-navy-800/40 border-t border-gold-500/10">
+      <div class="max-w-7xl mx-auto space-y-8">
+        
+        <div class="text-center space-y-2 max-w-3xl mx-auto">
+          <span class="text-xs uppercase font-bold tracking-widest text-gold-400">História Real de Superação e Visão</span>
+          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white">Como Fazer de <span class="gold-gradient-text">R$ 26 a R$ 1 Milhão</span></h2>
+          <p class="text-gray-300 text-sm">Não é sobre milagre financeiro, é sobre disciplina, gestão de risco e execução implacável.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <!-- Text Story Steps -->
+          <div class="lg:col-span-7 space-y-4">
+            
+            <div class="glass-card p-5 rounded-xl border border-gold-500/20 flex gap-4 items-start">
+              <div class="w-10 h-10 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center font-bold shrink-0">1</div>
+              <div>
+                <h4 class="text-white font-bold text-sm">O Ponto de Partida Escasso (R$ 26)</h4>
+                <p class="text-gray-300 text-xs mt-1">O início da jornada com capital quase nulo, onde o único ativo real era a capacidade de trabalho, a integridade e a determinação de aprender sem desculpas.</p>
+              </div>
+            </div>
+
+            <div class="glass-card p-5 rounded-xl border border-gold-500/20 flex gap-4 items-start">
+              <div class="w-10 h-10 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center font-bold shrink-0">2</div>
+              <div>
+                <h4 class="text-white font-bold text-sm">Reinvestimento Sistemático & Múltiplas Habilidades</h4>
+                <p class="text-gray-300 text-xs mt-1">Cada pequeno lucro obtido foi 100% reinvestido no conhecimento, na melhoria da imagem profissional e na aquisição de ferramentas operacionais de alto impacto.</p>
+              </div>
+            </div>
+
+            <div class="glass-card p-5 rounded-xl border border-gold-500/20 flex gap-4 items-start">
+              <div class="w-10 h-10 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center font-bold shrink-0">3</div>
+              <div>
+                <h4 class="text-white font-bold text-sm">Construção de Autoridade & Estruturação do Ecossistema</h4>
+                <p class="text-gray-300 text-xs mt-1">Surgimento da Clínica D'Moura, consolidação do Instituto DMAP e fundação de braços financeiros e tecnológicos, pavimentando o marco de R$ 1 milhão com consistência sólida.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Story Card Callout -->
+          <div class="lg:col-span-5">
+            <div class="glass-card p-8 rounded-2xl border-2 border-gold-500/40 text-center space-y-6 relative overflow-hidden">
+              <div class="absolute -top-10 -right-10 w-32 h-32 bg-gold-500/10 rounded-full blur-2xl"></div>
+              
+              <div class="w-16 h-16 rounded-full bg-gold-500/20 border border-gold-500/40 flex items-center justify-center text-gold-400 text-2xl mx-auto">
+                <i class="fa-solid fa-sack-dollar"></i>
+              </div>
+
+              <div>
+                <h3 class="text-2xl font-serif font-bold text-white">Quer Ouvir Esta História pelo Avatar?</h3>
+                <p class="text-gray-300 text-xs mt-2 leading-relaxed">
+                  Anderclay narra em detalhes os desafios, os momentos decisivos e os princípios de gestão que aplicou nessa trajetória real.
+                </p>
+              </div>
+
+              <button onclick="speakTopic('trajectory')" class="w-full bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-navy-900 font-bold px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2">
+                <i class="fa-solid fa-volume-high"></i> Ouvir Trajetória R$ 26 ➔ R$ 1M
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="glass-card border-t border-gold-500/20 py-8 px-4 mt-12 text-center text-xs text-gray-400 space-y-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full border border-gold-500/50 bg-navy-800 flex items-center justify-center text-gold-400 font-serif font-bold text-sm">
+          AP
+        </div>
+        <div class="text-left">
+          <p class="font-bold text-white text-sm">Instituto DMAP • Anderclay Pereira</p>
+          <p class="text-[11px] text-gray-400">CNPJ: 60.412.110/0001-92</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-4 text-gray-300">
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-phone text-gold-400"></i> (81) 99961-4322</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-envelope text-gold-400"></i> diretoria@clinicadmoura.company</span>
+      </div>
+
+      <p class="text-[11px]">© 2026 Anderclay Pereira. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    /* ==========================================================================
+       AVATAR STATE & CANVAS HUMAN DRAWING LOGIC
+       ========================================================================== */
+    const canvas = document.getElementById('avatarCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let avatarState = {
+      isSpeaking: false,
+      hasGlasses: true,
+      mouthOpen: 0, // 0 to 1
+      eyeBlink: false,
+      headTilt: 0,
+      gesturePhase: 0,
+      handLeftX: 0,
+      handLeftY: 0,
+      handRightX: 0,
+      handRightY: 0
+    };
+
+    let animationFrameId = null;
+    let audioContext = null;
+    let currentAudioSource = null;
+
+    // Toggle glasses option
+    function toggleGlasses() {
+      avatarState.hasGlasses = !avatarState.hasGlasses;
+      document.getElementById('glasses-text').innerText = avatarState.hasGlasses ? 'Com Óculos' : 'Sem Óculos';
+      drawAvatar();
+    }
+
+    // Canvas drawing helper for Anderclay Pereira (human business style)
+    function drawAvatar() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const w = canvas.width;
+      const h = canvas.height;
+      const centerX = w / 2;
+      const centerY = h / 2 - 20;
+
+      // 1. Background Glow / Halo
+      const glowGrad = ctx.createRadialGradient(centerX, centerY, 50, centerX, centerY, 180);
+      glowGrad.addColorStop(0, 'rgba(212, 175, 55, 0.15)');
+      glowGrad.addColorStop(1, 'rgba(6, 11, 20, 0)');
+      ctx.fillStyle = glowGrad;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 180, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 2. Shoulders & Executive Black Suit
+      ctx.save();
+      ctx.fillStyle = '#0f172a'; // Deep suit navy/black
+      ctx.beginPath();
+      ctx.moveTo(centerX - 130, h);
+      ctx.quadraticCurveTo(centerX - 100, centerY + 110, centerX - 55, centerY + 80);
+      ctx.lineTo(centerX + 55, centerY + 80);
+      ctx.quadraticCurveTo(centerX + 100, centerY + 110, centerX + 130, h);
+      ctx.closePath();
+      ctx.fill();
+
+      // Suit Lapels
+      ctx.fillStyle = '#1e293b';
+      // Left lapel
+      ctx.beginPath();
+      ctx.moveTo(centerX - 55, centerY + 80);
+      ctx.lineTo(centerX - 20, h);
+      ctx.lineTo(centerX - 5, h);
+      ctx.lineTo(centerX - 35, centerY + 85);
+      ctx.closePath();
+      ctx.fill();
+      // Right lapel
+      ctx.beginPath();
+      ctx.moveTo(centerX + 55, centerY + 80);
+      ctx.lineTo(centerX + 20, h);
+      ctx.lineTo(centerX + 5, h);
+      ctx.lineTo(centerX + 35, centerY + 85);
+      ctx.closePath();
+      ctx.fill();
+
+      // White Dress Shirt V-neck
+      ctx.fillStyle = '#f8fafc';
+      ctx.beginPath();
+      ctx.moveTo(centerX - 28, centerY + 80);
+      ctx.lineTo(centerX + 28, centerY + 80);
+      ctx.lineTo(centerX, centerY + 140);
+      ctx.closePath();
+      ctx.fill();
+
+      // Black Tie
+      ctx.fillStyle = '#090d16';
+      ctx.beginPath();
+      ctx.moveTo(centerX - 8, centerY + 82);
+      ctx.lineTo(centerX + 8, centerY + 82);
+      ctx.lineTo(centerX + 10, centerY + 150);
+      ctx.lineTo(centerX, centerY + 165);
+      ctx.lineTo(centerX - 10, centerY + 150);
+      ctx.closePath();
+      ctx.fill();
+
+      // Masonic Lapel Pin on Left Suit Lapel
+      ctx.fillStyle = '#d4af37';
+      ctx.beginPath();
+      ctx.arc(centerX - 65, centerY + 110, 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // White Pocket Square
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.moveTo(centerX + 65, centerY + 110);
+      ctx.lineTo(centerX + 80, centerY + 105);
+      ctx.lineTo(centerX + 75, centerY + 118);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+
+      // 3. Neck
+      ctx.fillStyle = '#e5b899'; // Skin tone
+      ctx.fillRect(centerX - 22, centerY + 40, 44, 45);
+      // Neck shadow
+      ctx.fillStyle = 'rgba(0,0,0,0.15)';
+      ctx.fillRect(centerX - 22, centerY + 40, 44, 15);
+
+      // 4. Head & Face Shape
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(avatarState.headTilt);
+
+      // Head shape (oval with structured jawline)
+      ctx.fillStyle = '#f2c4a5';
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 52, 68, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Hair (Dark, neatly styled pompadour / executive side part)
+      ctx.fillStyle = '#1c130e';
+      ctx.beginPath();
+      ctx.moveTo(-54, -20);
+      ctx.quadraticCurveTo(-50, -78, 0, -82);
+      ctx.quadraticCurveTo(50, -78, 54, -20);
+      ctx.quadraticCurveTo(45, -60, 0, -64);
+      ctx.quadraticCurveTo(-45, -60, -54, -20);
+      ctx.closePath();
+      ctx.fill();
+
+      // Hair volume top
+      ctx.beginPath();
+      ctx.arc(5, -62, 38, Math.PI, Math.PI * 2);
+      ctx.fill();
+
+      // Ears
+      ctx.fillStyle = '#f2c4a5';
+      ctx.beginPath();
+      ctx.ellipse(-52, 5, 8, 14, 0, 0, Math.PI * 2);
+      ctx.ellipse(52, 5, 8, 14, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Sideburns connecting seamlessly to beard
+      ctx.fillStyle = '#18110c';
+      ctx.fillRect(-52, -15, 6, 32);
+      ctx.fillRect(46, -15, 6, 32);
+
+      // --- ENHANCED FULL EXECUTIVE BEARD AND MUSTACHE ---
+      ctx.fillStyle = '#18110c';
+      // Full jaw & chin beard fill
+      ctx.beginPath();
+      ctx.moveTo(-52, 5);
+      ctx.quadraticCurveTo(-50, 72, 0, 75);
+      ctx.quadraticCurveTo(50, 72, 52, 5);
+      ctx.quadraticCurveTo(40, 32, 0, 35);
+      ctx.quadraticCurveTo(-40, 32, -52, 5);
+      ctx.closePath();
+      ctx.fill();
+
+      // Cheek line defining prominent beard outline
+      ctx.beginPath();
+      ctx.moveTo(-50, 8);
+      ctx.quadraticCurveTo(-26, 28, -12, 32);
+      ctx.quadraticCurveTo(-32, 52, -50, 25);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(50, 8);
+      ctx.quadraticCurveTo(26, 28, 12, 32);
+      ctx.quadraticCurveTo(32, 52, 50, 25);
+      ctx.closePath();
+      ctx.fill();
+
+      // Mustache (Well-groomed and connected to beard)
+      ctx.beginPath();
+      ctx.moveTo(-25, 23);
+      ctx.quadraticCurveTo(0, 17, 25, 23);
+      ctx.quadraticCurveTo(18, 33, 0, 34);
+      ctx.quadraticCurveTo(-18, 33, -25, 23);
+      ctx.closePath();
+      ctx.fill();
+
+      // Soul patch under lower lip
+      ctx.beginPath();
+      ctx.ellipse(0, 43, 6, 5, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Beard subtle texture strokes for realistic depth
+      ctx.strokeStyle = 'rgba(212, 175, 55, 0.15)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(0, 58, 22, 0.2, Math.PI - 0.2);
+      ctx.stroke();
+
+      // Eyes
+      const eyeY = -5;
+      if (!avatarState.eyeBlink) {
+        // Left Eye
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.ellipse(-20, eyeY, 10, 6, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#3d2516'; // Dark brown iris
+        ctx.beginPath();
+        ctx.arc(-20, eyeY, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Right Eye
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.ellipse(20, eyeY, 10, 6, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#3d2516';
+        ctx.beginPath();
+        ctx.arc(20, eyeY, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        // Blinking line
+        ctx.strokeStyle = '#1c130e';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(-28, eyeY);
+        ctx.lineTo(-12, eyeY);
+        ctx.moveTo(12, eyeY);
+        ctx.lineTo(28, eyeY);
+        ctx.stroke();
+      }
+
+      // Eyebrows (Strong dark eyebrows)
+      ctx.strokeStyle = '#1c130e';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(-30, eyeY - 12);
+      ctx.lineTo(-10, eyeY - 14);
+      ctx.moveTo(10, eyeY - 14);
+      ctx.lineTo(30, eyeY - 12);
+      ctx.stroke();
+
+      // Nose
+      ctx.strokeStyle = '#d69e7b';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, eyeY);
+      ctx.lineTo(-3, eyeY + 18);
+      ctx.lineTo(3, eyeY + 18);
+      ctx.stroke();
+
+      // Mouth (Dynamic lips opening while speaking)
+      const mouthY = 32;
+      ctx.fillStyle = '#a85b5b';
+      if (avatarState.isSpeaking) {
+        const openH = 3 + avatarState.mouthOpen * 12;
+        ctx.beginPath();
+        ctx.ellipse(0, mouthY, 11, openH, 0, 0, Math.PI * 2);
+        ctx.fill();
+        // Inner mouth darkness
+        ctx.fillStyle = '#421515';
+        ctx.beginPath();
+        ctx.ellipse(0, mouthY, 9, openH * 0.7, 0, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        // Natural confident smile
+        ctx.beginPath();
+        ctx.moveTo(-13, mouthY);
+        ctx.quadraticCurveTo(0, mouthY + 5, 13, mouthY);
+        ctx.quadraticCurveTo(0, mouthY + 2, -13, mouthY);
+        ctx.fill();
+      }
+
+      // Glasses (Optional executive dark rimmed glasses)
+      if (avatarState.hasGlasses) {
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 3;
+        // Left frame
+        ctx.strokeRect(-32, eyeY - 12, 24, 18);
+        // Right frame
+        ctx.strokeRect(8, eyeY - 12, 24, 18);
+        // Bridge
+        ctx.beginPath();
+        ctx.moveTo(-8, eyeY - 4);
+        ctx.lineTo(8, eyeY - 4);
+        ctx.stroke();
+      }
+
+      ctx.restore();
+
+      // --- 5. ANIMATED EXECUTIVE HANDS & GESTURES ---
+      ctx.save();
+      
+      // LEFT HAND (Gesturing on the left chest area)
+      const leftHandBaseX = centerX - 85 + avatarState.handLeftX;
+      const leftHandBaseY = centerY + 130 + avatarState.handLeftY;
+
+      // Suit Sleeve Cuff
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.ellipse(leftHandBaseX - 10, leftHandBaseY + 20, 18, 12, -0.3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // White Shirt Cuff Line
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(leftHandBaseX - 22, leftHandBaseY + 12, 16, 4);
+
+      // Hand / Palm
+      ctx.fillStyle = '#f2c4a5';
+      ctx.beginPath();
+      ctx.ellipse(leftHandBaseX, leftHandBaseY, 15, 12, -0.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Expressive Fingers (Left Hand)
+      ctx.strokeStyle = '#e5b899';
+      ctx.lineWidth = 4.5;
+      ctx.lineCap = 'round';
+      // Thumb
+      ctx.beginPath();
+      ctx.moveTo(leftHandBaseX - 5, leftHandBaseY - 2);
+      ctx.lineTo(leftHandBaseX + 12, leftHandBaseY - 14);
+      ctx.stroke();
+      // Index Finger
+      ctx.beginPath();
+      ctx.moveTo(leftHandBaseX + 2, leftHandBaseY - 6);
+      ctx.lineTo(leftHandBaseX + 22, leftHandBaseY - 12);
+      ctx.stroke();
+      // Middle Finger
+      ctx.beginPath();
+      ctx.moveTo(leftHandBaseX + 3, leftHandBaseY);
+      ctx.lineTo(leftHandBaseX + 24, leftHandBaseY - 3);
+      ctx.stroke();
+      // Ring & Little Finger
+      ctx.beginPath();
+      ctx.moveTo(leftHandBaseX + 2, leftHandBaseY + 5);
+      ctx.lineTo(leftHandBaseX + 20, leftHandBaseY + 5);
+      ctx.stroke();
+
+
+      // RIGHT HAND (Gesturing on the right side with Gold Luxury Watch)
+      const rightHandBaseX = centerX + 85 + avatarState.handRightX;
+      const rightHandBaseY = centerY + 130 + avatarState.handRightY;
+
+      // Suit Sleeve Cuff
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.ellipse(rightHandBaseX + 10, rightHandBaseY + 20, 18, 12, 0.3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Gold Executive Watch
+      ctx.fillStyle = '#d4af37';
+      ctx.beginPath();
+      ctx.ellipse(rightHandBaseX + 12, rightHandBaseY + 14, 10, 6, 0.3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // White Shirt Cuff Line
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(rightHandBaseX + 8, rightHandBaseY + 8, 16, 3);
+
+      // Hand / Palm
+      ctx.fillStyle = '#f2c4a5';
+      ctx.beginPath();
+      ctx.ellipse(rightHandBaseX, rightHandBaseY, 15, 12, 0.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Expressive Fingers (Right Hand)
+      ctx.strokeStyle = '#e5b899';
+      ctx.lineWidth = 4.5;
+      ctx.lineCap = 'round';
+      // Thumb
+      ctx.beginPath();
+      ctx.moveTo(rightHandBaseX + 5, rightHandBaseY - 2);
+      ctx.lineTo(rightHandBaseX - 12, rightHandBaseY - 14);
+      ctx.stroke();
+      // Index Finger
+      ctx.beginPath();
+      ctx.moveTo(rightHandBaseX - 2, rightHandBaseY - 6);
+      ctx.lineTo(rightHandBaseX - 22, rightHandBaseY - 12);
+      ctx.stroke();
+      // Middle Finger
+      ctx.beginPath();
+      ctx.moveTo(rightHandBaseX - 3, rightHandBaseY);
+      ctx.lineTo(rightHandBaseX - 24, rightHandBaseY - 3);
+      ctx.stroke();
+      // Ring Finger
+      ctx.beginPath();
+      ctx.moveTo(rightHandBaseX - 2, rightHandBaseY + 5);
+      ctx.lineTo(rightHandBaseX - 20, rightHandBaseY + 5);
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    // Animation Loop for Avatar Mouth, Head and Fluid Hand Gestures
+    function animateAvatar() {
+      avatarState.gesturePhase += 0.05;
+
+      if (avatarState.isSpeaking) {
+        // Random mouth oscillation simulating speech phonemes
+        avatarState.mouthOpen = 0.2 + Math.random() * 0.8;
+        avatarState.headTilt = Math.sin(Date.now() / 300) * 0.035;
+
+        // Dynamic fluid hand movement while speaking
+        avatarState.handLeftY = Math.sin(avatarState.gesturePhase * 1.5) * 16 - 10;
+        avatarState.handLeftX = Math.cos(avatarState.gesturePhase * 1.2) * 12;
+        avatarState.handRightY = Math.cos(avatarState.gesturePhase * 1.7) * 18 - 8;
+        avatarState.handRightX = Math.sin(avatarState.gesturePhase * 1.3) * -10;
+      } else {
+        avatarState.mouthOpen = 0;
+        avatarState.headTilt = Math.sin(Date.now() / 1500) * 0.015;
+
+        // Subtle idle breathing motion for hands
+        avatarState.handLeftY = Math.sin(avatarState.gesturePhase * 0.7) * 4;
+        avatarState.handLeftX = 0;
+        avatarState.handRightY = Math.cos(avatarState.gesturePhase * 0.7) * 4;
+        avatarState.handRightX = 0;
+      }
+
+      // Periodic blink logic
+      if (Math.random() < 0.015) {
+        avatarState.eyeBlink = true;
+        setTimeout(() => { avatarState.eyeBlink = false; }, 150);
+      }
+
+      drawAvatar();
+      animationFrameId = requestAnimationFrame(animateAvatar);
+    }
+
+    /* ==========================================================================
+       TEXT & AUDIO DATA CONTENT FOR ALL SECTIONS
+       ========================================================================== */
+    const topicsContent = {
+      intro: {
+        title: "Quem é Anderclay Pereira",
+        text: "Olá! Sou Anderclay Pereira, empresário, gestor e estrategista de negócios. Minha missão é transformar visão em resultados práticos através do desenvolvimento de pessoas, ecossistemas de saúde, soluções financeiras e inteligência de mercado."
+      },
+      dmap_summary: {
+        title: "Resumo do Instituto DMAP",
+        text: "O Instituto DMAP é um centro multidisciplinar focado em conectar artes, profissões, conhecimento e oportunidades. Nosso objetivo é acelerar o potencial humano e profissional para o desenvolvimento sustentável."
+      },
+      business_summary: {
+        title: "Visão Geral de Negócios",
+        text: "Meu ecossistema compreende a Clínica D'Moura Saúde, Invest Group Finance, Tecnologia & Soluções, HP Studio e consultorias executivas. Integramos gestão, saúde e finanças com governança centralizada."
+      },
+      dmap_d: {
+        title: "DMAP - Desenvolvimento",
+        text: "A letra D do DMAP representa Desenvolvimento. Focamos no crescimento do indivíduo através do aperfeiçoamento contínuo de competências técnicas, emocionais e de liderança."
+      },
+      dmap_m: {
+        title: "DMAP - Multidisciplinar",
+        text: "A letra M representa Multidisciplinaridade. Acreditamos que a união de diferentes ciências e saberes gera soluções inovadoras que nenhuma área isolada consegue entregar."
+      },
+      dmap_a: {
+        title: "DMAP - Artes & Visão",
+        text: "A letra A representa Artes e Expressão. Valorizamos a direção de arte, a estética e a comunicação visual como pilares fundamentais para posicionar marcas de alto valor."
+      },
+      dmap_p: {
+        title: "DMAP - Profissões",
+        text: "A letra P representa Profissões e Oportunidades. Orientamos talentos para transformar conhecimento acadêmico em modelos rentáveis e negócios autossustentáveis."
+      },
+      dmap_mission: {
+        title: "Manifesto do Instituto DMAP",
+        text: "Como conectar artes, profissões, conhecimento e oportunidades para transformar talento em desenvolvimento sustentável? Essa é a nossa pergunta guia diária no Instituto DMAP."
+      },
+      unit_dmoura: {
+        title: "Clínica D'Moura Saúde",
+        text: "A Clínica D'Moura Saúde é referência em atendimento multidisciplinar de alto nível, unindo saúde integrativa, medicina preventiva e experiência de bem-estar executivo."
+      },
+      unit_invest: {
+        title: "Invest Group Finance",
+        text: "No Invest Group Finance, atuamos na estruturação estratégica de ativos, análise de viabilidade e inteligência de capitais para assegurar solidez financeira aos nossos parceiros."
+      },
+      unit_tech: {
+        title: "Tecnologia & Soluções",
+        text: "Nossa divisão de Tecnologia e Soluções desenvolve infraestrutura digital, automações inteligentes e ecossistemas de software para acelerar a produtividade corporativa."
+      },
+      unit_hp: {
+        title: "HP Studio",
+        text: "O HP Studio é o coração de mídia e criação audiovisual do nosso grupo, produzindo conteúdos de alta fidelidade, gravações profissionais e estratégias de posicionamento de marca."
+      },
+      unit_consulting: {
+        title: "Gestão & Mentoria de Negócios",
+        text: "Oferecemos direcionamento executivo e governança corporativa para empresários que desejam profissionalizar suas operações, otimizar fluxos e escalar margens de lucro."
+      },
+      unit_holding: {
+        title: "Grupo Empresarial Anderclay",
+        text: "O Grupo Empresarial centraliza os valores e a visão estratégica do conjunto de nossas empresas, garantindo alinhamento e eficiência em todas as unidades de negócio."
+      },
+      trajectory: {
+        title: "A Trajetória de R$ 26 a R$ 1 Milhão",
+        text: "Minha história começou com apenas 26 reais no bolso. Com disciplina inabalável, reinvestimento total dos lucros e foco em gerar valor real para as pessoas, construí um patrimônio milionário e diversificado."
+      }
+    };
+
+    /* ==========================================================================
+       GEMINI API INTEGRATION & VOICE TTS ENGINE
+       ========================================================================== */
+    
+    // Function to convert PCM16 ArrayBuffer to standard WAV Blob
+    function pcmToWav(pcm16Data, sampleRate = 24000) {
+      const numChannels = 1;
+      const byteRate = sampleRate * numChannels * 2;
+      const blockAlign = numChannels * 2;
+      const dataSize = pcm16Data.length * 2;
+      const buffer = new ArrayBuffer(44 + dataSize);
+      const view = new DataView(buffer);
+
+      function writeString(view, offset, string) {
+        for (let i = 0; i < string.length; i++) {
+          view.setUint8(offset + i, string.charCodeAt(i));
+        }
+      }
+
+      writeString(view, 0, 'RIFF');
+      view.setUint32(4, 36 + dataSize, true);
+      writeString(view, 8, 'WAVE');
+      writeString(view, 12, 'fmt ');
+      view.setUint32(16, 16, true);
+      view.setUint16(20, 1, true); // Raw PCM
+      view.setUint16(22, numChannels, true);
+      view.setUint32(24, sampleRate, true);
+      view.setUint32(28, byteRate, true);
+      view.setUint16(32, blockAlign, true);
+      view.setUint16(34, 16, true);
+      writeString(view, 36, 'data');
+      view.setUint32(40, dataSize, true);
+
+      let offset = 44;
+      for (let i = 0; i < pcm16Data.length; i++, offset += 2) {
+        view.setInt16(offset, pcm16Data[i], true);
+      }
+
+      return new Blob([buffer], { type: 'audio/wav' });
+    }
+
+    // Convert Base64 to Int16Array
+    function base64ToInt16Array(base64) {
+      const binaryString = atob(base64);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      return new Int16Array(bytes.buffer);
+    }
+
+    // Play Text using Gemini TTS or Web Speech Fallback
+    async function speakText(text) {
+      stopAudio(); // Stop previous audio if playing
+      
+      const subtitlesEl = document.getElementById('avatarSubtitles');
+      const speechStateEl = document.getElementById('speechState');
+      const waveContainer = document.getElementById('waveContainer');
+      const stopBtn = document.getElementById('stopAudioBtn');
+
+      subtitlesEl.innerText = `"${text}"`;
+      speechStateEl.innerText = "Anderclay está falando...";
+      waveContainer.classList.add('wave-active');
+      stopBtn.classList.remove('hidden');
+      avatarState.isSpeaking = true;
+      if (window.AvatarFalante && window.AvatarFalante.ativo()) { fallbackWebSpeech(text); return; } // avatar com foto: voz pt-BR do aparelho + boca sincronizada
+
+      try {
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+        
+        const payload = {
+          contents: [{
+            parts: [{ text: `Fale de forma natural, firme, confiante e executiva em português do Brasil: ${text}` }]
+          }],
+          generationConfig: {
+            responseModalities: ["AUDIO"],
+            speechConfig: {
+              voiceConfig: {
+                prebuiltVoiceConfig: { voiceName: "Kore" } // Firm & executive voice
+              }
+            }
+          }
+        };
+
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        const part = result?.candidates?.[0]?.content?.parts?.[0];
+        
+        if (part && part.inlineData && part.inlineData.data) {
+          const base64Data = part.inlineData.data;
+          const mimeType = part.inlineData.mimeType || 'audio/L16;rate=24000';
+          let sampleRate = 24000;
+          const rateMatch = mimeType.match(/rate=(\d+)/);
+          if (rateMatch) sampleRate = parseInt(rateMatch[1], 10);
+
+          const pcm16 = base64ToInt16Array(base64Data);
+          const wavBlob = pcmToWav(pcm16, sampleRate);
+          const audioUrl = URL.createObjectURL(wavBlob);
+
+          const audio = new Audio(audioUrl);
+          currentAudioSource = audio;
+
+          audio.onended = () => {
+            finishSpeech();
+          };
+
+          audio.onerror = () => {
+            fallbackWebSpeech(text);
+          };
+
+          await audio.play();
+        } else {
+          fallbackWebSpeech(text);
+        }
+      } catch (err) {
+        console.warn("Gemini TTS API encounter, falling back to browser speech synthesis:", err);
+        fallbackWebSpeech(text);
+      }
+    }
+
+    // Fallback Web Speech Synthesis
+    function fallbackWebSpeech(text) {
+      if (window.AvatarFalante && window.AvatarFalante.ativo()) { window.AvatarFalante.falar(text, { onend: finishSpeech }); return; }
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'pt-BR';
+        utterance.rate = 1.0;
+        utterance.pitch = 0.95; // Slightly lower pitch for executive male tone
+
+        utterance.onend = () => {
+          finishSpeech();
+        };
+
+        utterance.onerror = () => {
+          finishSpeech();
+        };
+
+        window.speechSynthesis.speak(utterance);
+      } else {
+        setTimeout(finishSpeech, 4000);
+      }
+    }
+
+    function stopAudio() {
+      if (window.AvatarFalante) window.AvatarFalante.parar();
+      if (currentAudioSource) {
+        if (currentAudioSource.pause) currentAudioSource.pause();
+        currentAudioSource = null;
+      }
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      finishSpeech();
+    }
+
+    function finishSpeech() {
+      avatarState.isSpeaking = false;
+      document.getElementById('waveContainer').classList.remove('wave-active');
+      document.getElementById('speechState').innerText = "Clique em qualquer tópico para ouvir Anderclay";
+      document.getElementById('stopAudioBtn').classList.add('hidden');
+    }
+
+    function speakTopic(key) {
+      if (topicsContent[key]) {
+        scrollToSection('hero-avatar');
+        speakText(topicsContent[key].text);
+      }
+    }
+
+    function triggerGreeting() {
+      speakTopic('intro');
+    }
+
+    /* ==========================================================================
+       AI QUESTION & ANSWER SYSTEM (PERGUNTE AO AVATAR)
+       ========================================================================== */
+    async function askAvatarQuestion() {
+      const inputEl = document.getElementById('userQuestion');
+      const question = inputEl.value.trim();
+      if (!question) return;
+
+      scrollToSection('hero-avatar');
+      const subtitlesEl = document.getElementById('avatarSubtitles');
+      subtitlesEl.innerText = "Pensando na melhor resposta para você...";
+      
+      try {
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+        
+        const systemPrompt = `Você é o avatar digital oficial de Anderclay Pereira, um empresário e estrategista experiente do Brasil, fundador do Instituto DMAP (Desenvolvimento Multidisciplinar em Artes e Profissões) e líder de negócios como Clínica D'Moura Saúde, Invest Group Finance, Tecnologia & Soluções e HP Studio. Responda em 1ª pessoa ("Eu", "Meu ecossistema"), de forma elegante, direta, executiva e acolhedora em no máximo 3 frases concisas.`;
+
+        const payload = {
+          contents: [{ parts: [{ text: question }] }],
+          systemInstruction: { parts: [{ text: systemPrompt }] }
+        };
+
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        const replyText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (replyText) {
+          inputEl.value = '';
+          speakText(replyText);
+        } else {
+          speakText("Como empresário e fundador do Instituto DMAP, estou sempre focado em converter ideias em soluções reais de negócios e desenvolvimento profissional.");
+        }
+      } catch (err) {
+        console.error("AI Response error:", err);
+        speakText("O Instituto DMAP une conhecimento, arte e negócios para impulsionar a sua trajetória profissional ao próximo nível.");
+      }
+    }
+
+    function askAvatarPrompt(textPrompt) {
+      document.getElementById('userQuestion').value = textPrompt;
+      askAvatarQuestion();
+    }
+
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Initialize animation canvas on load
+    window.onload = function() {
+      animateAvatar();
+    };
+  </script>
+  <script src="../assets/avatares/avatar-falante.js" data-pessoa="anderclay" data-alvo="#avatarCanvas"></script>
+</body>
+</html>

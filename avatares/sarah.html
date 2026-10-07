@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarah - Secretária Virtual | Instituto DMap</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            navy: '#0b1329',
+                            darkNavy: '#050914',
+                            cardNavy: '#101a36',
+                            gold: '#d4af37',
+                            goldLight: '#f6e7b0',
+                            goldDark: '#a37c0c',
+                            accent: '#1e3a8a',
+                            roseAcc: '#e11d48'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Keyframe Animations for Micro-movements */
+        @keyframes subtleBreathing {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-3px) scale(1.003); }
+        }
+        
+        @keyframes eyeBlinking {
+            0%, 94%, 98%, 100% { transform: scaleY(1); }
+            96% { transform: scaleY(0.08); }
+        }
+
+        @keyframes goldPulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.25); }
+            50% { box-shadow: 0 0 35px rgba(212, 175, 55, 0.65); }
+        }
+
+        @keyframes waveFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .avatar-breathing {
+            animation: subtleBreathing 5s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+
+        .eye-blink-anim {
+            animation: eyeBlinking 5.2s infinite;
+            transform-origin: center 30%;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F6E7B0 45%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-bg {
+            background: linear-gradient(135deg, #d4af37 0%, #9e780a 100%);
+        }
+
+        .glass-panel {
+            background: rgba(16, 26, 54, 0.82);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.22);
+        }
+
+        .gold-glow {
+            animation: goldPulse 3s infinite ease-in-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(5, 9, 20, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.4);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 175, 55, 0.7);
+        }
+    </style>
+    <link rel="stylesheet" href="../assets/avatares/avatar-falante.css">
+</head>
+<body class="bg-brand-darkNavy text-slate-100 font-sans min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-brand-gold selection:text-brand-darkNavy">
+
+    <!-- Header / Brand Navigation -->
+    <header class="w-full glass-panel sticky top-0 z-40 border-b border-amber-500/20 px-4 py-3 sm:px-8">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            
+            <!-- Instituto DMap Logo & Branding -->
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-full gold-gradient-bg flex items-center justify-center p-0.5 shadow-lg shadow-amber-900/30">
+                    <div class="w-full h-full bg-brand-darkNavy rounded-full flex items-center justify-center p-1">
+                        <svg viewBox="0 0 100 100" class="w-full h-full text-brand-gold fill-current">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="3"/>
+                            <path d="M50 10 Q 70 50 50 90 Q 30 50 50 10 Z" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                            <path d="M10 50 Q 50 70 90 50 Q 50 30 10 50 Z" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                            <circle cx="50" cy="50" r="12" fill="currentColor"/>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="font-serif font-bold text-lg sm:text-xl tracking-wider gold-gradient-text uppercase">INSTITUTO DMAP</h1>
+                    <p class="text-[10px] sm:text-xs text-slate-400 font-medium tracking-tight">Desenvolvimento Multidisciplinar em Artes e Profissões</p>
+                </div>
+            </div>
+
+            <!-- Status Indicator and Audio Toggle -->
+            <div class="flex items-center gap-3">
+                <div class="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-950/80 border border-slate-800 text-xs">
+                    <span id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span id="statusText" class="text-slate-300 font-semibold">Sarah está online</span>
+                </div>
+                
+                <button id="muteAudioBtn" title="Ativar/Desativar Som da Sarah" class="p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-brand-gold border border-slate-700 transition shadow hover:border-amber-500/50">
+                    <i class="fa-solid fa-volume-high text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Workspace -->
+    <main class="max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Aviso: a Ana assumiu a recepção -->
+        <div class="af-aviso" role="note">
+            <span class="af-ana-icone" aria-hidden="true">A</span>
+            <p><strong>A Sarah foi a nossa recepcionista virtual.</strong> Agora quem cuida da recepção da Clínica D'Moura é a <strong>Ana</strong>: é só tocar em “Fale com a Ana” no site.</p>
+            <a href="../index.html">Falar com a Ana</a>
+        </div>
+        
+        <!-- LEFT COLUMN: Interactive Avatar Display (7 cols) -->
+        <section class="lg:col-span-7 flex flex-col items-center justify-center relative rounded-3xl glass-panel p-6 sm:p-8 shadow-2xl border border-amber-500/20 overflow-hidden min-h-[500px] sm:min-h-[580px]">
+            
+            <!-- Virtual Office Reception Background Elements -->
+            <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
+                <!-- Reception Ambient Lights -->
+                <div class="absolute -top-10 left-1/3 w-80 h-80 bg-blue-500/30 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 right-10 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl"></div>
+                <!-- Modern Interior Office Geometric Overlay -->
+                <svg class="w-full h-full text-slate-500 opacity-20" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0" y1="200" x2="100%" y2="200" stroke="currentColor" stroke-width="1"/>
+                    <rect x="5%" y="40" width="18%" height="120" rx="8" fill="none" stroke="currentColor" stroke-width="1"/>
+                    <rect x="75%" y="60" width="20%" height="180" rx="8" fill="none" stroke="currentColor" stroke-width="1"/>
+                </svg>
+            </div>
+
+            <!-- Avatar Identity Badge -->
+            <div class="absolute top-4 left-4 sm:top-6 sm:left-6 flex items-center gap-2 bg-slate-950/85 px-3.5 py-1.5 rounded-full border border-amber-500/30 shadow-md z-10">
+                <i class="fa-solid fa-circle-check text-brand-gold text-xs"></i>
+                <span class="text-xs font-bold text-slate-100">Sarah</span>
+                <span class="text-[10px] bg-amber-500/20 text-brand-gold px-2 py-0.5 rounded-full uppercase font-extrabold tracking-wider">Secretária</span>
+            </div>
+
+            <!-- Avatar Mood & Expression Selector -->
+            <div class="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center gap-1 bg-slate-950/85 p-1 rounded-full border border-slate-800 z-10">
+                <button onclick="setAvatarMood('happy')" class="px-2.5 py-1 rounded-full text-xs font-medium text-slate-300 hover:text-white transition" title="Sorriso Alegre">😊</button>
+                <button onclick="setAvatarMood('speaking')" class="px-2.5 py-1 rounded-full text-xs font-medium text-slate-300 hover:text-white transition" title="Modo Fala">💬</button>
+                <button onclick="setAvatarMood('welcoming')" class="px-2.5 py-1 rounded-full text-xs font-medium text-slate-300 hover:text-white transition" title="Atendimento Receptivo">✨</button>
+            </div>
+
+            <!-- AVATAR DISPLAY CONTAINER -->
+            <div id="avatarStage" class="avatar-breathing relative w-72 h-72 sm:w-88 sm:h-88 md:w-96 md:h-96 flex items-center justify-center my-3 transition-all duration-300">
+                
+                <!-- Audio Wave Glow Ring when speaking -->
+                <div id="speakingGlow" class="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500/20 to-yellow-300/10 opacity-0 transition-opacity duration-300 scale-105 pointer-events-none"></div>
+
+                <!-- High Quality Animated SVG Avatar: Sarah (Frequencial e idêntica à foto enviada) -->
+                <svg id="sarahSvg" viewBox="0 0 400 400" class="w-full h-full filter drop-shadow-[0_18px_30px_rgba(0,0,0,0.7)]">
+                    <defs>
+                        <!-- Hair Gradient (Golden Blonde) -->
+                        <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#fdf0a6"/>
+                            <stop offset="35%" stop-color="#ebd068"/>
+                            <stop offset="75%" stop-color="#c99f36"/>
+                            <stop offset="100%" stop-color="#936d1b"/>
+                        </linearGradient>
+
+                        <!-- Hair Highlights -->
+                        <linearGradient id="hairHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#fff8d4"/>
+                            <stop offset="100%" stop-color="#ebd068"/>
+                        </linearGradient>
+
+                        <!-- Warm Skin Tone Gradient -->
+                        <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#ffe8d6"/>
+                            <stop offset="60%" stop-color="#fdd5b8"/>
+                            <stop offset="100%" stop-color="#f2be9b"/>
+                        </linearGradient>
+
+                        <!-- Lab Coat / Blazer Gradient (Pure Professional White) -->
+                        <linearGradient id="coatGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ffffff"/>
+                            <stop offset="80%" stop-color="#f1f5f9"/>
+                            <stop offset="100%" stop-color="#e2e8f0"/>
+                        </linearGradient>
+
+                        <!-- Gold Earrings & Necklace Gradient -->
+                        <linearGradient id="goldAcc" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#fff3b0"/>
+                            <stop offset="50%" stop-color="#e5ba38"/>
+                            <stop offset="100%" stop-color="#9e780a"/>
+                        </linearGradient>
+
+                        <!-- Eye Iris Warm Brown Gradient -->
+                        <radialGradient id="irisGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#7c4a22"/>
+                            <stop offset="70%" stop-color="#542e11"/>
+                            <stop offset="100%" stop-color="#2c1404"/>
+                        </radialGradient>
+                        
+                        <!-- Soft Shadows Filter -->
+                        <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+                            <feDropShadow dx="0" dy="4" stdDeviation="5" flood-opacity="0.2"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Background Hair Layer (Back Fall) -->
+                    <path d="M 105 170 C 85 250 100 350 135 390 L 265 390 C 300 350 315 250 295 170 Z" fill="url(#hairGrad)"/>
+
+                    <!-- Torso / Executive White Blazer & Inner Blouse -->
+                    <g id="bodyOutfit">
+                        <!-- Silk Inner Top -->
+                        <path d="M 160 270 L 240 270 L 225 390 L 175 390 Z" fill="#2b1a08"/>
+                        <path d="M 170 280 L 230 280 L 220 390 L 180 390 Z" fill="url(#goldAcc)" opacity="0.85"/>
+
+                        <!-- Neck Structure -->
+                        <path d="M 172 230 L 228 230 L 228 285 L 172 285 Z" fill="url(#skinGrad)"/>
+                        <!-- Neck Shadow -->
+                        <path d="M 172 255 C 200 272 200 272 228 255 L 228 285 L 172 285 Z" fill="#e2a57e" opacity="0.6"/>
+
+                        <!-- Golden Pendant Necklace -->
+                        <path d="M 178 258 Q 200 284 222 258" fill="none" stroke="url(#goldAcc)" stroke-width="2.5"/>
+                        <circle cx="200" cy="278" r="4.5" fill="url(#goldAcc)"/>
+
+                        <!-- White Professional Medical/Secretary Blazer -->
+                        <path d="M 115 390 C 125 300 152 260 174 260 L 200 305 L 226 260 C 248 260 275 300 285 390 Z" fill="url(#coatGrad)" filter="url(#softShadow)"/>
+                        <!-- Lapels Stitch Lines -->
+                        <path d="M 148 260 L 195 320 L 165 390" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+                        <path d="M 252 260 L 205 320 L 235 390" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+                    </g>
+
+                    <!-- Head & Facial Features -->
+                    <g id="headGroup">
+                        <!-- Ears -->
+                        <circle cx="130" cy="190" r="14" fill="url(#skinGrad)"/>
+                        <circle cx="270" cy="190" r="14" fill="url(#skinGrad)"/>
+
+                        <!-- Gold Triple Ball Earrings on Ear (Matching image detail) -->
+                        <circle cx="125" cy="190" r="3.5" fill="url(#goldAcc)"/>
+                        <circle cx="123" cy="198" r="4.2" fill="url(#goldAcc)"/>
+                        <circle cx="121" cy="207" r="5" fill="url(#goldAcc)"/>
+
+                        <circle cx="275" cy="190" r="3.5" fill="url(#goldAcc)"/>
+                        <circle cx="277" cy="198" r="4.2" fill="url(#goldAcc)"/>
+                        <circle cx="279" cy="207" r="5" fill="url(#goldAcc)"/>
+
+                        <!-- Face Contour Oval -->
+                        <path d="M 134 150 C 134 80 266 80 266 150 C 266 215 235 252 200 252 C 165 252 134 215 134 150 Z" fill="url(#skinGrad)" filter="url(#softShadow)"/>
+
+                        <!-- Soft Blush Cheeks -->
+                        <ellipse cx="158" cy="182" rx="15" ry="9" fill="#f43f5e" opacity="0.15"/>
+                        <ellipse cx="242" cy="182" rx="15" ry="9" fill="#f43f5e" opacity="0.15"/>
+
+                        <!-- Styled Arch Eyebrows -->
+                        <path id="leftBrow" d="M 150 134 Q 170 122 188 132" fill="none" stroke="#3d210b" stroke-width="3.8" stroke-linecap="round"/>
+                        <path id="rightBrow" d="M 212 132 Q 230 122 250 134" fill="none" stroke="#3d210b" stroke-width="3.8" stroke-linecap="round"/>
+
+                        <!-- Expressive Warm Brown Eyes -->
+                        <g id="eyesGroup" class="eye-blink-anim">
+                            <!-- Left Eye -->
+                            <ellipse cx="168" cy="155" rx="15" ry="10" fill="#ffffff"/>
+                            <circle cx="169" cy="155" r="7.5" fill="url(#irisGrad)"/>
+                            <circle cx="169" cy="155" r="3.5" fill="#111827"/>
+                            <circle cx="166" cy="152" r="2.2" fill="#ffffff"/> <!-- Shine -->
+                            <!-- Upper Eyelash -->
+                            <path d="M 151 154 Q 168 141 185 154" fill="none" stroke="#1c0d04" stroke-width="2.8" stroke-linecap="round"/>
+
+                            <!-- Right Eye -->
+                            <ellipse cx="232" cy="155" rx="15" ry="10" fill="#ffffff"/>
+                            <circle cx="231" cy="155" r="7.5" fill="url(#irisGrad)"/>
+                            <circle cx="231" cy="155" r="3.5" fill="#111827"/>
+                            <circle cx="228" cy="152" r="2.2" fill="#ffffff"/> <!-- Shine -->
+                            <!-- Upper Eyelash -->
+                            <path d="M 215 154 Q 232 141 249 154" fill="none" stroke="#1c0d04" stroke-width="2.8" stroke-linecap="round"/>
+                        </g>
+
+                        <!-- Refined Nose -->
+                        <path d="M 200 154 L 197 184 Q 200 188 203 184" fill="none" stroke="#cf9063" stroke-width="2.2" stroke-linecap="round"/>
+
+                        <!-- DYNAMIC VISUAL MOUTH (Lips morph dynamically with speech) -->
+                        <g id="mouthGroup">
+                            <!-- Outer Lips Path -->
+                            <path id="mouthPath" d="M 170 212 Q 200 234 230 212 Q 200 220 170 212 Z" fill="#b91c1c" stroke="#881337" stroke-width="1"/>
+                            <!-- Teeth Highlight -->
+                            <path id="teethPath" d="M 174 213 Q 200 220 226 213 Q 200 217 174 213 Z" fill="#ffffff" opacity="0.95"/>
+                        </g>
+
+                        <!-- Blonde Hair Foreground & Side Swept Framing (Matching uploaded image hairstyle) -->
+                        <path d="M 134 135 C 130 65 270 65 266 135 C 266 110 288 75 220 50 C 155 35 115 85 134 135 Z" fill="url(#hairGrad)"/>
+                        <path d="M 150 60 Q 210 75 260 115 C 240 80 190 60 150 60 Z" fill="url(#hairHighlight)" opacity="0.6"/>
+                        <!-- Side Locks -->
+                        <path d="M 134 125 C 118 175 120 235 142 285 C 128 225 132 165 146 130 Z" fill="url(#hairGrad)"/>
+                        <path d="M 266 125 C 282 175 280 235 258 285 C 272 225 268 165 254 130 Z" fill="url(#hairGrad)"/>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- Subtitle & Live Audio Visualization Box -->
+            <div class="w-full mt-3 glass-panel rounded-2xl p-4 border border-amber-500/20 text-center relative overflow-hidden min-h-[80px] flex items-center justify-center shadow-lg">
+                <p id="sarahSubtitles" class="text-sm sm:text-base text-amber-100 font-medium italic transition-all duration-200">
+                    "Olá! Sou a Sarah, secretária virtual do Instituto DMap. Como posso ajudar você hoje?"
+                </p>
+                <!-- Equalizer Bar Animation when speaking -->
+                <div id="equalizer" class="absolute bottom-1.5 flex items-center gap-1.5 opacity-0 transition-opacity duration-300">
+                    <span class="w-1 h-3 bg-brand-gold rounded-full animate-bounce"></span>
+                    <span class="w-1 h-5 bg-brand-gold rounded-full animate-bounce delay-75"></span>
+                    <span class="w-1 h-2 bg-brand-gold rounded-full animate-bounce delay-150"></span>
+                    <span class="w-1 h-4 bg-brand-gold rounded-full animate-bounce delay-100"></span>
+                </div>
+            </div>
+
+            <!-- Quick Action Preset Buttons -->
+            <div class="w-full grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-4">
+                <button onclick="triggerPreset('apresentacao')" class="px-3 py-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 hover:border-amber-500/50 text-xs font-semibold text-slate-200 transition flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-solid fa-hand-wave text-brand-gold"></i> Apresentação
+                </button>
+                <button onclick="triggerPreset('cursos')" class="px-3 py-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 hover:border-amber-500/50 text-xs font-semibold text-slate-200 transition flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-solid fa-graduation-cap text-brand-gold"></i> Cursos & Áreas
+                </button>
+                <button onclick="triggerPreset('missao')" class="px-3 py-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 hover:border-amber-500/50 text-xs font-semibold text-slate-200 transition flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-solid fa-bullseye text-brand-gold"></i> Nossa Missão
+                </button>
+                <button onclick="triggerPreset('contato')" class="px-3 py-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 hover:border-amber-500/50 text-xs font-semibold text-slate-200 transition flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-solid fa-phone text-brand-gold"></i> Falar Conosco
+                </button>
+            </div>
+        </section>
+
+        <!-- RIGHT COLUMN: Interaction Chat & AI Assistant Hub (5 cols) -->
+        <section class="lg:col-span-5 flex flex-col h-full min-h-[580px] glass-panel rounded-3xl p-5 sm:p-6 border border-amber-500/20 shadow-2xl justify-between">
+            
+            <!-- Hub Title Bar -->
+            <div class="border-b border-slate-800 pb-3 mb-4 flex items-center justify-between">
+                <div>
+                    <h2 class="font-serif font-bold text-base sm:text-lg text-slate-100 flex items-center gap-2">
+                        <i class="fa-solid fa-comments text-brand-gold"></i> Conversar com Sarah
+                    </h2>
+                    <p class="text-xs text-slate-400">Atendimento interativo do Instituto DMap</p>
+                </div>
+                <button onclick="clearChat()" class="text-xs text-slate-400 hover:text-slate-200 transition p-1.5 rounded-lg hover:bg-slate-800" title="Limpar conversa">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </div>
+
+            <!-- Chat History Area -->
+            <div id="chatHistory" class="flex-1 overflow-y-auto space-y-3 pr-2 mb-4 max-h-[380px] text-xs sm:text-sm">
+                <!-- Initial Sarah Greeting -->
+                <div class="flex items-start gap-2.5">
+                    <div class="w-8 h-8 rounded-full gold-gradient-bg flex items-center justify-center text-brand-darkNavy font-extrabold text-xs shrink-0 shadow">
+                        S
+                    </div>
+                    <div class="bg-slate-800/90 border border-slate-700/80 p-3.5 rounded-2xl rounded-tl-none text-slate-200 leading-relaxed shadow">
+                        Olá! Bem-vindo(a) ao <strong>Instituto DMap</strong>! Eu sou a Sarah. Como posso ajudar você no seu desenvolvimento profissional, artístico ou em nossos serviços hoje?
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Input Form -->
+            <form id="chatForm" onsubmit="handleUserSubmit(event)" class="space-y-3">
+                <div class="relative flex items-center">
+                    <input type="text" id="userInput" placeholder="Digite sua mensagem para a Sarah..." 
+                        class="w-full bg-slate-950/90 border border-slate-700 focus:border-brand-gold rounded-2xl py-3.5 pl-4 pr-24 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none transition shadow-inner">
+                    
+                    <div class="absolute right-2 flex items-center gap-1.5">
+                        <!-- Microphone Voice Input Button -->
+                        <button type="button" id="micBtn" onclick="toggleVoiceRecognition()" title="Falar pelo microfone"
+                            class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-brand-gold transition border border-slate-700">
+                            <i class="fa-solid fa-microphone text-xs"></i>
+                        </button>
+                        
+                        <!-- Submit Button -->
+                        <button type="submit" id="sendBtn" title="Enviar mensagem"
+                            class="p-2.5 rounded-xl gold-gradient-bg text-brand-darkNavy font-bold hover:brightness-110 transition shadow">
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Footer Info / Location Badges -->
+                <div class="flex items-center justify-between text-[11px] text-slate-400 px-1 pt-1">
+                    <span class="flex items-center gap-1">
+                        <i class="fa-solid fa-shield-halved text-brand-gold"></i> Atendimento Inteligente Gemini
+                    </span>
+                    <span class="text-slate-400 font-medium">Recife • Caruaru • Garanhuns</span>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full glass-panel border-t border-amber-500/20 py-4 px-6 text-center text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p>© 2026 Instituto DMap — Desenvolvimento Multidisciplinar em Artes e Profissões | CNPJ 60.412.110/0001-92</p>
+            <p class="text-slate-400">Em parceria com Clínica D'Moura</p>
+        </div>
+    </footer>
+
+    <script>
+        /* ===================================================================
+           STATE MANAGEMENT & GLOBAL VARIABLES
+           =================================================================== */
+        let isSpeaking = false;
+        let speechSynth = window.speechSynthesis;
+        let isMuted = false;
+        let recognition = null;
+        let isListening = false;
+        let speechInterval = null;
+
+        // System Instruction Context for Sarah Assistant
+        const SARAH_SYSTEM_INSTRUCTION = `
+Você é a Sarah, a secretária virtual e embaixadora interativa oficial do Instituto DMap (Desenvolvimento Multidisciplinar em Artes e Profissões - CNPJ 60.412.110/0001-92).
+Sua aparência é de uma mulher elegante, de cabelos loiros, jaleco/blazer branco sofisticado e atenciosa.
+Seu tom de voz e texto é sempre extremamente educado, acolhedor, profissional e simpático.
+O Instituto DMap atua com cursos de capacitação profissional, formações multidisciplinares em artes, gestão, saúde e desenvolvimento humano, contando com parceria técnica com a Clínica D'Moura, atendendo Pernambuco (Recife, Caruaru, Garanhuns).
+
+Diretrizes de Resposta:
+1. Responda em primeira pessoa como Sarah.
+2. Seja clara e direta (máximo 2 a 3 parágrafos curtos) para garantir leitura agradável e fala fluida.
+3. Incentive o usuário a conhecer nossos cursos, diferenciais e agendar atendimento.
+`;
+
+        /* ===================================================================
+           PCM16 TO WAV AUDIO DECODER (for Gemini 2.5 Flash TTS)
+           =================================================================== */
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        function pcmToWav(pcm16Array, sampleRate = 24000) {
+            const buffer = new ArrayBuffer(44 + pcm16Array.length * 2);
+            const view = new DataView(buffer);
+
+            const writeString = (v, offset, str) => {
+                for (let i = 0; i < str.length; i++) {
+                    v.setUint8(offset + i, str.charCodeAt(i));
+                }
+            };
+
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + pcm16Array.length * 2, true);
+            writeString(view, 8, 'WAVE');
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true); // PCM
+            view.setUint16(22, 1, true); // Mono
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * 2, true);
+            view.setUint16(32, 2, true);
+            view.setUint16(34, 16, true);
+            writeString(view, 36, 'data');
+            view.setUint32(40, pcm16Array.length * 2, true);
+
+            let offset = 44;
+            for (let i = 0; i < pcm16Array.length; i++, offset += 2) {
+                view.setInt16(offset, pcm16Array[i], true);
+            }
+
+            return new Blob([view], { type: 'audio/wav' });
+        }
+
+        /* ===================================================================
+           AVATAR ANIMATION & LIP-SYNC ENGINE
+           =================================================================== */
+        const mouthPath = document.getElementById('mouthPath');
+        const teethPath = document.getElementById('teethPath');
+        const leftBrow = document.getElementById('leftBrow');
+        const rightBrow = document.getElementById('rightBrow');
+        const speakingGlow = document.getElementById('speakingGlow');
+        const equalizer = document.getElementById('equalizer');
+
+        // SVG Viseme Shapes
+        const MOUTH_SHAPES = {
+            closed: "M 170 212 Q 200 218 230 212 Q 200 218 170 212 Z",
+            smile: "M 170 212 Q 200 234 230 212 Q 200 220 170 212 Z",
+            talkSmall: "M 170 212 Q 200 230 230 212 Q 200 224 170 212 Z",
+            talkWide: "M 168 210 Q 200 242 232 210 Q 200 220 168 210 Z",
+            talkO: "M 180 208 Q 200 238 220 208 Q 200 222 180 208 Z"
+        };
+
+        const TEETH_SHAPES = {
+            closed: "M 174 213 Q 200 215 226 213 Q 200 215 174 213 Z",
+            open: "M 174 213 Q 200 221 226 213 Q 200 216 174 213 Z"
+        };
+
+        function setMouthShape(shapeKey) {
+            if (MOUTH_SHAPES[shapeKey]) {
+                mouthPath.setAttribute('d', MOUTH_SHAPES[shapeKey]);
+                teethPath.setAttribute('d', shapeKey === 'closed' ? TEETH_SHAPES.closed : TEETH_SHAPES.open);
+            }
+        }
+
+        function setAvatarMood(mood) {
+            if (mood === 'happy') {
+                leftBrow.setAttribute('d', "M 150 132 Q 170 120 188 132");
+                rightBrow.setAttribute('d', "M 212 132 Q 230 120 250 132");
+                setMouthShape('smile');
+            } else if (mood === 'speaking') {
+                leftBrow.setAttribute('d', "M 150 134 Q 170 125 188 134");
+                rightBrow.setAttribute('d', "M 212 134 Q 230 125 250 134");
+                setMouthShape('talkSmall');
+            } else if (mood === 'welcoming') {
+                leftBrow.setAttribute('d', "M 150 130 Q 170 118 188 130");
+                rightBrow.setAttribute('d', "M 212 130 Q 230 118 250 130");
+                setMouthShape('smile');
+            }
+        }
+
+        function startLipSync() {
+            if (speechInterval) clearInterval(speechInterval);
+            isSpeaking = true;
+            speakingGlow.style.opacity = '1';
+            equalizer.style.opacity = '1';
+            document.getElementById('statusText').innerText = "Sarah está falando...";
+
+            const shapes = ['talkSmall', 'talkWide', 'talkO', 'smile'];
+
+            speechInterval = setInterval(() => {
+                if (!isSpeaking) {
+                    stopLipSync();
+                    return;
+                }
+                const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+                setMouthShape(randomShape);
+            }, 110);
+        }
+
+        function stopLipSync() {
+            isSpeaking = false;
+            if (speechInterval) clearInterval(speechInterval);
+            speakingGlow.style.opacity = '0';
+            equalizer.style.opacity = '0';
+            setMouthShape('smile');
+            document.getElementById('statusText').innerText = "Sarah está online";
+        }
+
+        /* ===================================================================
+           TEXT TO SPEECH GENERATION (Gemini 2.5 Flash TTS + Web Speech)
+           =================================================================== */
+        async function speakText(text) {
+            if (isMuted) {
+                updateSubtitles(text);
+                return;
+            }
+
+            updateSubtitles(text);
+            startLipSync();
+            if (window.AvatarFalante && window.AvatarFalante.ativo()) { fallbackWebSpeech(text); return; } // avatar com foto: voz pt-BR do aparelho + boca sincronizada
+
+            // Try Gemini 2.5 Flash TTS API first
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{
+                        parts: [{ text: `Fale em português do Brasil com tom suave, profissional e simpático de secretária: ${text}` }]
+                    }],
+                    generationConfig: {
+                        responseModalities: ["AUDIO"],
+                        speechConfig: {
+                            voiceConfig: {
+                                prebuiltVoiceConfig: { voiceName: "Aoede" }
+                            }
+                        }
+                    }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    const part = result?.candidates?.[0]?.content?.parts?.[0];
+                    const audioData = part?.inlineData?.data;
+                    const mimeType = part?.inlineData?.mimeType;
+
+                    if (audioData) {
+                        const sampleRateMatch = mimeType ? mimeType.match(/rate=(\d+)/) : null;
+                        const sampleRate = sampleRateMatch ? parseInt(sampleRateMatch[1], 10) : 24000;
+                        const pcmBuffer = base64ToArrayBuffer(audioData);
+                        const pcm16 = new Int16Array(pcmBuffer);
+                        const wavBlob = pcmToWav(pcm16, sampleRate);
+                        const audioUrl = URL.createObjectURL(wavBlob);
+
+                        const audio = new Audio(audioUrl);
+                        audio.onended = () => stopLipSync();
+                        audio.onerror = () => fallbackWebSpeech(text);
+                        await audio.play();
+                        return;
+                    }
+                }
+            } catch (err) {
+                console.warn("Gemini TTS API indisponível temporariamente, acionando síntese de voz local...", err);
+            }
+
+            // Fallback: Web Speech Synthesis API
+            fallbackWebSpeech(text);
+        }
+
+        function fallbackWebSpeech(text) {
+            if (window.AvatarFalante && window.AvatarFalante.ativo()) { window.AvatarFalante.falar(text, { onend: stopLipSync }); return; }
+            if (!('speechSynthesis' in window)) {
+                setTimeout(() => stopLipSync(), text.length * 60);
+                return;
+            }
+
+            speechSynth.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'pt-BR';
+            utterance.rate = 1.0;
+            utterance.pitch = 1.1;
+
+            const voices = speechSynth.getVoices();
+            const ptVoice = voices.find(v => v.lang.includes('pt') && (v.name.includes('Luciana') || v.name.includes('Maria') || v.name.includes('Google') || v.name.includes('Female')));
+            if (ptVoice) utterance.voice = ptVoice;
+
+            utterance.onstart = () => startLipSync();
+            utterance.onend = () => stopLipSync();
+            utterance.onerror = () => stopLipSync();
+
+            speechSynth.speak(utterance);
+        }
+
+        function updateSubtitles(text) {
+            const subElem = document.getElementById('sarahSubtitles');
+            subElem.innerText = `"${text}"`;
+        }
+
+        /* ===================================================================
+           GEMINI 3 FLASH GENERATION FOR SMART CHAT
+           =================================================================== */
+        async function fetchGeminiResponse(userQuery) {
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: SARAH_SYSTEM_INSTRUCTION }]
+                }
+            };
+
+            let retries = 0;
+            const maxRetries = 3;
+            let delay = 1000;
+
+            while (retries < maxRetries) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        const answerText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                        if (answerText) return answerText.trim();
+                    }
+                } catch (err) {
+                    // Exponential backoff delay
+                }
+                retries++;
+                await new Promise(r => setTimeout(r, delay));
+                delay *= 2;
+            }
+
+            return "No Instituto DMap, oferecemos excelência em cursos multidisciplinares de Artes, Profissões e Serviços! Como posso orientar sua inscrição ou tirar dúvidas?";
+        }
+
+        /* ===================================================================
+           PRESETS & USER CHAT LOGIC
+           =================================================================== */
+        const PRESETS = {
+            apresentacao: "Olá! Seja muito bem-vindo(a) ao Instituto DMap! Eu sou a Sarah, secretária e assistente virtual. O Instituto DMap é focado no Desenvolvimento Multidisciplinar em Artes e Profissões. Conectamos conhecimento, capacitação e mercado para transformar talentos em futuro sustentável. Como posso ajudar você hoje?",
+            cursos: "Oferecemos formações nas áreas de Artes, Gestão, Tecnologia, Capacitação Profissional e Saúde em parceria com a Clínica D'Moura. Nossas unidades atendem Recife, Caruaru, Garanhuns e região. Gostaria de conhecer o catálogo completo?",
+            missao: "Nossa missão é promover o desenvolvimento de pessoas e organizações por meio da educação multidisciplinar, alinhando inovação, expressão artística e profissionalização de alto impacto.",
+            contato: "Você pode falar diretamente com nossa equipe presencial ou via atendimento do Instituto DMap! Atendemos em Recife, Caruaru e Garanhuns. Deseja agendar uma visita ou receber mais detalhes no seu WhatsApp?"
+        };
+
+        async function triggerPreset(type) {
+            const text = PRESETS[type];
+            if (text) {
+                appendChatMessage('Sarah', text);
+                await speakText(text);
+            }
+        }
+
+        async function handleUserSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('userInput');
+            const query = input.value.trim();
+            if (!query) return;
+
+            input.value = '';
+            appendChatMessage('Você', query);
+
+            updateSubtitles("Sarah está preparando a resposta...");
+            setAvatarMood('speaking');
+
+            const reply = await fetchGeminiResponse(query);
+            appendChatMessage('Sarah', reply);
+            await speakText(reply);
+        }
+
+        function appendChatMessage(sender, text) {
+            const chatHistory = document.getElementById('chatHistory');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = "flex items-start gap-2.5 my-2.5";
+
+            if (sender === 'Sarah') {
+                msgDiv.innerHTML = `
+                    <div class="w-8 h-8 rounded-full gold-gradient-bg flex items-center justify-center text-brand-darkNavy font-extrabold text-xs shrink-0 shadow">S</div>
+                    <div class="bg-slate-800/90 border border-slate-700/80 p-3.5 rounded-2xl rounded-tl-none text-slate-200 leading-relaxed shadow">
+                        ${text}
+                    </div>
+                `;
+            } else {
+                msgDiv.innerHTML = `
+                    <div class="ml-auto flex items-start gap-2.5 flex-row-reverse">
+                        <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-extrabold text-xs shrink-0 shadow">U</div>
+                        <div class="bg-blue-900/40 border border-blue-500/30 p-3.5 rounded-2xl rounded-tr-none text-slate-100 leading-relaxed shadow">
+                            ${text}
+                        </div>
+                    </div>
+                `;
+            }
+
+            chatHistory.appendChild(msgDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        function clearChat() {
+            const chatHistory = document.getElementById('chatHistory');
+            chatHistory.innerHTML = `
+                <div class="flex items-start gap-2.5">
+                    <div class="w-8 h-8 rounded-full gold-gradient-bg flex items-center justify-center text-brand-darkNavy font-extrabold text-xs shrink-0 shadow">S</div>
+                    <div class="bg-slate-800/90 border border-slate-700/80 p-3.5 rounded-2xl rounded-tl-none text-slate-200 leading-relaxed shadow">
+                        Conversa reiniciada. Como posso ajudar você no Instituto DMap?
+                    </div>
+                </div>
+            `;
+            updateSubtitles("Olá! Como posso ajudar você no Instituto DMap?");
+        }
+
+        /* ===================================================================
+           VOICE RECOGNITION (MICROPHONE)
+           =================================================================== */
+        function initVoiceRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRec();
+                recognition.lang = 'pt-BR';
+                recognition.continuous = false;
+                recognition.interimResults = false;
+
+                recognition.onstart = () => {
+                    isListening = true;
+                    document.getElementById('micBtn').classList.add('text-rose-500', 'animate-pulse', 'border-rose-500');
+                    updateSubtitles("Ouvindo sua pergunta...");
+                };
+
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    document.getElementById('userInput').value = transcript;
+                    handleUserSubmit(new Event('submit'));
+                };
+
+                recognition.onerror = () => stopListening();
+                recognition.onend = () => stopListening();
+            }
+        }
+
+        function toggleVoiceRecognition() {
+            if (!recognition) initVoiceRecognition();
+            if (!recognition) {
+                return;
+            }
+
+            if (isListening) {
+                recognition.stop();
+            } else {
+                recognition.start();
+            }
+        }
+
+        function stopListening() {
+            isListening = false;
+            const micBtn = document.getElementById('micBtn');
+            if (micBtn) micBtn.classList.remove('text-rose-500', 'animate-pulse', 'border-rose-500');
+        }
+
+        /* Mute Control Event */
+        document.getElementById('muteAudioBtn').addEventListener('click', () => {
+            isMuted = !isMuted;
+            const btn = document.getElementById('muteAudioBtn');
+            if (isMuted) {
+                btn.innerHTML = `<i class="fa-solid fa-volume-xmark text-sm text-slate-400"></i>`;
+                if (speechSynth) speechSynth.cancel();
+                if (window.AvatarFalante) window.AvatarFalante.parar();
+                stopLipSync();
+            } else {
+                btn.innerHTML = `<i class="fa-solid fa-volume-high text-sm text-brand-gold"></i>`;
+            }
+        });
+
+        /* Page Load Setup */
+        window.onload = function() {
+            setAvatarMood('happy');
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+            }
+        };
+    </script>
+    <script src="../assets/avatares/avatar-falante.js" data-pessoa="sarah" data-alvo="#sarahSvg"></script>
+</body>
+</html>

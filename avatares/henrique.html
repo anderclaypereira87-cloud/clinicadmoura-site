@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Henrique - Avatar Interativo de Oftalmologia</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter & Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            300: '#f6e05e',
+                            400: '#ecc94b',
+                            500: '#d4af37',
+                            600: '#b7912a',
+                            700: '#97731e'
+                        },
+                        navy: {
+                            800: '#0b1329',
+                            900: '#070c1b',
+                            950: '#03060d'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Keyframe Animations */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 0.3; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+        @keyframes speak-wave {
+            0%, 100% { height: 8px; }
+            50% { height: 28px; }
+        }
+        @keyframes avatar-breathe {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-4px) scale(1.008); }
+        }
+        @keyframes mouth-talk {
+            0%, 100% { transform: scaleY(0.2); }
+            50% { transform: scaleY(1.1); }
+        }
+
+        .avatar-container {
+            animation: avatar-breathe 4s ease-in-out infinite;
+        }
+        .speaking .ring-glow {
+            animation: pulse-ring 1.5s infinite ease-in-out;
+            box-shadow: 0 0 35px rgba(212, 175, 55, 0.6);
+        }
+        .mouth-overlay {
+            transform-origin: center top;
+            transition: transform 0.1s ease;
+        }
+        .speaking .mouth-anim {
+            animation: mouth-talk 0.22s infinite alternate ease-in-out;
+        }
+        .wave-bar {
+            animation: speak-wave 1s infinite ease-in-out;
+        }
+        .wave-bar:nth-child(2) { animation-delay: 0.15s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.45s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.6s; }
+
+        /* Glassmorphism elements */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.3);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 175, 55, 0.6);
+        }
+    </style>
+    <link rel="stylesheet" href="../assets/avatares/avatar-falante.css">
+</head>
+<body class="bg-navy-950 text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-gold-500 selection:text-navy-950">
+
+    <!-- Header / Brand Banner -->
+    <header class="border-b border-gold-500/20 bg-navy-900/90 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- DMAP Logo Emblem Representation -->
+                <div class="w-10 h-10 rounded-full border border-gold-500/50 bg-navy-800 flex items-center justify-center text-gold-500 shadow-md">
+                    <i class="fa-solid fa-spine text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg md:text-xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-500 to-amber-200">
+                        INSTITUTO DMAP
+                    </h1>
+                    <p class="text-xs text-slate-400 font-medium tracking-wide">
+                        CLÍNICA D'MOURA | DR. HENRIQUE - OFTALMOLOGIA
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <span id="ai-status" class="hidden md:inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Dr. Henrique Online
+                </span>
+                <button id="toggle-settings" title="Configurações da API" class="px-3 py-1.5 rounded-lg bg-navy-800 hover:bg-navy-700 text-gold-500 border border-gold-500/30 text-sm flex items-center gap-2 transition">
+                    <i class="fa-solid fa-gear"></i>
+                    <span class="hidden sm:inline">Configurações</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modal for Custom API Settings -->
+    <div id="settings-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-panel max-w-md w-full rounded-2xl p-6 relative border border-gold-500/30 shadow-2xl">
+            <button id="close-settings" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-serif font-bold text-gold-400 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-sliders"></i> Configurações da IA
+            </h3>
+            <p class="text-xs text-slate-300 mb-4">
+                O aplicativo utiliza a chave Gemini embutida por padrão. Se desejar usar sua própria chave de API para chamadas Gemini ilimitadas:
+            </p>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Chave da API Gemini (Opcional):</label>
+                    <input type="password" id="custom-api-key" placeholder="AIzaSy..." class="w-full bg-navy-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:border-gold-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Voz do Dr. Henrique (Gemini TTS):</label>
+                    <select id="voice-select" class="w-full bg-navy-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:border-gold-500 focus:outline-none">
+                        <option value="Algenib" selected>Algenib (Masculina Grave, Encorpada & Profissional)</option>
+                        <option value="Gacrux">Gacrux (Masculina Grave, Matura & Sóbria)</option>
+                        <option value="Orus">Orus (Masculina Firme & Impositiva)</option>
+                        <option value="Iapetus">Iapetus (Masculina Didática & Clara)</option>
+                        <option value="Kore">Kore (Neutra & Suave)</option>
+                    </select>
+                </div>
+                <div class="pt-2 flex justify-end gap-2">
+                    <button id="save-settings" class="px-4 py-2 bg-gold-500 hover:bg-gold-600 text-navy-950 font-semibold rounded-lg text-sm transition">
+                        Salvar e Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 py-6 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- LEFT COLUMN: Speaking Avatar Box (Lg: 5 cols) -->
+        <section class="lg:col-span-5 flex flex-col items-center">
+            <div class="w-full glass-panel rounded-3xl p-6 flex flex-col items-center relative overflow-hidden shadow-2xl border border-gold-500/30">
+                
+                <!-- Background Glow Effect -->
+                <div class="absolute -top-24 -left-24 w-60 h-60 bg-gold-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Avatar Status Badge -->
+                <div class="w-full flex justify-between items-center mb-4 z-10">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-gold-500 animate-pulse"></span>
+                        <span id="speaking-indicator-text" class="text-xs uppercase tracking-widest text-gold-400 font-semibold">
+                            Dr. Henrique Pronto
+                        </span>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 rounded-md bg-gold-500/10 text-gold-300 border border-gold-500/20 font-mono">
+                        Oftalmologia · CRM/RQE
+                    </span>
+                </div>
+
+                <!-- Avatar Circle Container -->
+                <div id="avatar-frame" class="relative my-4 avatar-container flex justify-center items-center">
+                    
+                    <!-- Outer Glowing Pulse Ring -->
+                    <div class="ring-glow absolute inset-0 rounded-full border-2 border-gold-500/40 transform scale-110 pointer-events-none"></div>
+
+                    <!-- Audio Visualizer Wave Overlay Around Avatar -->
+                    <div id="wave-container" class="absolute -bottom-3 flex items-end justify-center gap-1.5 z-20 h-8 opacity-0 transition-opacity duration-300">
+                        <span class="wave-bar w-1.5 bg-gold-400 rounded-full"></span>
+                        <span class="wave-bar w-1.5 bg-gold-400 rounded-full"></span>
+                        <span class="wave-bar w-1.5 bg-gold-300 rounded-full"></span>
+                        <span class="wave-bar w-1.5 bg-gold-400 rounded-full"></span>
+                        <span class="wave-bar w-1.5 bg-gold-400 rounded-full"></span>
+                    </div>
+
+                    <!-- Avatar Portrait Visual Component -->
+                    <div class="w-56 h-56 sm:w-64 sm:h-64 rounded-full overflow-hidden border-4 border-gold-500/80 shadow-2xl relative bg-navy-900 group">
+                        <!-- Stylized SVG Representation of Dr. Henrique -->
+                        <svg viewBox="0 0 300 300" class="w-full h-full object-cover">
+                            <defs>
+                                <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#1e293b"/>
+                                    <stop offset="100%" stop-color="#0f172a"/>
+                                </linearGradient>
+                                <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#d0a382"/>
+                                    <stop offset="100%" stop-color="#b88362"/>
+                                </linearGradient>
+                                <linearGradient id="goldTie" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#d4af37"/>
+                                    <stop offset="100%" stop-color="#97731e"/>
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- Background in Avatar -->
+                            <rect width="300" height="300" fill="#09101f" />
+                            <!-- Office Bookshelf Subtle Silhouette -->
+                            <rect x="20" y="30" width="80" height="180" fill="#111827" opacity="0.6"/>
+                            <rect x="200" y="20" width="80" height="200" fill="#111827" opacity="0.6"/>
+                            <circle cx="150" cy="150" r="140" fill="none" stroke="#d4af37" stroke-width="2" opacity="0.15"/>
+
+                            <!-- Suit & Shoulders -->
+                            <path d="M 50 300 C 60 220, 100 200, 150 200 C 200 200, 240 220, 250 300 Z" fill="url(#suitGrad)" />
+                            <!-- Vest -->
+                            <path d="M 110 210 L 150 280 L 190 210 Z" fill="#0f172a" />
+                            <!-- Shirt Collar -->
+                            <polygon points="125,200 150,225 135,185" fill="#ffffff" />
+                            <polygon points="175,200 150,225 165,185" fill="#ffffff" />
+                            <!-- Tie -->
+                            <polygon points="144,215 156,215 160,280 150,290 140,280" fill="url(#goldTie)" />
+
+                            <!-- Neck -->
+                            <rect x="135" y="160" width="30" height="35" rx="5" fill="url(#skinGrad)" />
+
+                            <!-- Head & Face -->
+                            <path d="M 105 110 C 105 50, 195 50, 195 110 C 195 155, 175 175, 150 175 C 125 175, 105 155, 105 110 Z" fill="url(#skinGrad)" />
+
+                            <!-- Hair (Dark Neat Trim) -->
+                            <path d="M 102 105 C 100 70, 120 40, 150 40 C 180 40, 200 70, 198 105 C 190 65, 170 50, 150 52 C 130 50, 110 65, 102 105 Z" fill="#1a1310" />
+                            
+                            <!-- Beard & Moustache (Dark Well Groomed) -->
+                            <path d="M 115 125 C 115 165, 130 174, 150 174 C 170 174, 185 165, 185 125 C 180 150, 165 170, 150 170 C 135 170, 120 150, 115 125 Z" fill="#1f1815" opacity="0.85" />
+                            
+                            <!-- Eyes -->
+                            <ellipse cx="132" cy="112" rx="7" ry="5" fill="#ffffff" />
+                            <circle cx="132" cy="112" r="3" fill="#3b2314" />
+                            <ellipse cx="168" cy="112" rx="7" ry="5" fill="#ffffff" />
+                            <circle cx="168" cy="112" r="3" fill="#3b2314" />
+                            
+                            <!-- Eyebrows -->
+                            <path d="M 122 102 Q 132 98 140 102" stroke="#1a1310" stroke-width="3.5" fill="none" stroke-linecap="round" />
+                            <path d="M 160 102 Q 168 98 178 102" stroke="#1a1310" stroke-width="3.5" fill="none" stroke-linecap="round" />
+
+                            <!-- Nose -->
+                            <path d="M 150 110 L 146 128 L 154 128" stroke="#8c5839" stroke-width="2" fill="none" stroke-linecap="round" />
+
+                            <!-- Mouth Base -->
+                            <path d="M 136 146 Q 150 150 164 146" stroke="#6e3a22" stroke-width="3" fill="none" stroke-linecap="round" />
+                            
+                            <!-- Animated Lip Overlay for Speaking -->
+                            <g id="animated-mouth" class="mouth-overlay">
+                                <ellipse id="mouth-aperture" cx="150" cy="148" rx="10" ry="1" fill="#421a0d" />
+                            </g>
+                        </svg>
+
+                        <!-- Overlay Badge on Image -->
+                        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-navy-950/85 backdrop-blur px-3 py-0.5 rounded-full border border-gold-500/40 text-[10px] text-gold-300 font-semibold tracking-wider uppercase">
+                            Dr. Henrique
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Intro / Audio Greeting Controller -->
+                <div class="w-full text-center mt-2 z-10">
+                    <h2 class="text-xl font-serif font-bold text-white">Dr. Henrique</h2>
+                    <p class="text-xs text-gold-400 font-medium mb-3">Oftalmologista · Clínica D'Moura</p>
+                    
+                    <!-- Quick Play Intro Audio Button -->
+                    <button id="btn-play-intro" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-gold-600 via-gold-500 to-amber-500 hover:from-gold-500 hover:to-gold-400 text-navy-950 font-bold text-sm shadow-lg flex items-center justify-center gap-2 transition transform active:scale-98">
+                        <i class="fa-solid fa-volume-high"></i>
+                        <span>Ouvir Apresentação do Dr. Henrique</span>
+                    </button>
+                </div>
+
+                <!-- Live Subtitles / Avatar Speech Display Box -->
+                <div class="w-full mt-4 bg-navy-900/90 border border-slate-800 rounded-2xl p-4 text-sm text-slate-200 min-h-[90px] flex flex-col justify-between shadow-inner">
+                    <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1 border-b border-slate-800 pb-1">
+                        <span class="flex items-center gap-1 font-semibold text-gold-400">
+                            <i class="fa-solid fa-comment-dots"></i> Fala do Dr. Henrique
+                        </span>
+                        <span id="audio-state-tag" class="text-slate-500">Aguardando</span>
+                    </div>
+                    <p id="avatar-speech-text" class="italic text-slate-300 leading-relaxed font-sans text-xs sm:text-sm">
+                        "Olá! Eu sou o Dr. Henrique, oftalmologista. Estou aqui para esclarecer dúvidas sobre a saúde dos seus olhos, exames de vista e tratamentos — com clareza e segurança."
+                    </p>
+                    <div class="mt-2 flex justify-end gap-2 text-xs">
+                        <button id="btn-repeat-audio" title="Repetir Áudio" class="p-1.5 rounded text-slate-400 hover:text-gold-400 hover:bg-navy-800 transition">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                        <button id="btn-stop-audio" title="Parar Áudio" class="p-1.5 rounded text-slate-400 hover:text-rose-400 hover:bg-navy-800 transition">
+                            <i class="fa-solid fa-stop"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- RIGHT COLUMN: Interactive Chat & Spine Diagnostic Guide (Lg: 7 cols) -->
+        <section class="lg:col-span-7 space-y-6">
+            
+            <!-- Question Launcher & Chat Card -->
+            <div class="glass-panel rounded-3xl p-6 border border-gold-500/30 shadow-xl flex flex-col h-[520px]">
+                
+                <!-- Card Header -->
+                <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
+                    <div>
+                        <h3 class="text-base font-serif font-bold text-gold-400 flex items-center gap-2">
+                            <i class="fa-solid fa-user-doctor"></i> Consultório de Oftalmologia Virtual
+                        </h3>
+                        <p class="text-xs text-slate-400">Faça sua pergunta ao Dr. Henrique ou escolha um tópico abaixo</p>
+                    </div>
+                    <span class="text-xs bg-navy-800 text-slate-300 px-2.5 py-1 rounded-full border border-slate-700">
+                        IA de Oftalmologia
+                    </span>
+                </div>
+
+                <!-- Chat History Window -->
+                <div id="chat-history" class="flex-1 overflow-y-auto space-y-3 pr-2 mb-4">
+                    <!-- Doctor Initial Message -->
+                    <div class="flex gap-3">
+                        <div class="w-8 h-8 rounded-full bg-gold-500/20 border border-gold-500/50 flex items-center justify-center text-gold-400 shrink-0 text-xs font-bold">
+                            DT
+                        </div>
+                        <div class="bg-navy-800 border border-gold-500/20 rounded-2xl p-3.5 text-xs sm:text-sm text-slate-200 max-w-[85%] shadow">
+                            <p class="font-semibold text-gold-400 mb-1">Dr. Henrique</p>
+                            Olá! Sou oftalmologista da Clínica D'Moura / Instituto DMAP. Cuidamos da saúde ocular com exames de vista, prevenção e tratamentos para catarata, miopia, hipermetropia, astigmatismo, cirurgia refrativa e adaptação de lentes de contato. Como posso te ajudar hoje?
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Suggested Topics Pill Bar -->
+                <div class="mb-3">
+                    <p class="text-[11px] text-slate-400 uppercase font-semibold tracking-wider mb-2 flex items-center gap-1">
+                        <i class="fa-solid fa-lightbulb text-gold-400"></i> Perguntas Frequentes:
+                    </p>
+                    <div class="flex flex-wrap gap-1.5 max-h-20 overflow-y-auto">
+                        <button class="quick-btn text-xs bg-navy-800 hover:bg-gold-500/20 text-slate-300 hover:text-gold-300 border border-slate-700 hover:border-gold-500/40 rounded-lg px-2.5 py-1 transition">
+                            O que faz um oftalmologista?
+                        </button>
+                        <button class="quick-btn text-xs bg-navy-800 hover:bg-gold-500/20 text-slate-300 hover:text-gold-300 border border-slate-700 hover:border-gold-500/40 rounded-lg px-2.5 py-1 transition">
+                            Miopia, hipermetropia e astigmatismo
+                        </button>
+                        <button class="quick-btn text-xs bg-navy-800 hover:bg-gold-500/20 text-slate-300 hover:text-gold-300 border border-slate-700 hover:border-gold-500/40 rounded-lg px-2.5 py-1 transition">
+                            Quando pensar em catarata?
+                        </button>
+                        <button class="quick-btn text-xs bg-navy-800 hover:bg-gold-500/20 text-slate-300 hover:text-gold-300 border border-slate-700 hover:border-gold-500/40 rounded-lg px-2.5 py-1 transition">
+                            Cirurgia refrativa: para quem?
+                        </button>
+                        <button class="quick-btn text-xs bg-navy-800 hover:bg-gold-500/20 text-slate-300 hover:text-gold-300 border border-slate-700 hover:border-gold-500/40 rounded-lg px-2.5 py-1 transition">
+                            Cuidados com lentes de contato
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Input Field & Voice Controls -->
+                <form id="chat-form" class="flex gap-2">
+                    <div class="relative flex-1">
+                        <input type="text" id="user-input" placeholder="Pergunte ao Dr. Henrique sobre vista, catarata, miopia, cirurgia refrativa..." required class="w-full bg-navy-900 border border-slate-700 focus:border-gold-500 rounded-xl py-3 pl-4 pr-10 text-xs sm:text-sm text-white focus:outline-none placeholder-slate-500 shadow-inner">
+                        <button type="button" id="btn-mic" title="Falar por voz" class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-slate-400 hover:text-gold-400 transition">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                    </div>
+                    <button type="submit" id="btn-send" class="bg-gold-500 hover:bg-gold-600 text-navy-950 font-bold px-5 py-3 rounded-xl transition flex items-center justify-center shadow-lg">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+
+            </div>
+
+            <!-- Interactive Spine Region Diagnostic Selector -->
+            <div class="glass-panel rounded-3xl p-5 border border-gold-500/30">
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="text-sm font-serif font-bold text-gold-400 flex items-center gap-2">
+                        <i class="fa-solid fa-bone"></i> Cuidados com a Visão
+                    </h4>
+                    <span class="text-[11px] text-slate-400">Clique na região afetada</span>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <button class="spine-region-btn text-left p-3 rounded-xl bg-navy-900 hover:bg-navy-800 border border-slate-800 hover:border-gold-500/50 transition group" data-region="Exames de vista" data-query="Quais exames de vista um oftalmologista costuma indicar no check-up?">
+                        <div class="flex items-center justify-between text-xs font-bold text-gold-400 group-hover:text-gold-300">
+                            <span>1. Exames</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Check-up de vista, acuidade e fundo de olho.</p>
+                    </button>
+
+                    <button class="spine-region-btn text-left p-3 rounded-xl bg-navy-900 hover:bg-navy-800 border border-slate-800 hover:border-gold-500/50 transition group" data-region="Erros refracionais" data-query="Qual a diferença entre miopia, hipermetropia e astigmatismo?">
+                        <div class="flex items-center justify-between text-xs font-bold text-gold-400 group-hover:text-gold-300">
+                            <span>2. Refração</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Miopia, hipermetropia e astigmatismo.</p>
+                    </button>
+
+                    <button class="spine-region-btn text-left p-3 rounded-xl bg-navy-900 hover:bg-navy-800 border border-slate-800 hover:border-gold-500/50 transition group" data-region="Catarata" data-query="O que é catarata e quando procurar avaliação?">
+                        <div class="flex items-center justify-between text-xs font-bold text-gold-400 group-hover:text-gold-300">
+                            <span>3. Catarata</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Opacidade do cristalino e avaliação cirúrgica.</p>
+                    </button>
+
+                    <button class="spine-region-btn text-left p-3 rounded-xl bg-navy-900 hover:bg-navy-800 border border-slate-800 hover:border-gold-500/50 transition group" data-region="Cirurgia refrativa e lentes" data-query="Para quem a cirurgia refrativa ou lentes de contato podem ser indicadas?">
+                        <div class="flex items-center justify-between text-xs font-bold text-gold-400 group-hover:text-gold-300">
+                            <span>4. Refrativa</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Correção de grau e lentes de contato.</p>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-navy-900/80 py-4 mt-6">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between text-xs text-slate-400 gap-2">
+            <div class="flex items-center gap-2">
+                <span class="font-serif font-semibold text-gold-400">Instituto DMAP / D'Moura Clínica</span>
+                <span>• Atendimento Oftalmológico Educativo</span>
+            </div>
+            <p class="text-slate-500 text-[11px]">
+                Nota: As respostas do Avatar Dr. Henrique têm caráter informativo e educativo. Consulte sempre um profissional de saúde em sua consulta presencial.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        /**
+         * Dr. Henrique Avatar Application Engine
+         * Handles:
+         * - Gemini 3 Flash Text Generation for Doctor persona
+         * - Gemini 2.5 Flash TTS for realistic voice output
+         * - Audio visualizer & mouth animation synchronization
+         * - Fallback Web Speech API when offline
+         */
+
+        // State Management
+        let currentApiKey = ""; // Embedded runtime key handled by Canvas platform
+        let isSpeaking = false;
+        let currentAudioSource = null;
+        let audioContext = null;
+
+        const SYSTEM_PROMPT = `Você é o Dr. Henrique, oftalmologista da Clínica D'Moura / Instituto DMAP.
+Sua postura é acolhedora, científica, didática e reasseguradora.
+Sempre responda em Português do Brasil, com linguagem clara para leigos, sem alarmismo.
+Você orienta (sem substituir consulta presencial) sobre:
+1. Exames de vista e check-up oftalmológico de rotina.
+2. Erros refracionais: miopia, hipermetropia e astigmatismo — o que são e opções (óculos, lentes de contato, cirurgia refrativa quando indicada).
+3. Catarata: conceitos gerais, quando avaliar e importância do acompanhamento.
+4. Cirurgia refrativa (a laser / correção de grau): indicações gerais e necessidade de avaliação presencial.
+5. Lentes de contato: higiene, adaptação e cuidados.
+6. Sinais de alerta que pedem avaliação presencial (dor ocular intensa, perda súbita de visão, flashes, etc.).
+Regras: respostas em no máximo 2 a 3 parágrafos curtos para o áudio do avatar; incentive agendamento na Clínica D'Moura (Recife, Caruaru, Garanhuns) quando fizer sentido; nunca invente CRM, preços ou resultados garantidos.`;
+
+        // Initial Doctor Greeting Text
+        const INTRO_TEXT = "Olá! Eu sou o Dr. Henrique, oftalmologista da Clínica D'Moura. Cuidamos da sua visão com exames, prevenção e tratamentos para miopia, hipermetropia, astigmatismo, catarata, cirurgia refrativa e lentes de contato. Como posso esclarecer sua dúvida hoje?";
+
+        // DOM Elements
+        const avatarFrame = document.getElementById('avatar-frame');
+        const mouthAperture = document.getElementById('mouth-aperture');
+        const waveContainer = document.getElementById('wave-container');
+        const speakingIndicatorText = document.getElementById('speaking-indicator-text');
+        const avatarSpeechText = document.getElementById('avatar-speech-text');
+        const audioStateTag = document.getElementById('audio-state-tag');
+
+        const chatHistory = document.getElementById('chat-history');
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        const btnSend = document.getElementById('btn-send');
+        const btnMic = document.getElementById('btn-mic');
+
+        const btnPlayIntro = document.getElementById('btn-play-intro');
+        const btnRepeatAudio = document.getElementById('btn-repeat-audio');
+        const btnStopAudio = document.getElementById('btn-stop-audio');
+
+        const settingsModal = document.getElementById('settings-modal');
+        const toggleSettingsBtn = document.getElementById('toggle-settings');
+        const closeSettingsBtn = document.getElementById('close-settings');
+        const saveSettingsBtn = document.getElementById('save-settings');
+        const customApiKeyInput = document.getElementById('custom-api-key');
+        const voiceSelect = document.getElementById('voice-select');
+
+        let lastDoctorSpeech = INTRO_TEXT;
+
+        // Initialize Audio Context on user interaction
+        function getAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            return audioContext;
+        }
+
+        // Settings Modal Handlers
+        toggleSettingsBtn.addEventListener('click', () => settingsModal.classList.remove('hidden'));
+        closeSettingsBtn.addEventListener('click', () => settingsModal.classList.add('hidden'));
+        saveSettingsBtn.addEventListener('click', () => {
+            currentApiKey = customApiKeyInput.value.trim();
+            settingsModal.classList.add('hidden');
+        });
+
+        /**
+         * Converts Int16 PCM array buffer from Gemini TTS API into a browser-playable WAV Blob
+         */
+        function pcmToWav(pcm16Data, sampleRate = 24000) {
+            const numChannels = 1;
+            const byteRate = sampleRate * numChannels * 2;
+            const blockAlign = numChannels * 2;
+            const dataSize = pcm16Data.length * 2;
+            const buffer = new ArrayBuffer(44 + dataSize);
+            const view = new DataView(buffer);
+
+            // RIFF header
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + dataSize, true);
+            writeString(view, 8, 'WAVE');
+            
+            // Subchunk 1 (fmt )
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true); // PCM Format
+            view.setUint16(22, numChannels, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, byteRate, true);
+            view.setUint16(32, blockAlign, true);
+            view.setUint16(34, 16, true); // Bits per sample
+            
+            // Subchunk 2 (data)
+            writeString(view, 36, 'data');
+            view.setUint32(40, dataSize, true);
+
+            // Write PCM audio data
+            let offset = 44;
+            for (let i = 0; i < pcm16Data.length; i++, offset += 2) {
+                view.setInt16(offset, pcm16Data[i], true);
+            }
+
+            return new Blob([buffer], { type: 'audio/wav' });
+        }
+
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        }
+
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        /**
+         * Starts visual talking animations on Dr. Henrique avatar
+         */
+        function startSpeakingAnimation() {
+            isSpeaking = true;
+            avatarFrame.classList.add('speaking');
+            waveContainer.classList.remove('opacity-0');
+            speakingIndicatorText.innerText = "Dr. Henrique Falando...";
+            audioStateTag.innerText = "Reproduzindo Áudio";
+            audioStateTag.className = "text-gold-400 font-medium animate-pulse";
+        }
+
+        /**
+         * Stops visual talking animations
+         */
+        function stopSpeakingAnimation() {
+            isSpeaking = false;
+            avatarFrame.classList.remove('speaking');
+            waveContainer.classList.add('opacity-0');
+            speakingIndicatorText.innerText = "Dr. Henrique Pronto";
+            audioStateTag.innerText = "Aguardando";
+            audioStateTag.className = "text-slate-500";
+            if (mouthAperture) {
+                mouthAperture.setAttribute('ry', '1');
+            }
+        }
+
+        /**
+         * Stop any playing audio
+         */
+        function stopAudio() {
+            if (window.AvatarFalante) window.AvatarFalante.parar();
+            if (currentAudioSource) {
+                try {
+                    currentAudioSource.stop();
+                } catch(e) {}
+                currentAudioSource = null;
+            }
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            stopSpeakingAnimation();
+        }
+
+        /**
+         * Generate TTS via Gemini API (`gemini-2.5-flash-preview-tts`) with Web Speech API fallback
+         */
+        async function speakText(text) {
+            stopAudio();
+            startSpeakingAnimation();
+            avatarSpeechText.innerText = `"${text}"`;
+            lastDoctorSpeech = text;
+            if (window.AvatarFalante && window.AvatarFalante.ativo()) { fallbackWebSpeech(text); return; } // avatar com foto: voz pt-BR do aparelho + boca sincronizada
+
+            const voiceName = voiceSelect.value || "Algenib";
+            const apiKey = currentApiKey; // Can be empty string for platform runtime injection
+
+            const payload = {
+                contents: [{
+                    parts: [{ text: `Fale em português do Brasil com tom masculino firme, calmo, acolhedor e científico de um oftalmologista: ${text}` }]
+                }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: { voiceName: voiceName }
+                        }
+                    }
+                }
+            };
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Gemini TTS API HTTP Error ${response.status}`);
+                }
+
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const base64Audio = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType || "";
+
+                if (base64Audio) {
+                    // Extract sample rate if present (e.g. rate=24000)
+                    let sampleRate = 24000;
+                    const match = mimeType.match(/rate=(\d+)/);
+                    if (match && match[1]) {
+                        sampleRate = parseInt(match[1], 10);
+                    }
+
+                    const arrayBuffer = base64ToArrayBuffer(base64Audio);
+                    const pcm16 = new Int16Array(arrayBuffer);
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    const audioUrl = URL.createObjectURL(wavBlob);
+
+                    const audio = new Audio(audioUrl);
+                    
+                    // Lip animation trigger on mouth graphic
+                    const mouthInterval = setInterval(() => {
+                        if (!isSpeaking) {
+                            clearInterval(mouthInterval);
+                            return;
+                        }
+                        const randomHeight = Math.floor(Math.random() * 8) + 2;
+                        if (mouthAperture) mouthAperture.setAttribute('ry', randomHeight);
+                    }, 120);
+
+                    audio.onended = () => {
+                        clearInterval(mouthInterval);
+                        stopSpeakingAnimation();
+                    };
+
+                    audio.onerror = () => {
+                        clearInterval(mouthInterval);
+                        fallbackWebSpeech(text);
+                    };
+
+                    audio.play().catch(() => fallbackWebSpeech(text));
+                    return;
+                } else {
+                    throw new Error("Formato de áudio indisponível na resposta da API");
+                }
+            } catch (err) {
+                console.warn("Gemini TTS endpoint fallbacked to Web Speech API:", err);
+                fallbackWebSpeech(text);
+            }
+        }
+
+        /**
+         * Fallback native SpeechSynthesis if TTS API is throttled or offline
+         */
+        function fallbackWebSpeech(text) {
+            if (window.AvatarFalante && window.AvatarFalante.ativo()) { window.AvatarFalante.falar(text, { onend: stopSpeakingAnimation }); return; }
+            if (!('speechSynthesis' in window)) {
+                stopSpeakingAnimation();
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'pt-BR';
+            utterance.rate = 0.92;
+            utterance.pitch = 0.65; // Tom de voz mais grave e encorpado
+
+            // Try finding male Portuguese voice
+            const voices = window.speechSynthesis.getVoices();
+            const ptVoice = voices.find(v => v.lang.includes('pt') && (v.name.includes('Male') || v.name.includes('Luciano') || v.name.includes('Daniel') || v.name.includes('Google')));
+            if (ptVoice) utterance.voice = ptVoice;
+
+            const mouthInterval = setInterval(() => {
+                if (!isSpeaking) {
+                    clearInterval(mouthInterval);
+                    return;
+                }
+                const randomHeight = Math.floor(Math.random() * 7) + 2;
+                if (mouthAperture) mouthAperture.setAttribute('ry', randomHeight);
+            }, 130);
+
+            utterance.onend = () => {
+                clearInterval(mouthInterval);
+                stopSpeakingAnimation();
+            };
+
+            utterance.onerror = () => {
+                clearInterval(mouthInterval);
+                stopSpeakingAnimation();
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        /**
+         * Generate AI Answer from Dr. Henrique using `gemini-3-flash-preview`
+         */
+        async function askDrHenrique(questionText) {
+            appendUserMessage(questionText);
+            userInput.value = '';
+
+            // Show Thinking Indicator
+            const doctorThinkingMsg = appendDoctorMessage("Dr. Henrique está formulando a resposta...");
+            speakingIndicatorText.innerText = "Dr. Henrique Pensando...";
+
+            const apiKey = currentApiKey;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [
+                    {
+                        role: "user",
+                        parts: [{ text: questionText }]
+                    }
+                ],
+                systemInstruction: {
+                    parts: [{ text: SYSTEM_PROMPT }]
+                }
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP Error ${response.status}`);
+                }
+
+                const data = await response.json();
+                const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (replyText) {
+                    doctorThinkingMsg.innerHTML = `<p class="font-semibold text-gold-400 mb-1">Dr. Henrique</p>${formatMarkdown(replyText)}`;
+                    chatHistory.scrollTop = chatHistory.scrollHeight;
+                    speakText(replyText);
+                } else {
+                    throw new Error("Sem texto gerado");
+                }
+
+            } catch (err) {
+                console.error("Erro na geração da IA:", err);
+                const fallbackReply = `Como oftalmologista, oriento que a saúde ocular depende de avaliação presencial: exames de vista, prevenção e, quando indicado, tratamento de catarata, erros refracionais, cirurgia refrativa ou adaptação de lentes. Recomendo agendar na Clínica D'Moura para um exame completo.`;
+                doctorThinkingMsg.innerHTML = `<p class="font-semibold text-gold-400 mb-1">Dr. Henrique</p>${fallbackReply}`;
+                speakText(fallbackReply);
+            }
+        }
+
+        // Helper UI Chat Append Functions
+        function appendUserMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'flex gap-3 justify-end';
+            msgDiv.innerHTML = `
+                <div class="bg-gold-500/10 border border-gold-500/30 rounded-2xl p-3 text-xs sm:text-sm text-slate-100 max-w-[85%] shadow">
+                    <p class="font-semibold text-gold-300 mb-0.5 text-[11px]">Você</p>
+                    ${escapeHtml(text)}
+                </div>
+            `;
+            chatHistory.appendChild(msgDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        function appendDoctorMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'flex gap-3';
+            msgDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-gold-500/20 border border-gold-500/50 flex items-center justify-center text-gold-400 shrink-0 text-xs font-bold">
+                    DT
+                </div>
+                <div class="doctor-msg-content bg-navy-800 border border-gold-500/20 rounded-2xl p-3.5 text-xs sm:text-sm text-slate-200 max-w-[85%] shadow">
+                    <p class="font-semibold text-gold-400 mb-1">Dr. Henrique</p>
+                    ${text}
+                </div>
+            `;
+            chatHistory.appendChild(msgDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+            return msgDiv.querySelector('.doctor-msg-content');
+        }
+
+        function formatMarkdown(text) {
+            return text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/\n/g, '<br>');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Form Submit
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = userInput.value.trim();
+            if (query) askDrHenrique(query);
+        });
+
+        // Quick Buttons Click
+        document.querySelectorAll('.quick-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                askDrHenrique(btn.innerText.trim());
+            });
+        });
+
+        // Spine Region Buttons Click
+        document.querySelectorAll('.spine-region-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const query = btn.getAttribute('data-query');
+                if (query) askDrHenrique(query);
+            });
+        });
+
+        // Audio Controls Buttons
+        btnPlayIntro.addEventListener('click', () => {
+            getAudioContext();
+            speakText(INTRO_TEXT);
+        });
+
+        btnRepeatAudio.addEventListener('click', () => {
+            getAudioContext();
+            if (lastDoctorSpeech) speakText(lastDoctorSpeech);
+        });
+
+        btnStopAudio.addEventListener('click', () => {
+            stopAudio();
+        });
+
+        // Speech Recognition (Microphone input)
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'pt-BR';
+            recognition.continuous = false;
+
+            btnMic.addEventListener('click', () => {
+                try {
+                    recognition.start();
+                    btnMic.classList.add('text-rose-500', 'animate-pulse');
+                } catch(e) {
+                    recognition.stop();
+                    btnMic.classList.remove('text-rose-500', 'animate-pulse');
+                }
+            });
+
+            recognition.onresult = (event) => {
+                btnMic.classList.remove('text-rose-500', 'animate-pulse');
+                const transcript = event.results[0][0].transcript;
+                if (transcript) {
+                    userInput.value = transcript;
+                    askDrHenrique(transcript);
+                }
+            };
+
+            recognition.onerror = () => {
+                btnMic.classList.remove('text-rose-500', 'animate-pulse');
+            };
+
+            recognition.onend = () => {
+                btnMic.classList.remove('text-rose-500', 'animate-pulse');
+            };
+        } else {
+            btnMic.style.display = 'none';
+        }
+
+        // Preload Web Speech voices
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = () => {
+                window.speechSynthesis.getVoices();
+            };
+        }
+
+        // Window Load Handler
+        window.addEventListener('load', () => {
+            avatarSpeechText.innerText = `"${INTRO_TEXT}"`;
+        });
+    </script>
+    <script src="../assets/avatares/avatar-falante.js" data-pessoa="henrique" data-alvo="#avatar-frame svg"></script>
+</body>
+</html>

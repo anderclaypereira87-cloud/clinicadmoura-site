@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <!-- Chosen Palette: Ouro Soberano & Azul Imperial Executivo -->
+    <!-- Application Structure Plan: Painel interativo executivo e proposta comercial digital para a parceria entre Instituto DMap e Faculdade Metropolitana da Grande Recife. Estruturado em 7 seções estratégicas: 1. Documento de Proposta e Conceito CAPEX Zero; 2. Análise Semiótica e Gerador do Isotipo em Canvas HTML5; 3. Mercado Regional (Recife, Caruaru, Garanhuns - 6,4M Hab) e Público-Alvo; 4. Ecossistema DMap AI e Calculadora Comercial Interativa; 5. Grade de Cursos por Especialidade; 6. Governança, Co-Branding em Canvas e Roadmap; 7. Gerador e Central do E-mail Oficial de Envio (Gilmarcio@yahoo.com.br) com botão de Download em PDF/Relatório posicionado antes das ações de código/cópia e contatos atualizados para diretoria@clinicadmoura.company e anderclay@dmapone.org. -->
+    <!-- Visualization & Content Choices:
+        - Gerador de Isotipo Marca DMap: API Canvas HTML5 sem SVG, com controles dinâmicos de síntese, matrizes e simulação de grade.
+        - Co-Branding Canvas: API Canvas HTML5 para visualização em tempo real das chancelas conjuntas.
+        - Gráfico de Mercado Regional: Chart.js (Barras Agrupadas) com quebra de rótulos automatizada em 16 caracteres.
+        - Gráfico de Público-Alvo: Chart.js (Doughnut) de especialidades da saúde estética.
+        - Gráfico de Funil Comercial DMap AI: Chart.js (Linha Logarítmica).
+        - Calculadora de Captação: JS interativo com projeção em tempo real de matrículas e ROI.
+        - Central do E-mail Executivo: Minuta formal direcionada a Gilmarcio com botão de Download de Proposta/PDF antes do botão de cópia, e emails institucionais sincronizados.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instituto DMap | Proposta Executiva & Arquitetura de Marca</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #071120;
+            color: #E5E9F0;
+        }
+        .font-brand {
+            font-family: 'Cinzel', serif;
+        }
+        .font-sans-header {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 620px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 380px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .card-gold-border {
+            border: 1px solid rgba(197, 160, 89, 0.35);
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(7, 17, 32, 0.98));
+        }
+        .card-gold-border:hover {
+            border-color: rgba(197, 160, 89, 0.7);
+        }
+        .glow-gold {
+            box-shadow: 0 0 25px rgba(197, 160, 89, 0.12);
+        }
+        @media print {
+            nav, button, input[type="range"], .no-print {
+                display: none !important;
+            }
+            body {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+            }
+            .card-gold-border {
+                border: 1px solid #ccc !important;
+                background: #ffffff !important;
+                color: #000000 !important;
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #071120;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E242B;
+            border-radius: 4px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C5A059;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Navegação Executiva Superior -->
+    <nav class="sticky top-0 z-50 bg-[#071120]/95 backdrop-blur-md border-b border-[#C5A059]/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-full bg-[#C5A059]/20 border border-[#C5A059] flex items-center justify-center font-brand font-bold text-[#C5A059] text-base">
+                        D
+                    </div>
+                    <div>
+                        <span class="font-brand font-bold text-base text-[#E8D8B8] tracking-widest block leading-none">
+                            INSTITUTO DMAP
+                        </span>
+                        <span class="text-[9px] text-slate-400 font-sans-header uppercase tracking-wider block mt-0.5">
+                            Desenvolvimento Multidisciplinar
+                        </span>
+                    </div>
+                </div>
+
+                <div class="hidden xl:flex space-x-5 text-[11px] font-semibold uppercase tracking-wider">
+                    <a href="#proposta-executiva" class="text-slate-300 hover:text-[#C5A059] transition">1. Proposta</a>
+                    <a href="#sintese-logo" class="text-slate-300 hover:text-[#C5A059] transition">2. Marca & Semiótica</a>
+                    <a href="#mercado-regional" class="text-slate-300 hover:text-[#C5A059] transition">3. Mercado</a>
+                    <a href="#dmap-ai" class="text-slate-300 hover:text-[#C5A059] transition">4. DMap AI</a>
+                    <a href="#linhas-cursos" class="text-slate-300 hover:text-[#C5A059] transition">5. Cursos</a>
+                    <a href="#co-branding" class="text-slate-300 hover:text-[#C5A059] transition">6. Governança</a>
+                    <a href="#email-template" class="text-slate-300 hover:text-[#C5A059] transition">7. E-mail Gilmarcio</a>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    <button onclick="downloadDocumentPDF()" class="px-3 py-1.5 bg-[#C5A059] text-black text-xs font-bold rounded hover:bg-[#E8D8B8] transition flex items-center space-x-1 shadow">
+                        <span>↓ Baixar Proposta</span>
+                    </button>
+                    <a href="#email-template" class="px-3 py-1.5 bg-slate-800 text-[#E8D8B8] border border-[#C5A059]/40 text-xs font-bold rounded hover:bg-slate-700 transition">
+                        E-mail
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cabeçalho Principal e Banner Institucional -->
+    <header class="relative bg-gradient-to-b from-[#0B192E] via-[#071120] to-[#0B192E] py-12 px-4 sm:px-6 lg:px-8 border-b border-[#C5A059]/20">
+        <div class="max-w-7xl mx-auto text-center space-y-5">
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest text-[#E8D8B8] bg-[#C5A059]/10 border border-[#C5A059]/30 uppercase">
+                <span>Documento Oficial de Proposta Institucional e Comercial</span>
+            </div>
+            
+            <h1 class="text-3xl sm:text-5xl font-extrabold font-brand text-[#C5A059] tracking-wider uppercase drop-shadow-lg">
+                INSTITUTO DMAP
+            </h1>
+            
+            <p class="text-xs sm:text-sm font-sans-header text-[#E8D8B8] tracking-widest uppercase max-w-3xl mx-auto font-medium">
+                Expansão Regional de Pós-Graduação em Saúde, Estética, Gestão e Áreas Estratégicas
+            </p>
+
+            <div class="max-w-3xl mx-auto p-4 rounded-xl bg-[#0B192E]/80 border border-[#C5A059]/30 text-xs sm:text-sm text-slate-200 italic shadow-inner">
+                "Levar a força acadêmica da Metropolitana para mais perto do aluno, criando presença regional com investimento mínimo e máxima eficiência operacional."
+            </div>
+
+            <!-- Ficha Técnica e Contatos Telefônicos / E-mails -->
+            <div class="pt-2 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-5xl mx-auto text-xs text-slate-300">
+                <div class="p-3 bg-slate-900/80 rounded-lg border border-slate-800 text-left">
+                    <span class="block text-slate-400 text-[10px] uppercase font-bold">Proponente</span>
+                    <strong class="text-[#E8D8B8] block text-xs">Instituto DMap</strong>
+                    <span class="text-[10px] text-slate-400 block">CNPJ: 60.412.110/0001-92</span>
+                </div>
+                <div class="p-3 bg-slate-900/80 rounded-lg border border-slate-800 text-left">
+                    <span class="block text-slate-400 text-[10px] uppercase font-bold">Direção Executiva</span>
+                    <strong class="text-[#E8D8B8] block text-xs">Anderclay Pereira</strong>
+                    <span class="text-[10px] text-slate-400 block">anderclay@dmapone.org</span>
+                </div>
+                <div class="p-3 bg-slate-900/80 rounded-lg border border-slate-800 text-left">
+                    <span class="block text-slate-400 text-[10px] uppercase font-bold">Canal Institucional</span>
+                    <strong class="text-[#E8D8B8] block text-xs">Diretoria DMap / Clínica</strong>
+                    <span class="text-[10px] text-slate-400 block">diretoria@clinicadmoura.company</span>
+                </div>
+                <div class="p-3 bg-slate-900/80 rounded-lg border border-slate-800 text-left">
+                    <span class="block text-slate-400 text-[10px] uppercase font-bold">Polos Estratégicos</span>
+                    <strong class="text-[#C5A059] block text-xs">Recife | Caruaru | Garanhuns</strong>
+                    <span class="text-[10px] text-slate-400 block">6,4 Milhões de Hab.</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== AVATAR FALANTE ANDERCLAY – VERSÃO LIMPA ==================== -->
+    <section id="avatar-falante" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8">
+        <div class="card-gold-border rounded-2xl p-5 md:p-6 glow-gold">
+            
+            <!-- Cabeçalho com foto pequena no canto + cumprimento -->
+            <div class="flex items-center gap-4 mb-5">
+                <div class="relative flex-shrink-0">
+                    <img src="anderclay_avatar.jpg" alt="Anderclay Pereira" 
+                         class="w-14 h-14 rounded-full object-cover border-2 border-[#C5A059]"
+                         onerror="this.src='https://via.placeholder.com/100x100/0B192E/C5A059?text=AP'">
+                    <div id="avatarStatus" class="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-slate-600 rounded-full border-2 border-[#071120] transition-colors"></div>
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm text-[#E8D8B8] font-medium">Olá, eu sou <strong class="text-[#C5A059]">Anderclay Pereira</strong>, Diretor Executivo do Instituto DMap.</p>
+                    <p class="text-xs text-slate-400 mt-0.5">Clique nos botões abaixo para ouvir a apresentação da proposta.</p>
+                </div>
+                <button onclick="pararFala()" class="px-3 py-1.5 bg-slate-800 text-[#E8D8B8] border border-slate-700 text-xs font-bold rounded-lg hover:bg-slate-700 transition flex-shrink-0">
+                    ⏹ Parar
+                </button>
+            </div>
+
+            <div id="statusFala" class="text-xs text-[#C5A059] italic hidden font-medium mb-3">
+                ● Anderclay está falando...
+            </div>
+
+            <!-- Controles de Voz Personalizada -->
+            <div class="flex flex-wrap items-center gap-4 mb-4 p-3 rounded-xl bg-slate-900/70 border border-slate-800 text-xs">
+                <span class="text-[#C5A059] font-bold uppercase tracking-wider">Voz:</span>
+                <label class="flex items-center gap-2 text-slate-300">
+                    Tom
+                    <input type="range" id="voicePitch" min="0.5" max="1.2" step="0.05" value="0.75" class="w-20 accent-[#C5A059]" oninput="document.getElementById('pitchVal').innerText=this.value">
+                    <span id="pitchVal" class="text-[#E8D8B8] w-8">0.75</span>
+                </label>
+                <label class="flex items-center gap-2 text-slate-300">
+                    Velocidade
+                    <input type="range" id="voiceRate" min="0.7" max="1.1" step="0.05" value="0.87" class="w-20 accent-[#C5A059]" oninput="document.getElementById('rateVal').innerText=this.value">
+                    <span id="rateVal" class="text-[#E8D8B8] w-8">0.87</span>
+                </label>
+                <button onclick="testarVoz()" class="px-3 py-1 bg-slate-800 border border-[#C5A059]/40 text-[#E8D8B8] rounded hover:bg-slate-700 transition text-[11px] font-bold">
+                    Testar voz
+                </button>
+            </div>
+
+            <!-- Botões de Play -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                <button onclick="falarSecao('abertura')" class="text-left p-3 rounded-xl bg-slate-900/90 border border-slate-700 hover:border-[#C5A059] transition group">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-7 h-7 rounded-full bg-[#C5A059] text-black font-bold flex items-center justify-center text-xs group-hover:scale-110 transition">▶</span>
+                        <div>
+                            <strong class="text-[#E8D8B8] text-xs block">1. Por que esta parceria</strong>
+                            <span class="text-[10px] text-slate-400">Visão estratégica</span>
+                        </div>
+                    </div>
+                </button>
+
+                <button onclick="falarSecao('protecao')" class="text-left p-3 rounded-xl bg-slate-900/90 border border-slate-700 hover:border-[#C5A059] transition group">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-7 h-7 rounded-full bg-[#C5A059] text-black font-bold flex items-center justify-center text-xs group-hover:scale-110 transition">▶</span>
+                        <div>
+                            <strong class="text-[#E8D8B8] text-xs block">2. Proteção Financeira</strong>
+                            <span class="text-[10px] text-slate-400">Quórum e CAPEX zero</span>
+                        </div>
+                    </div>
+                </button>
+
+                <button onclick="falarSecao('modelo')" class="text-left p-3 rounded-xl bg-slate-900/90 border border-slate-700 hover:border-[#C5A059] transition group">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-7 h-7 rounded-full bg-[#C5A059] text-black font-bold flex items-center justify-center text-xs group-hover:scale-110 transition">▶</span>
+                        <div>
+                            <strong class="text-[#E8D8B8] text-xs block">3. Revenue Share</strong>
+                            <span class="text-[10px] text-slate-400">Modelo de partilha</span>
+                        </div>
+                    </div>
+                </button>
+
+                <button onclick="falarSecao('exclusividade')" class="text-left p-3 rounded-xl bg-slate-900/90 border border-slate-700 hover:border-[#C5A059] transition group">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-7 h-7 rounded-full bg-[#C5A059] text-black font-bold flex items-center justify-center text-xs group-hover:scale-110 transition">▶</span>
+                        <div>
+                            <strong class="text-[#E8D8B8] text-xs block">4. Exclusividade</strong>
+                            <span class="text-[10px] text-slate-400">Segurança territorial</span>
+                        </div>
+                    </div>
+                </button>
+
+                <button onclick="falarSecao('tecnologia')" class="text-left p-3 rounded-xl bg-slate-900/90 border border-slate-700 hover:border-[#C5A059] transition group">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-7 h-7 rounded-full bg-[#C5A059] text-black font-bold flex items-center justify-center text-xs group-hover:scale-110 transition">▶</span>
+                        <div>
+                            <strong class="text-[#E8D8B8] text-xs block">5. DMap AI & PI</strong>
+                            <span class="text-[10px] text-slate-400">Propriedade intelectual</span>
+                        </div>
+                    </div>
+                </button>
+
+                <button onclick="falarSecao('fechamento')" class="text-left p-3 rounded-xl bg-gradient-to-r from-[#C5A059]/20 to-transparent border border-[#C5A059] hover:border-[#E8D8B8] transition group">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-7 h-7 rounded-full bg-[#C5A059] text-black font-bold flex items-center justify-center text-xs group-hover:scale-110 transition">▶</span>
+                        <div>
+                            <strong class="text-[#E8D8B8] text-xs block">6. Fechamento + Dúvidas</strong>
+                            <span class="text-[10px] text-slate-400">Pode perguntar</span>
+                        </div>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Texto que ensina -->
+            <div id="textoEnsino" class="mt-4 p-3 rounded-xl bg-[#0B192E] border border-slate-800 text-sm text-slate-300 leading-relaxed hidden">
+                <p class="text-[11px] font-bold text-[#C5A059] uppercase mb-1">O que você está ouvindo:</p>
+                <div id="conteudoEnsino"></div>
+            </div>
+
+            <!-- Chat de Perguntas -->
+            <div class="mt-4 p-3 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                <p class="text-xs font-bold text-[#C5A059] uppercase tracking-wider">Pergunte ao Anderclay:</p>
+                <div class="flex gap-2">
+                    <input type="text" id="perguntaAvatar" placeholder="Ex: Como o DMap se protege? Qual o quórum?" 
+                           class="flex-1 px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-sm text-[#E8D8B8] focus:outline-none focus:border-[#C5A059]"
+                           onkeypress="if(event.key==='Enter') perguntarAvatar()">
+                    <button onclick="perguntarAvatar()" class="px-4 py-2 bg-[#C5A059] text-black font-bold text-xs rounded-lg hover:bg-[#E8D8B8] transition">
+                        Perguntar
+                    </button>
+                </div>
+                <div id="respostaAvatar" class="text-sm text-slate-300 leading-relaxed min-h-[30px] p-2 rounded-lg bg-[#0B192E] border border-slate-800 hidden"></div>
+            </div>
+        </div>
+    </section>
+    <!-- ==================== FIM AVATAR FALANTE ==================== -->
+
+    <!-- Conteúdo Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-12 space-y-20 flex-grow">
+
+        <!-- SEÇÃO 1: PROPOSTA EXECUTIVA COMPLETA -->
+        <section id="proposta-executiva" class="space-y-8 scroll-mt-20">
+            <div class="border-l-4 border-[#C5A059] pl-4">
+                <h2 class="text-2xl sm:text-3xl font-brand font-bold text-[#E8D8B8]">1. Apresentação & Conceito Central da Parceria</h2>
+                <p class="text-slate-300 text-sm sm:text-base mt-1">
+                    Esta seção reproduz integralmente as diretrizes e justificativas estratégicas apresentadas no documento oficial de proposta para a Faculdade Metropolitana da Grande Recife.
+                </p>
+            </div>
+
+            <!-- Card de Visão Geral -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-7 card-gold-border p-6 rounded-2xl space-y-4">
+                    <h3 class="text-lg font-sans-header font-bold text-[#C5A059] border-b border-slate-800 pb-3">
+                        1. Apresentação Institucional
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        O <strong>Instituto DMap</strong> (CNPJ 60.412.110/0001-92), sob a direção executiva de <strong>Anderclay Pereira</strong>, apresenta à <strong>Faculdade Metropolitana da Grande Recife</strong> uma proposta de parceria estratégica para implantação e expansão de uma operação regional de pós-graduação e educação continuada, inicialmente concentrada em três polos de alto potencial em Pernambuco: <strong>RECIFE, CARUARU e GARANHUNS</strong>.
+                    </p>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        Esta não é uma proposta de simplesmente abrir três salas de aula. É a criação de uma <strong>rede regional integrada de captação, divulgação, relacionamento, estrutura física e experiência acadêmica</strong>, combinando a força acadêmica e a credibilidade da Faculdade Metropolitana com a capacidade operacional, comercial, tecnológica e regional do Instituto DMap.
+                    </p>
+                    <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 text-xs text-slate-300 space-y-2">
+                        <span class="text-[#E8D8B8] font-bold block uppercase text-[11px]">Onde a Oportunidade se Conecta:</span>
+                        <p>
+                            A Metropolitana já possui experiência consolidada em pós-graduação e estrutura para convênios empresariais. O DMap entra exatamente onde existe a maior oportunidade: <em>levar a Metropolitana para mais perto do aluno, criando presença regional sem exigir, inicialmente, a implantação de uma grande estrutura própria em cada cidade.</em>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Fórmula da Parceria -->
+                <div class="lg:col-span-5 card-gold-border p-6 rounded-2xl space-y-6 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-sans-header font-bold text-[#E8D8B8] border-b border-slate-800 pb-3">
+                            2. A Ideia Central da Parceria
+                        </h3>
+                        
+                        <div class="space-y-4 pt-3">
+                            <div class="p-3 rounded-lg bg-[#0B192E] border border-slate-700">
+                                <span class="text-xs font-bold text-[#E8D8B8] block uppercase">FACULDADE METROPOLITANA</span>
+                                <span class="text-xs text-[#C5A059] font-semibold block">FORÇA ACADÊMICA</span>
+                                <p class="text-[11px] text-slate-300 mt-1">Conteúdo pedagógico, corpo docente, certificação oficial e responsabilidade institucional perante o MEC.</p>
+                            </div>
+
+                            <div class="text-center text-[#C5A059] font-bold text-lg">+</div>
+
+                            <div class="p-3 rounded-lg bg-[#0B192E] border border-slate-700">
+                                <span class="text-xs font-bold text-[#E8D8B8] block uppercase">INSTITUTO DMAP</span>
+                                <span class="text-xs text-[#C5A059] font-semibold block">PRESENÇA REGIONAL + OPERAÇÃO</span>
+                                <p class="text-[11px] text-slate-300 mt-1">Operação comercial, tecnologia DMap AI, infraestrutura sob demanda, tráfego pago e captação automatizada.</p>
+                            </div>
+
+                            <div class="text-center text-[#C5A059] font-bold text-lg">=</div>
+
+                            <div class="p-4 rounded-xl bg-gradient-to-r from-[#C5A059]/20 to-[#E8D8B8]/20 border border-[#C5A059] text-center">
+                                <span class="text-xs font-extrabold text-[#E8D8B8] uppercase block tracking-wider">
+                                    OPERAÇÃO REGIONAL DE ALTA PERFORMANCE
+                                </span>
+                                <span class="text-[10px] text-slate-300 block mt-0.5">Escala, alta conversão e CAPEX inicial zero para a parceira.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- O que o DMap oferece detalhadamente -->
+            <div class="card-gold-border p-6 rounded-2xl space-y-6">
+                <h3 class="text-lg font-sans-header font-bold text-[#C5A059]">
+                    O Que o Instituto DMap Entrega na Parceria (Infraestrutura & Diferenciais)
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-300">
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                        <strong class="text-[#E8D8B8] font-bold text-sm block">5.1 Estrutura Física e Operacional</strong>
+                        <p class="leading-relaxed">
+                            O DMap atua como operador regional de infraestrutura. A Metropolitana não precisa assumir um imóvel próprio em cada cidade. O Instituto identifica, negocia, estrutura e administra espaços sob demanda: salas de aula, auditórios, laboratórios parceiros, espaços clínicos e centros empresariais. Isso reduz drasticamente o investimento inicial e permite testar cada praça com risco controlado.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                        <strong class="text-[#E8D8B8] font-bold text-sm block">5.2 Ponte Saúde Estética-Mercado</strong>
+                        <p class="leading-relaxed">
+                            O DMap já possui relacionamento estruturado com o ecossistema de saúde e estética, conectando a Pós-Graduação com Práticas Supervisionadas em Clínicas Parceiras, Atendimento a Pacientes e Empreendedorismo. Aulas hands-on e demonstrações cumprem rigorosamente os requisitos do MEC e conselhos de classe.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+                        <strong class="text-[#E8D8B8] font-bold text-sm block">5.3 Pós-Graduação + Experiência Profissional</strong>
+                        <p class="leading-relaxed">
+                            Entregamos um ecossistema completo: conteúdo acadêmico de excelência + prática supervisionada + gestão de clínica + marketing profissional + tecnologia DMap AI + inteligência financeira e formação de networking duradouro entre os alunos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 2: IDENTIDADE VISUAL E ANÁLISE SEMIÓTICA DO LOGO -->
+        <section id="sintese-logo" class="space-y-8 scroll-mt-20">
+            <div class="border-l-4 border-[#C5A059] pl-4">
+                <h2 class="text-2xl sm:text-3xl font-brand font-bold text-[#E8D8B8]">2. Identidade Visual, Logotipo e Análise Semiótica</h2>
+                <p class="text-slate-300 text-sm sm:text-base mt-1">
+                    Tradução gráfica da autoridade acadêmica, tecnologia e sensibilidade estética. O isotipo unifica três matrizes visuais de referência em um símbolo dinâmico gerado em HTML5 Canvas.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Renderizador do Logo em Canvas (Sem SVG) -->
+                <div class="lg:col-span-7 card-gold-border rounded-2xl p-6 glow-gold text-center space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <h3 class="text-base font-sans-header font-semibold text-[#C5A059]">
+                            Sintetizador Vetorial do Isotipo DMap (Canvas API)
+                        </h3>
+                        <span class="text-[10px] px-2.5 py-0.5 rounded bg-slate-800 text-[#E8D8B8] border border-slate-700">Sem SVG</span>
+                    </div>
+
+                    <div class="flex justify-center my-2 relative">
+                        <canvas id="logoCanvas" width="340" height="340" class="cursor-pointer transition-transform duration-300 hover:scale-102 bg-[#081324] rounded-xl border border-slate-800 shadow-inner"></canvas>
+                    </div>
+
+                    <!-- Controles Interativos -->
+                    <div class="space-y-3">
+                        <div class="flex flex-wrap justify-center gap-2">
+                            <button onclick="setLogoView('synthesis')" id="btn-synthesis" class="px-3 py-1.5 text-xs font-semibold rounded bg-[#C5A059] text-black shadow transition">
+                                ★ Síntese Unificada
+                            </button>
+                            <button onclick="setLogoView('m1')" id="btn-m1" class="px-3 py-1.5 text-xs font-semibold rounded bg-slate-800 text-[#E8D8B8] border border-slate-700 hover:border-[#C5A059] transition">
+                                Matriz 1: Rede Geométrica
+                            </button>
+                            <button onclick="setLogoView('m2')" id="btn-m2" class="px-3 py-1.5 text-xs font-semibold rounded bg-slate-800 text-[#E8D8B8] border border-slate-700 hover:border-[#C5A059] transition">
+                                Matriz 2: DMap AI & Ciência
+                            </button>
+                            <button onclick="setLogoView('m3')" id="btn-m3" class="px-3 py-1.5 text-xs font-semibold rounded bg-slate-800 text-[#E8D8B8] border border-slate-700 hover:border-[#C5A059] transition">
+                                Matriz 3: Saúde & Estética
+                            </button>
+                        </div>
+
+                        <div class="flex justify-center items-center space-x-6 text-xs text-slate-400 pt-1">
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="checkbox" id="chkGrid" onchange="drawInteractiveLogo()" class="rounded bg-slate-900 border-slate-700 text-[#C5A059] focus:ring-0">
+                                <span>Grade Proporcional</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="checkbox" id="chkGlow" onchange="drawInteractiveLogo()" checked class="rounded bg-slate-900 border-slate-700 text-[#C5A059] focus:ring-0">
+                                <span>Sombreamento Metálico</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Explicação Dinâmica -->
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-slate-300 leading-relaxed text-left min-h-[70px]" id="logoExplanation">
+                        Exibindo a <strong>Síntese Unificada</strong>: O isotipo integra a moldura circular de rede (Matriz 1), os nós neurais da IA e rigor científico no hemisfério esquerdo (Matriz 2) e as fitas fluídas da estética orgânica no hemisfério direito (Matriz 3), unindo-se no símbolo do infinito (&infin;).
+                    </div>
+                </div>
+
+                <!-- Detalhamento Semiótico -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="card-gold-border p-4 rounded-xl space-y-1">
+                        <div class="flex items-center space-x-2 text-[#C5A059] font-bold text-xs uppercase">
+                            <span>1. Moldura Circular & Rede (Matriz 1)</span>
+                        </div>
+                        <p class="text-xs text-slate-300">
+                            Representa a proteção institucional, a integridade da marca e a malha de convênios territoriais nos polos regionais.
+                        </p>
+                    </div>
+
+                    <div class="card-gold-border p-4 rounded-xl space-y-1">
+                        <div class="flex items-center space-x-2 text-[#C5A059] font-bold text-xs uppercase">
+                            <span>2. Estrutura Cognitiva DMap AI (Matriz 2)</span>
+                        </div>
+                        <p class="text-xs text-slate-300">
+                            Desenhos vetoriais neurais simbolizam a neurociência, a tecnologia proprietária DMap AI e o embasamento científico das especializações.
+                        </p>
+                    </div>
+
+                    <div class="card-gold-border p-4 rounded-xl space-y-1">
+                        <div class="flex items-center space-x-2 text-[#C5A059] font-bold text-xs uppercase">
+                            <span>3. Fluidez Orgânica & Sensorial (Matriz 3)</span>
+                        </div>
+                        <p class="text-xs text-slate-300">
+                            Linhas em bronze e champanhe evocam as curvas da anatomia humana, o cuidado com a saúde integrativa e as artes aplicadas.
+                        </p>
+                    </div>
+
+                    <div class="card-gold-border p-4 rounded-xl space-y-1 bg-[#0B192E]/90">
+                        <div class="flex items-center space-x-2 text-[#E8D8B8] font-bold text-xs uppercase">
+                            <span>O Símbolo do Infinito (&infin;)</span>
+                        </div>
+                        <p class="text-xs text-slate-300">
+                            Na convergência exata dos hemisférios esquerdo (razão/ciência) e direito (arte/sensibilidade), forma-se o loop do infinito — símbolo maior do <em>lifelong learning</em> (aprendizado contínuo).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paleta Cromática e Tipografia -->
+            <div class="card-gold-border p-6 rounded-2xl space-y-6">
+                <h3 class="text-base font-sans-header font-bold text-[#E8D8B8]">
+                    Manual da Marca: Paleta Cromática & Hierarquia Tipográfica
+                </h3>
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                    <div class="p-3 bg-slate-900 rounded-lg border border-slate-800 space-y-2">
+                        <div class="h-10 w-full rounded bg-[#0B192E] border border-slate-700"></div>
+                        <div>
+                            <span class="text-xs font-bold text-[#E8D8B8] block">Azul Imperial</span>
+                            <span class="text-[10px] text-slate-400 block">#0B192E | Fundo/Autoridade</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-900 rounded-lg border border-slate-800 space-y-2">
+                        <div class="h-10 w-full rounded bg-[#C5A059]"></div>
+                        <div>
+                            <span class="text-xs font-bold text-[#C5A059] block">Ouro Soberano</span>
+                            <span class="text-[10px] text-slate-400 block">#C5A059 | Destaques/Isotipo</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-900 rounded-lg border border-slate-800 space-y-2">
+                        <div class="h-10 w-full rounded bg-[#E8D8B8]"></div>
+                        <div>
+                            <span class="text-xs font-bold text-[#E8D8B8] block">Champanhe Metálico</span>
+                            <span class="text-[10px] text-slate-400 block">#E8D8B8 | Iluminação/Linhas</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-900 rounded-lg border border-slate-800 space-y-2">
+                        <div class="h-10 w-full rounded bg-[#E5E9F0]"></div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-200 block">Prata Platina</span>
+                            <span class="text-[10px] text-slate-400 block">#E5E9F0 | Leitura/Textos</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-900 rounded-lg border border-slate-800 space-y-2">
+                        <div class="h-10 w-full rounded bg-[#1E242B] border border-slate-700"></div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-300 block">Grafite Profundo</span>
+                            <span class="text-[10px] text-slate-400 block">#1E242B | Modais/Cards</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 3: ANÁLISE DE MERCADO REGIONAL -->
+        <section id="mercado-regional" class="space-y-8 scroll-mt-20">
+            <div class="border-l-4 border-[#C5A059] pl-4">
+                <h2 class="text-2xl sm:text-3xl font-brand font-bold text-[#E8D8B8]">3. Cobertura Territorial e Potencial de Mercado</h2>
+                <p class="text-slate-300 text-sm sm:text-base mt-1">
+                    Análise populacional e econômica dos três polos regionais estratégicos em Pernambuco, cobrindo um raio de 100km e 6,4 milhões de habitantes.
+                </p>
+            </div>
+
+            <!-- Tabela e Métrica Oficial -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7 card-gold-border p-6 rounded-2xl space-y-4">
+                    <h3 class="text-base font-sans-header font-bold text-[#E8D8B8]">
+                        População Municipal vs. Mercado Regional Influenciado (Raio 100km)
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="marketChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="card-gold-border p-5 rounded-2xl space-y-3">
+                        <h4 class="text-sm font-bold font-sans-header text-[#C5A059] uppercase border-b border-slate-800 pb-2">
+                            Visão Consolidada do Mercado Regional
+                        </h4>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs text-slate-300 border-collapse">
+                                <thead>
+                                    <tr class="border-b border-slate-700 text-[#E8D8B8]">
+                                        <th class="py-2">Polo</th>
+                                        <th class="py-2">Pop. Cidade</th>
+                                        <th class="py-2">Mercado Regional*</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-800">
+                                    <tr>
+                                        <td class="py-2 font-bold text-[#E8D8B8]">Recife</td>
+                                        <td class="py-2">~ 1,59 milhão</td>
+                                        <td class="py-2 font-semibold text-[#C5A059]">~ 4,3 milhões</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 font-bold text-[#E8D8B8]">Caruaru</td>
+                                        <td class="py-2">~ 408 mil</td>
+                                        <td class="py-2 font-semibold text-[#C5A059]">~ 1,4 milhão</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 font-bold text-[#E8D8B8]">Garanhuns</td>
+                                        <td class="py-2">~ 152 mil</td>
+                                        <td class="py-2 font-semibold text-[#C5A059]">~ 0,7 milhão</td>
+                                    </tr>
+                                    <tr class="bg-slate-900/60 font-bold">
+                                        <td class="py-2 text-[#C5A059]">TOTAL</td>
+                                        <td class="py-2 text-white">~ 2,15 milhões</td>
+                                        <td class="py-2 text-emerald-400">~ 6,4 milhões</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <span class="text-[10px] text-slate-400 block italic pt-1">
+                            *Estimativa comercial a partir dos principais municípios no raio aproximado de 100km.
+                        </span>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-slate-300 leading-relaxed">
+                        <strong class="text-[#E8D8B8] block mb-1">Por que esta estratégia territorial?</strong>
+                        Essas três cidades não representam apenas suas populações locais, mas funcionam como capitais regionais de serviços e saúde, atraindo profissionais de dezenas de municípios do entorno.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfico 2: Público Alvo por Categoria Profissional -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-4">
+                <div class="lg:col-span-5 card-gold-border p-6 rounded-2xl space-y-4">
+                    <h3 class="text-base font-sans-header font-bold text-[#E8D8B8]">
+                        Público-Alvo por Categoria Profissional
+                    </h3>
+                    <p class="text-xs text-slate-400">
+                        Proporção estimada de graduados elegíveis para as pós-graduações e exames de título.
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="audienceChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 card-gold-border p-6 rounded-2xl space-y-4">
+                    <h3 class="text-base font-sans-header font-bold text-[#C5A059]">
+                        Estratégia de Captação e Imersões Locais
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        A estratégia comercial não começa tentando vender diretamente a pós-graduação. Ela se inicia gerando desejo, autoridade e relacionamento através dos <strong>Eventos DMap + Metropolitana: "Imersão em Saúde e Estética"</strong>.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">
+                        <div class="p-3 rounded-lg bg-slate-900 border border-slate-800">
+                            <strong class="text-[#E8D8B8] block mb-1">1. Palestras e Hands-on</strong>
+                            <p class="text-slate-400">Aulas demonstrativas com docentes renomados e procedimentos ao vivo.</p>
+                        </div>
+                        <div class="p-3 rounded-lg bg-slate-900 border border-slate-800">
+                            <strong class="text-[#E8D8B8] block mb-1">2. Apresentação Oficial</strong>
+                            <p class="text-slate-400">Exposição dos diferenciais acadêmicos e do selo da Faculdade Metropolitana.</p>
+                        </div>
+                        <div class="p-3 rounded-lg bg-slate-900 border border-slate-800">
+                            <strong class="text-[#E8D8B8] block mb-1">3. Matrícula no Local</strong>
+                            <p class="text-slate-400">Condições especiais de lançamento e formação de turmas em lotes fechados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 4: ECOSSISTEMA DMAP AI & CALCULADORA COMERCIAL -->
+        <section id="dmap-ai" class="space-y-8 scroll-mt-20">
+            <div class="border-l-4 border-[#C5A059] pl-4">
+                <h2 class="text-2xl sm:text-3xl font-brand font-bold text-[#E8D8B8]">4. Automação Comercial & Sistema DMap AI</h2>
+                <p class="text-slate-300 text-sm sm:text-base mt-1">
+                    Como a Inteligência Acadêmica e Comercial opera do primeiro clique até o acompanhamento do egresso, garantindo escala com previsibilidade.
+                </p>
+            </div>
+
+            <!-- Mapeamento do Funil -->
+            <div class="card-gold-border p-6 rounded-2xl space-y-6">
+                <h3 class="text-base font-sans-header font-bold text-[#E8D8B8] text-center">
+                    Percurso Completo do Aluno no Sistema DMap AI
+                </h3>
+
+                <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 text-center font-semibold text-xs sm:text-sm text-[#C5A059]">
+                    ANÚNCIO META/GOOGLE &rarr; LANDING PAGE LOCAL &rarr; WHATSAPP IA 24/7 &rarr; LEAD QUALIFICADO &rarr; CONSULTOR &rarr; EVENTO/IMERSÃO &rarr; MATRÍCULA &rarr; ALUNO &rarr; EGRESSO
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                    <div class="p-4 rounded-xl bg-slate-900/70 border border-slate-800 space-y-2">
+                        <strong class="text-[#E8D8B8] font-bold block">6.1 Pré-Atendimento 24h</strong>
+                        <p class="text-slate-300">
+                            IA responde dúvidas no WhatsApp instantaneamente sobre turmas, horários, locais de prática e requisitos de diploma, mantendo conformidade com as regras da Metropolitana.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-900/70 border border-slate-800 space-y-2">
+                        <strong class="text-[#E8D8B8] font-bold block">6.2 Landing Pages Locais</strong>
+                        <p class="text-slate-300">
+                            Páginas exclusivas por cidade (ex: <em>posmetropolitana.dmap.life/caruaru</em>) com professores, cronogramas e integração direta ao CRM.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-900/70 border border-slate-800 space-y-2">
+                        <strong class="text-[#E8D8B8] font-bold block">6.4 CRM & Painel em Tempo Real</strong>
+                        <p class="text-slate-300">
+                            Direção da Metropolitana acompanha em painel único: LEADS &rarr; MATRÍCULAS &rarr; RECEITA por praça e consolidado.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-900/70 border border-slate-800 space-y-2">
+                        <strong class="text-[#E8D8B8] font-bold block">6.5 Mídia Segmentada</strong>
+                        <p class="text-slate-300">
+                            Tráfego pago focado em biomédicos, enfermeiros, farmacêuticos, fisioterapeutas, dentistas e gestores por localização geográfica.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfico Logarítmico do Funil e Simulador Interativo -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7 card-gold-border p-6 rounded-2xl space-y-4">
+                    <h3 class="text-base font-sans-header font-bold text-[#E8D8B8]">
+                        Funil de Conversão Comercial (Escala Logarítmica)
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="funnelChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 card-gold-border p-6 rounded-2xl space-y-5">
+                    <h3 class="text-base font-sans-header font-bold text-[#C5A059]">
+                        Calculadora Interativa de Captação
+                    </h3>
+                    <p class="text-xs text-slate-300">
+                        Ajuste o orçamento em mídia para simular o volume de matrículas geradas por polo:
+                    </p>
+
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-xs text-slate-300 mb-1">
+                                <span>Investimento em Anúncios / Polo:</span>
+                                <strong id="lblBudget" class="text-[#C5A059]">R$ 5.000</strong>
+                            </div>
+                            <input type="range" id="rngBudget" min="2000" max="20000" step="1000" value="5000" oninput="calcFunnel()" class="w-full accent-[#C5A059] bg-slate-800 rounded cursor-pointer">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="p-3 bg-slate-900 rounded-lg border border-slate-800 text-center">
+                                <span class="text-[10px] text-slate-400 block uppercase">Leads Qualificados</span>
+                                <span id="calcLeads" class="text-base font-bold text-[#E8D8B8]">750</span>
+                            </div>
+                            <div class="p-3 bg-slate-900 rounded-lg border border-slate-800 text-center">
+                                <span class="text-[10px] text-slate-400 block uppercase">Participantes Imersão</span>
+                                <span id="calcEvents" class="text-base font-bold text-[#E8D8B8]">180</span>
+                            </div>
+                            <div class="p-3 bg-slate-900 rounded-lg border border-slate-800 text-center col-span-2">
+                                <span class="text-[10px] text-slate-400 block uppercase">Estimativa de Matrículas Efetivas</span>
+                                <span id="calcStudents" class="text-2xl font-bold text-emerald-400">36 Alunos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 5: LINHAS DE CURSOS AVALIADAS -->
+        <section id="linhas-cursos" class="space-y-8 scroll-mt-20">
+            <div class="border-l-4 border-[#C5A059] pl-4">
+                <h2 class="text-2xl sm:text-3xl font-brand font-bold text-[#E8D8B8]">5. Linhas de Cursos & Oferta Acadêmica</h2>
+                <p class="text-slate-300 text-sm sm:text-base mt-1">
+                    Cursos propostos sujeitos à validação final da Faculdade Metropolitana conforme diretrizes do MEC e conselhos profissionais de classe.
+                </p>
+            </div>
+
+            <!-- Filtros Interativos de Cursos -->
+            <div class="card-gold-border p-6 rounded-2xl space-y-6">
+                <div class="flex flex-wrap justify-center gap-2">
+                    <button onclick="filterCourses('all')" id="cbtn-all" class="px-4 py-1.5 text-xs font-semibold rounded bg-[#C5A059] text-black shadow">
+                        Todos os Cursos
+                    </button>
+                    <button onclick="filterCourses('saude')" id="cbtn-saude" class="px-4 py-1.5 text-xs font-semibold rounded bg-slate-800 text-[#E8D8B8] border border-slate-700">
+                        Área de Saúde
+                    </button>
+                    <button onclick="filterCourses('estetica')" id="cbtn-estetica" class="px-4 py-1.5 text-xs font-semibold rounded bg-slate-800 text-[#E8D8B8] border border-slate-700">
+                        Saúde Estética Avançada
+                    </button>
+                    <button onclick="filterCourses('gestao')" id="cbtn-gestao" class="px-4 py-1.5 text-xs font-semibold rounded bg-slate-800 text-[#E8D8B8] border border-slate-700">
+                        Gestão & Negócios
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="courseGrid">
+                    <!-- Cursos Injetados Dinamicamente em JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 6: GOVERNANÇA, CO-BRANDING E ROADMAP -->
+        <section id="co-branding" class="space-y-8 scroll-mt-20">
+            <div class="border-l-4 border-[#C5A059] pl-4">
+                <h2 class="text-2xl sm:text-3xl font-brand font-bold text-[#E8D8B8]">6. Governança, Co-Branding & Próximos Passos</h2>
+                <p class="text-slate-300 text-sm sm:text-base mt-1">
+                    Divisão clara de papéis e roteiro prático de implantação da parceria institucional.
+                </p>
+            </div>
+
+            <!-- Previewer de Co-Branding em Canvas -->
+            <div class="card-gold-border p-6 rounded-2xl text-center space-y-4">
+                <h3 class="text-base font-sans-header font-bold text-[#C5A059]">
+                    Simulador da Assinatura Conjunta das Marcas (Co-Branding em Canvas)
+                </h3>
+                <p class="text-xs text-slate-300 max-w-xl mx-auto">
+                    Aplicação harmônica das duas marcas em materiais promocionais, diplomas e campanhas regionais:
+                </p>
+                <div class="flex justify-center">
+                    <canvas id="cobrandCanvas" width="600" height="150" class="bg-[#081324] border border-slate-800 rounded-xl shadow-lg max-w-full h-auto"></canvas>
+                </div>
+            </div>
+
+            <!-- Matriz de Governança -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card-gold-border p-6 rounded-2xl space-y-4">
+                    <h3 class="text-base font-bold font-sans-header text-[#E8D8B8] border-b border-slate-800 pb-2">
+                        FACULDADE METROPOLITANA DA GRANDE RECIFE
+                    </h3>
+                    <span class="text-xs font-semibold text-[#C5A059] block uppercase">Pilar Acadêmico & Regulatório</span>
+                    <ul class="space-y-2 text-xs text-slate-300">
+                        <li class="flex items-start"><span class="text-[#C5A059] mr-2">✓</span><span>Chancela institucional e emissão de diplomas reconhecidos pelo MEC.</span></li>
+                        <li class="flex items-start"><span class="text-[#C5A059] mr-2">✓</span><span>Aprovação dos Projetos Pedagógicos de Curso (PPC) e corpo docente.</span></li>
+                        <li class="flex items-start"><span class="text-[#C5A059] mr-2">✓</span><span>Gestão do registro acadêmico, diários de classe e validação legal.</span></li>
+                    </ul>
+                </div>
+
+                <div class="card-gold-border p-6 rounded-2xl space-y-4">
+                    <h3 class="text-base font-bold font-sans-header text-[#C5A059] border-b border-slate-800 pb-2">
+                        INSTITUTO DMAP
+                    </h3>
+                    <span class="text-xs font-semibold text-[#E8D8B8] block uppercase">Pilar Operacional, Comercial & Tecnológico</span>
+                    <ul class="space-y-2 text-xs text-slate-300">
+                        <li class="flex items-start"><span class="text-[#C5A059] mr-2">✓</span><span>Locação e gestão de infraestrutura física e laboratórios sob demanda.</span></li>
+                        <li class="flex items-start"><span class="text-[#C5A059] mr-2">✓</span><span>Operação do sistema DMap AI, landing pages e tráfego pago regional.</span></li>
+                        <li class="flex items-start"><span class="text-[#C5A059] mr-2">✓</span><span>Organização dos eventos de imersão e gestão das matrículas presenciais.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Roadmap Próximos Passos -->
+            <div class="card-gold-border p-6 rounded-2xl space-y-4">
+                <h3 class="text-base font-sans-header font-bold text-[#E8D8B8]">
+                    Próximos Passos para Efetivação
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 text-xs text-center">
+                    <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                        <span class="w-6 h-6 rounded-full bg-[#C5A059] text-black font-bold inline-flex items-center justify-center mb-2">1</span>
+                        <strong class="text-[#E8D8B8] block">Reunião</strong>
+                        <p class="text-slate-400 text-[10px] mt-1">Alinhamento direto com a diretoria.</p>
+                    </div>
+                    <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                        <span class="w-6 h-6 rounded-full bg-[#C5A059] text-black font-bold inline-flex items-center justify-center mb-2">2</span>
+                        <strong class="text-[#E8D8B8] block">Demonstração</strong>
+                        <p class="text-slate-400 text-[10px] mt-1">Apresentação do sistema DMap AI.</p>
+                    </div>
+                    <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                        <span class="w-6 h-6 rounded-full bg-[#C5A059] text-black font-bold inline-flex items-center justify-center mb-2">3</span>
+                        <strong class="text-[#E8D8B8] block">Grade</strong>
+                        <p class="text-slate-400 text-[10px] mt-1">Definição dos cursos e praças iniciais.</p>
+                    </div>
+                    <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                        <span class="w-6 h-6 rounded-full bg-[#C5A059] text-black font-bold inline-flex items-center justify-center mb-2">4</span>
+                        <strong class="text-[#E8D8B8] block">Contrato</strong>
+                        <p class="text-slate-400 text-[10px] mt-1">Formalização do termo de parceria.</p>
+                    </div>
+                    <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                        <span class="w-6 h-6 rounded-full bg-[#C5A059] text-black font-bold inline-flex items-center justify-center mb-2">5</span>
+                        <strong class="text-[#E8D8B8] block">Lançamento</strong>
+                        <p class="text-slate-400 text-[10px] mt-1">Início das campanhas e imersões.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 7: GERADOR DO E-MAIL OFICIAL PARA GILMARCIO COM BOTÃO DE BAIXAR -->
+        <section id="email-template" class="space-y-8 scroll-mt-20">
+            <div class="border-l-4 border-[#C5A059] pl-4">
+                <h2 class="text-2xl sm:text-3xl font-brand font-bold text-[#E8D8B8]">7. Modelo de E-mail Executivo para Envio (Gilmarcio)</h2>
+                <p class="text-slate-300 text-sm sm:text-base mt-1">
+                    Utilize a minuta executiva formal configurada abaixo para encaminhar a proposta e este painel interativo.
+                </p>
+            </div>
+
+            <div class="card-gold-border p-6 rounded-2xl space-y-4">
+                <div class="flex flex-wrap items-center justify-between border-b border-slate-800 pb-3 gap-3">
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-bold text-[#C5A059] uppercase">Destinatário:</span>
+                            <span class="text-xs font-mono text-[#E8D8B8] px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Gilmarcio@yahoo.com.br</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-bold text-[#C5A059] uppercase">Assunto:</span>
+                            <span class="text-xs text-slate-300">Proposta Estratégica de Expansão de Pós-Graduação | Instituto DMap & Faculdade Metropolitana</span>
+                        </div>
+                    </div>
+
+                    <!-- Botões de Ação: O Botão de Baixar é posicionado EXATAMENTE ANTES do Botão do Código / Copiar -->
+                    <div class="flex items-center space-x-3">
+                        <button onclick="downloadDocumentPDF()" class="px-4 py-2 bg-[#C5A059] text-black font-bold text-xs rounded hover:bg-[#E8D8B8] transition shadow flex items-center space-x-1.5">
+                            <span>↓ Baixar Documento / PDF</span>
+                        </button>
+                        <button onclick="copyEmailText()" id="btnCopyEmail" class="px-4 py-2 bg-slate-800 text-[#E8D8B8] border border-[#C5A059]/50 font-bold text-xs rounded hover:bg-slate-700 transition shadow">
+                            Copiar Texto do E-mail
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs sm:text-sm text-slate-300 font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap shadow-inner" id="emailTextContent">
+Para: Gilmarcio@yahoo.com.br
+Assunto: Proposta Estratégica de Expansão de Pós-Graduação | Instituto DMap & Faculdade Metropolitana
+
+Prezado Gilmarcio,
+
+Espero que este e-mail o encontre bem.
+
+Em continuidade às nossas tratativas institucionais, encaminho formalmente a Proposta Executiva e Comercial de Parceria Estratégica do Instituto DMap (CNPJ: 60.412.110/0001-92) para a expansão territorial de Pós-Graduação e Educação Continuada nas áreas de Saúde, Estética e Gestão.
+
+Visão Geral da Parceria:
+O objetivo central é unificar a autoridade acadêmica e chancela MEC da Faculdade Metropolitana à capacidade operacional, inteligência de mídia digital e tecnologia do Instituto DMap.
+
+Através dessa estrutura conjunta, viabilizamos a presença e captação de alunos nos três principais polos regionais de Pernambuco (Recife, Caruaru e Garanhuns), impactando um mercado potencial de 6,4 milhões de habitantes sob um modelo de CAPEX inicial zero para a instituição parceira.
+
+Divisão de Responsabilidades (Dupla Chancela):
+
+• Faculdade Metropolitana da Grande Recife (Pilar Acadêmico):
+  - Responsabilidade acadêmica e validação dos Projetos Pedagógicos de Curso (PPCs).
+  - Aprovação do corpo docente e acompanhamento regulatório.
+  - Emissão de certificados e diplomas oficiais reconhecidos pelo MEC.
+
+• Instituto DMap (Pilar Operacional & Comercial):
+  - Operação regional e contrato de infraestrutura física/laboratórios sob demanda.
+  - Marketing digital de tráfego pago e automação de captação via ecossistema DMap AI.
+  - Realização dos eventos presenciais de imersão e gestão comercial de matrículas.
+
+Painel Interativo & Material de Apoio:
+Desenvolvemos um Painel Web Executivo Interativo onde é possível simular o volume de matrículas por polo na calculadora comercial, analisar os dados demográficos da região e visualizar a aplicação de co-branding da marca.
+
+Próximos Passos Sugeridos:
+1. Agendamento de reunião presencial ou remota para validação da grade curricular e praças iniciais.
+2. Demonstração prática do assistente virtual DMap AI e do funil de conversão WhatsApp.
+3. Formalização do termo de parceria e cronograma de lançamento das imersões.
+
+Permanecemos à inteira disposição para dirimir dúvidas e avançar na concretização deste projeto.
+
+Atenciosamente,
+
+Anderclay Pereira
+Diretor Executivo | Instituto DMap
+CNPJ: 60.412.110/0001-92
+E-mails Institucionais: diretoria@clinicadmoura.company | anderclay@dmapone.org
+Site Oficial: https://dmap.life
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bg-[#050C17] border-t border-slate-800 py-8 px-4 text-center text-xs text-slate-400 space-y-2">
+        <p class="font-sans-header font-bold text-[#C5A059]">
+            INSTITUTO DMAP - DESENVOLVIMENTO MULTIDISCIPLINAR EM ARTES E PROFISSÕES
+        </p>
+        <p>CNPJ: 60.412.110/0001-92 | Diretor Executivo: Anderclay Pereira</p>
+        <p class="text-[#E8D8B8]">E-mails: diretoria@clinicadmoura.company | anderclay@dmapone.org</p>
+        <p class="text-[10px] text-slate-500 pt-1">Documento Confidencial - Uso Exclusivo das Partes Parceiras</p>
+    </footer>
+
+    <!-- Scripts JavaScript e Canvas Renderers -->
+    <script>
+        // --- 1. Renderizador de Logo em HTML5 Canvas (Sem SVG) ---
+        const logoCanvas = document.getElementById('logoCanvas');
+        const ctx = logoCanvas.getContext('2d');
+        let currentLogoView = 'synthesis';
+
+        function setLogoView(view) {
+            currentLogoView = view;
+            ['synthesis', 'm1', 'm2', 'm3'].forEach(v => {
+                const btn = document.getElementById(`btn-${v}`);
+                if(v === view) {
+                    btn.className = "px-3 py-1.5 text-xs font-semibold rounded bg-[#C5A059] text-black shadow transition";
+                } else {
+                    btn.className = "px-3 py-1.5 text-xs font-semibold rounded bg-slate-800 text-[#E8D8B8] border border-slate-700 hover:border-[#C5A059] transition";
+                }
+            });
+
+            const exp = document.getElementById('logoExplanation');
+            if(view === 'synthesis') {
+                exp.innerHTML = "Exibindo a <strong>Síntese Unificada</strong>: O isotipo integra a moldura circular de rede (Matriz 1), os nós neurais da IA e rigor científico no hemisfério esquerdo (Matriz 2) e as fitas fluídas da estética orgânica no hemisfério direito (Matriz 3), unindo-se no símbolo do infinito (&infin;).";
+            } else if(view === 'm1') {
+                exp.innerHTML = "Exibindo <strong>Matriz 1 (Rede Geométrica)</strong>: Circunferência dupla e laços cruzados em tom Ouro Soberano e Prata, simbolizando proteção, coesão institucional e malha de parcerias.";
+            } else if(view === 'm2') {
+                exp.innerHTML = "Exibindo <strong>Matriz 2 (Estrutura Cognitiva & DMap AI)</strong>: Hemisfério neural vetorial e nós interconectados representando a inteligência artificial proprietária e a fundamentação acadêmica.";
+            } else if(view === 'm3') {
+                exp.innerHTML = "Exibindo <strong>Matriz 3 (Fluidez Orgânica & Sensorial)</strong>: Fitas fluídas em relevo champanhe e bronze remetendo à anatomia humana, saúde estética e artes aplicadas.";
+            }
+
+            drawInteractiveLogo();
+        }
+
+        function drawInteractiveLogo() {
+            ctx.clearRect(0, 0, logoCanvas.width, logoCanvas.height);
+            const cx = logoCanvas.width / 2;
+            const cy = logoCanvas.height / 2;
+            const r = 110;
+
+            const showGrid = document.getElementById('chkGrid').checked;
+            const showGlow = document.getElementById('chkGlow').checked;
+
+            if(showGrid) {
+                ctx.save();
+                ctx.strokeStyle = 'rgba(197, 160, 89, 0.2)';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([4, 4]);
+
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.arc(cx, cy, r * 0.7, 0, Math.PI * 2);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(cx - r - 20, cy); ctx.lineTo(cx + r + 20, cy);
+                ctx.moveTo(cx, cy - r - 20); ctx.lineTo(cx, cy + r + 20);
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            if(showGlow) {
+                ctx.shadowColor = 'rgba(197, 160, 89, 0.4)';
+                ctx.shadowBlur = 10;
+            } else {
+                ctx.shadowBlur = 0;
+            }
+
+            // M1: REDE
+            if (currentLogoView === 'synthesis' || currentLogoView === 'm1') {
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.strokeStyle = '#C5A059';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(cx, cy, r - 7, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(232, 216, 184, 0.4)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+
+            // M2: CÉREBRO NEURAL AI
+            if (currentLogoView === 'synthesis' || currentLogoView === 'm2') {
+                ctx.beginPath();
+                ctx.moveTo(cx - 3, cy - 70);
+                ctx.bezierCurveTo(cx - 50, cy - 70, cx - 80, cy - 20, cx - 70, cy + 20);
+                ctx.bezierCurveTo(cx - 70, cy + 50, cx - 30, cy + 70, cx - 3, cy + 68);
+                ctx.strokeStyle = '#C5A059';
+                ctx.lineWidth = 3.5;
+                ctx.stroke();
+
+                const nodes = [
+                    {x: cx - 35, y: cy - 30},
+                    {x: cx - 50, y: cy - 5},
+                    {x: cx - 30, y: cy + 20},
+                    {x: cx - 45, y: cy + 40}
+                ];
+
+                ctx.beginPath();
+                ctx.moveTo(cx - 3, cy - 30);
+                nodes.forEach(n => ctx.lineTo(n.x, n.y));
+                ctx.strokeStyle = '#E8D8B8';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                nodes.forEach(n => {
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, 3.5, 0, Math.PI * 2);
+                    ctx.fillStyle = '#E5E9F0';
+                    ctx.fill();
+                });
+            }
+
+            // M3: FLUIDEZ ORGANICA
+            if (currentLogoView === 'synthesis' || currentLogoView === 'm3') {
+                ctx.beginPath();
+                ctx.moveTo(cx + 3, cy - 70);
+                ctx.bezierCurveTo(cx + 50, cy - 60, cx + 75, cy - 10, cx + 65, cy + 30);
+                ctx.bezierCurveTo(cx + 55, cy + 60, cx + 25, cy + 72, cx + 3, cy + 68);
+                ctx.strokeStyle = '#E8D8B8';
+                ctx.lineWidth = 3.5;
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(cx + 10, cy - 40);
+                ctx.bezierCurveTo(cx + 45, cy - 20, cx + 35, cy + 20, cx + 10, cy + 40);
+                ctx.strokeStyle = '#C5A059';
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+            }
+
+            // NÓ DO INFINITO
+            if (currentLogoView === 'synthesis') {
+                ctx.beginPath();
+                ctx.moveTo(cx - 15, cy);
+                ctx.bezierCurveTo(cx - 15, cy - 10, cx, cy + 10, cx + 15, cy);
+                ctx.bezierCurveTo(cx + 15, cy - 10, cx, cy + 10, cx - 15, cy);
+                ctx.strokeStyle = '#E5E9F0';
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+            }
+        }
+
+        drawInteractiveLogo();
+
+        // --- 2. Lógica de Quebra de Rótulos em Gráficos (16 Caracteres) ---
+        function wrapLabel(str) {
+            if (typeof str !== 'string' || str.length <= 16) return str;
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = '';
+
+            words.forEach(word => {
+                if ((currentLine + word).length > 16) {
+                    if (currentLine.length > 0) {
+                        lines.push(currentLine.trim());
+                        currentLine = '';
+                    }
+                }
+                currentLine += word + ' ';
+            });
+            if (currentLine.trim().length > 0) lines.push(currentLine.trim());
+            return lines;
+        }
+
+        const defaultTooltipCallback = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(items) {
+                            let label = items[0].chart.data.labels[items[0].dataIndex];
+                            return Array.isArray(label) ? label.join(' ') : label;
+                        }
+                    }
+                }
+            }
+        };
+
+        // --- 3. Chart 1: Mercado Regional ---
+        const marketLabels = ['Recife (Hub Central)', 'Caruaru (Agreste)', 'Garanhuns (Sertão)'].map(wrapLabel);
+        const ctxMarket = document.getElementById('marketChart').getContext('2d');
+        new Chart(ctxMarket, {
+            type: 'bar',
+            data: {
+                labels: marketLabels,
+                datasets: [
+                    {
+                        label: 'População Municipal (Direta)',
+                        data: [1.59, 0.408, 0.152],
+                        backgroundColor: 'rgba(197, 160, 89, 0.85)',
+                        borderColor: '#C5A059',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Mercado Regional (100km)',
+                        data: [4.30, 1.40, 0.70],
+                        backgroundColor: 'rgba(232, 216, 184, 0.4)',
+                        borderColor: '#E8D8B8',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Milhões de Habitantes', color: '#E8D8B8' },
+                        ticks: { color: '#E5E9F0' },
+                        grid: { color: 'rgba(255,255,255,0.08)' }
+                    },
+                    x: { ticks: { color: '#E5E9F0' }, grid: { color: 'rgba(255,255,255,0.08)' } }
+                },
+                plugins: {
+                    ...defaultTooltipCallback.plugins,
+                    legend: { labels: { color: '#E8D8B8', font: { family: 'Inter', size: 11 } } }
+                }
+            }
+        });
+
+        // --- 4. Chart 2: Público Alvo ---
+        const audienceLabels = ['Biomedicina Estética', 'Enfermagem Estética', 'Farmácia Estética', 'Fisioterapia Dermato', 'Odontologia / Outros', 'Gestão de Saúde'].map(wrapLabel);
+        const ctxAudience = document.getElementById('audienceChart').getContext('2d');
+        new Chart(ctxAudience, {
+            type: 'doughnut',
+            data: {
+                labels: audienceLabels,
+                datasets: [{
+                    data: [26, 24, 18, 14, 10, 8],
+                    backgroundColor: ['#C5A059', '#E8D8B8', '#9E7B3B', '#6B5325', '#E5E9F0', '#3A4859'],
+                    borderColor: '#0B192E',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    ...defaultTooltipCallback.plugins,
+                    legend: { position: 'bottom', labels: { color: '#E5E9F0', font: { family: 'Inter', size: 10 } } }
+                }
+            }
+        });
+
+        // --- 5. Chart 3: Funil DMap AI ---
+        const funnelLabels = ['1. Anúncios Ads', '2. Landing Page', '3. WhatsApp IA', '4. Leads Qualificados', '5. Imersão Presencial', '6. Matrículas'].map(wrapLabel);
+        const ctxFunnel = document.getElementById('funnelChart').getContext('2d');
+        new Chart(ctxFunnel, {
+            type: 'line',
+            data: {
+                labels: funnelLabels,
+                datasets: [{
+                    label: 'Volume de Leads por Estágio',
+                    data: [12000, 3600, 1800, 950, 240, 45],
+                    fill: true,
+                    backgroundColor: 'rgba(197, 160, 89, 0.15)',
+                    borderColor: '#C5A059',
+                    pointBackgroundColor: '#E8D8B8',
+                    pointRadius: 5,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { type: 'logarithmic', ticks: { color: '#E5E9F0' }, grid: { color: 'rgba(255,255,255,0.08)' } },
+                    x: { ticks: { color: '#E5E9F0' }, grid: { color: 'rgba(255,255,255,0.08)' } }
+                },
+                plugins: {
+                    ...defaultTooltipCallback.plugins,
+                    legend: { labels: { color: '#E8D8B8', font: { family: 'Inter', size: 11 } } }
+                }
+            }
+        });
+
+        // --- 6. Calculadora de Captação ---
+        function calcFunnel() {
+            const budget = parseInt(document.getElementById('rngBudget').value);
+            document.getElementById('lblBudget').innerText = 'R$ ' + budget.toLocaleString('pt-BR');
+
+            const leads = Math.round(budget * 0.15);
+            const events = Math.round(leads * 0.24);
+            const students = Math.round(events * 0.20);
+
+            document.getElementById('calcLeads').innerText = leads.toLocaleString('pt-BR');
+            document.getElementById('calcEvents').innerText = events.toLocaleString('pt-BR');
+            document.getElementById('calcStudents').innerText = students + ' Alunos';
+        }
+
+        // --- 7. Lista de Cursos e Filtro Interativo ---
+        const courseData = [
+            { title: "Pós-Graduação em Saúde Estética Avançada", cat: "estetica", badge: "Multiprofissional", desc: "Procedimentos injetáveis, toxina botulínica, preenchedores e prática supervisionada." },
+            { title: "Estética e Cosmética Aplicada", cat: "estetica", badge: "Saúde & Estética", desc: "Cosmetologia avançada, harmonização e laserterapia para profissionais." },
+            { title: "Gestão em Saúde & Clínicas", cat: "gestao", badge: "Gestão Executiva", desc: "Finanças, marketing médico, compliance e empreendedorismo para saúde." },
+            { title: "Gestão de Serviços e Hospitais", cat: "gestao", badge: "Gestão Executiva", desc: "Liderança de equipes multiprofissionais e eficiência operacional." },
+            { title: "Saúde Integrativa & Bem-Estar", cat: "saude", badge: "Saúde Geral", desc: "Abordagem holística, ortomolecular e longevidade na prática clínica." },
+            { title: "Práticas de Enfermagem e Biomedicina", cat: "saude", badge: "Especialização", desc: "Prática em ambientes clínicos qualificados e regulamentação dos conselhos." }
+        ];
+
+        function renderCourses(filter = 'all') {
+            const container = document.getElementById('courseGrid');
+            container.innerHTML = '';
+
+            const filtered = filter === 'all' ? courseData : courseData.filter(c => c.cat === filter);
+
+            filtered.forEach(c => {
+                const card = document.createElement('div');
+                card.className = "p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2 text-left hover:border-[#C5A059] transition";
+                card.innerHTML = `
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-[#C5A059]/20 text-[#C5A059] border border-[#C5A059]/30 uppercase">${c.badge}</span>
+                    <strong class="text-xs sm:text-sm text-[#E8D8B8] block pt-1">${c.title}</strong>
+                    <p class="text-xs text-slate-400 leading-relaxed">${c.desc}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterCourses(cat) {
+            ['all', 'saude', 'estetica', 'gestao'].forEach(c => {
+                const btn = document.getElementById(`cbtn-${c}`);
+                if (c === cat) {
+                    btn.className = "px-4 py-1.5 text-xs font-semibold rounded bg-[#C5A059] text-black shadow";
+                } else {
+                    btn.className = "px-4 py-1.5 text-xs font-semibold rounded bg-slate-800 text-[#E8D8B8] border border-slate-700";
+                }
+            });
+            renderCourses(cat);
+        }
+
+        renderCourses();
+
+        // --- 8. Renderizador de Co-Branding Canvas ---
+        function drawCoBranding() {
+            const canvas = document.getElementById('cobrandCanvas');
+            if(!canvas) return;
+            const cb = canvas.getContext('2d');
+            cb.clearRect(0,0, canvas.width, canvas.height);
+
+            cb.fillStyle = '#0B192E';
+            cb.fillRect(0,0, canvas.width, canvas.height);
+
+            cb.fillStyle = '#E8D8B8';
+            cb.font = 'bold 15px Montserrat';
+            cb.textAlign = 'center';
+            cb.fillText('FACULDADE METROPOLITANA', 180, 70);
+            cb.font = '10px Inter';
+            cb.fillStyle = '#94A3B8';
+            cb.fillText('CHANCELA ACADÊMICA & MEC', 180, 88);
+
+            cb.strokeStyle = 'rgba(229, 233, 240, 0.3)';
+            cb.lineWidth = 1.5;
+            cb.beginPath();
+            cb.moveTo(330, 30);
+            cb.lineTo(330, 120);
+            cb.stroke();
+
+            cb.fillStyle = '#C5A059';
+            cb.font = 'bold 16px Cinzel';
+            cb.textAlign = 'left';
+            cb.fillText('INSTITUTO DMAP', 370, 70);
+            cb.font = '10px Montserrat';
+            cb.fillStyle = '#E8D8B8';
+            cb.fillText('OPERADOR REGIONAL & DMAP AI', 370, 88);
+        }
+
+        drawCoBranding();
+
+        // --- 9. Ações de Download do Documento & Cópia de E-mail ---
+        function downloadDocumentPDF() {
+            window.print();
+        }
+
+        function copyEmailText() {
+            const text = document.getElementById('emailTextContent').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('btnCopyEmail');
+                btn.innerText = "✓ E-mail Copiado!";
+                btn.className = "px-4 py-2 bg-emerald-500 text-black font-bold text-xs rounded transition shadow";
+                setTimeout(() => {
+                    btn.innerText = "Copiar Texto do E-mail";
+                    btn.className = "px-4 py-2 bg-slate-800 text-[#E8D8B8] border border-[#C5A059]/50 font-bold text-xs rounded hover:bg-slate-700 transition shadow";
+                }, 3000);
+            });
+        }
+
+        // ==================== AVATAR FALANTE ANDERCLAY – VERSÃO CORPORATIVA ====================
+        
+        const secoesFala = {
+            abertura: {
+                texto: `Olá, tudo bem? Eu sou Anderclay Pereira, Diretor Executivo do Instituto DMap. É um prazer apresentar esta proposta. 
+Esta não é uma parceria comum. É um modelo estruturado no mesmo padrão que grandes grupos educacionais e corporações usam para expandir com segurança e baixo risco. 
+A Faculdade Metropolitana traz a força acadêmica, a chancela do MEC e a credibilidade institucional. O Instituto DMap traz a operação regional, a tecnologia de captação e a capacidade de executar com CAPEX inicial zero para a parceira. 
+Juntos, criamos uma operação de alta performance em Recife, Caruaru e Garanhuns, um mercado de aproximadamente seis milhões e quatrocentos mil habitantes. 
+O que estamos propondo é simples e poderoso: a Metropolitana chega mais perto do aluno sem precisar construir uma grande estrutura própria em cada cidade. O DMap assume a execução e o risco operacional, enquanto a Faculdade mantém o controle acadêmico e regulatório.`,
+                ensino: `<strong>O que esta seção ensina:</strong> Grandes corporações não abrem filiais do zero. Elas usam operadores regionais para testar mercados com risco controlado. Aqui o DMap assume o papel de operador.`
+            },
+            protecao: {
+                texto: `Agora o ponto mais importante para a segurança do Instituto DMap: a proteção financeira. 
+Nenhuma turma começa e nenhum contrato de locação é firmado sem o quórum mínimo de vinte alunos regularmente matriculados e adimplentes. 
+Toda a fase de captação acontece no digital e em eventos temporários. Não geramos passivo imobiliário fixo. 
+Se o quórum não for atingido até quinze dias antes da data prevista, podemos adiar a turma ou migrar os alunos para a modalidade híbrida ou online, sem qualquer penalidade para as partes. 
+Este é o modelo de breakeven que grandes grupos usam: só se escala o que já tem demanda comprovada. O DMap não se expõe a risco de estrutura vazia.`,
+                ensino: `<strong>Por que isso protege o DMap:</strong> Em parcerias corporativas sérias, o operador nunca assume custo fixo antes de ter receita garantida. O quórum mínimo de 20 alunos é a trava de segurança. É assim que se evita o erro clássico de abrir estrutura e depois descobrir que a demanda não veio.`
+            },
+            modelo: {
+                texto: `O modelo comercial segue o padrão de Revenue Share usado por grandes grupos de educação e tecnologia. 
+A receita bruta das mensalidades e matrículas é partilhada em percentual a ser definido no contrato definitivo. Os repasses são mensais, com prestação de contas transparente através do painel financeiro consolidado. 
+Importante: os custos operacionais repassados são calculados apenas sobre a receita efetivamente arrecadada e recebida. Não existe cobrança sobre inadimplência. 
+Isso alinha os interesses das duas partes. Quanto mais alunos pagantes, mais as duas instituições ganham. É o mesmo princípio que grandes players de educação a distância e de saúde usam em suas joint ventures.`,
+                ensino: `<strong>Lógica de grandes corporações:</strong> Revenue Share elimina conflito de interesse. O DMap só ganha se a operação performar. A Faculdade só repassa o que realmente entrou. Nenhum dos lados carrega o risco isolado do outro.`
+            },
+            exclusividade: {
+                texto: `Para garantir segurança de investimento e reciprocidade, o Instituto DMap terá exclusividade como operador comercial e de infraestrutura regional da Faculdade Metropolitana nas linhas de Pós-Graduação em Saúde, Estética e Gestão nas praças de Recife, Caruaru e Garanhuns. 
+Exclusividade territorial é o que permite ao operador investir em marketing, estrutura e relacionamento com segurança. Sem ela, o risco de outro parceiro entrar na mesma praça destrói o retorno do investimento. 
+Grandes grupos só investem pesado em uma região quando têm exclusividade clara. Estamos pedindo exatamente o mesmo nível de proteção que qualquer operador sério exige.`,
+                ensino: `<strong>Por que exclusividade é não-negociável:</strong> Sem exclusividade, o DMap estaria investindo em brand building e captação para depois ver outro operador colher os frutos. Em qualquer joint venture corporativa de verdade, a exclusividade territorial é a base da confiança.`
+            },
+            tecnologia: {
+                texto: `O ativo mais valioso e mais protegido desta operação é o DMap AI e toda a propriedade intelectual. 
+Os agentes de inteligência artificial, os códigos, os algoritmos, as landing pages, as estratégias de anúncios e os fluxos de automação pertencem e continuarão pertencendo exclusivamente ao Instituto DMap. 
+A Faculdade Metropolitana recebe apenas a licença de uso dentro do âmbito desta parceria. 
+Isso é exatamente como as grandes empresas de tecnologia estruturam suas parcerias: o parceiro usa a ferramenta, mas a propriedade intelectual nunca sai de casa. 
+Além disso, toda a operação está em conformidade com a LGPD. O DMap e a Metropolitana atuam como co-controladores apenas para fins de matrícula e gestão acadêmica.`,
+                ensino: `<strong>Proteção de ativo estratégico:</strong> Em parcerias de alto nível, a tecnologia e o know-how comercial nunca são transferidos. O DMap mantém a propriedade total do seu motor de captação. Isso é o que diferencia uma parceria estratégica de uma simples prestação de serviço.`
+            },
+            completo: {
+                texto: `Eu sou Anderclay Pereira, Diretor Executivo do Instituto DMap. 
+Esta proposta foi estruturada no padrão das grandes corporações: baixo risco, alta proteção e alinhamento de interesses. 
+A Faculdade Metropolitana traz a força acadêmica e a chancela do MEC. O Instituto DMap traz a operação regional, a tecnologia de captação e a execução com CAPEX zero para a parceira. 
+A proteção financeira é clara: quórum mínimo de vinte alunos matriculados e adimplentes. Sem quórum, não há estrutura física. 
+O modelo é Revenue Share transparente, com repasses apenas sobre receita efetiva. 
+O DMap terá exclusividade territorial nas três praças prioritárias. 
+E toda a propriedade intelectual do DMap AI permanece exclusivamente conosco. 
+Estamos prontos para apresentar o sistema, definir a grade e formalizar o termo de parceria. 
+Esta é uma operação desenhada para escalar com segurança.`,
+                ensino: `<strong>Resumo executivo:</strong> Esta é uma joint venture de baixo risco e alta proteção. O DMap não se expõe a passivo fixo, mantém a propriedade da tecnologia e só escala o que já tem demanda comprovada.`
+            },
+            fechamento: {
+                texto: `Antes de finalizarmos, quero antecipar as dúvidas mais comuns que surgem neste tipo de parceria. 
+Muitos perguntam: e se não atingir o quórum? A resposta é simples e segura: não iniciamos a estrutura física. Zero prejuízo. 
+Outros perguntam sobre o percentual de partilha. Ele será definido de forma transparente no contrato, sempre alinhado ao desempenho real. 
+Há quem questione a exclusividade. Ela existe exatamente para proteger o investimento de ambas as partes, como em qualquer joint venture séria. 
+E sobre a tecnologia? O DMap AI e toda a propriedade intelectual permanecem conosco. A Faculdade usa, mas não possui. 
+Este modelo foi desenhado para eliminar objeções e criar segurança. 
+Agora eu pergunto: ficou alguma dúvida? Pode perguntar. Estou aqui para esclarecer qualquer ponto e avançarmos juntos.`,
+                ensino: `<strong>Técnica de fechamento:</strong> Antecipar objeções é uma das habilidades mais poderosas de vendas consultivas. Ao trazer as dúvidas antes que o outro lado as faça, você demonstra domínio, reduz resistência e facilita a decisão.`
+            }
+        };
+
+        let utteranceAtual = null;
+
+        function falarSecao(chave) {
+            if (!('speechSynthesis' in window)) {
+                alert('Seu navegador não suporta síntese de voz. Use Chrome, Edge ou Safari.');
+                return;
+            }
+            window.speechSynthesis.cancel();
+            
+            const secao = secoesFala[chave];
+            if (!secao) return;
+
+            // Mostra o texto de ensino
+            const ensinoDiv = document.getElementById('textoEnsino');
+            const conteudo = document.getElementById('conteudoEnsino');
+            conteudo.innerHTML = secao.ensino;
+            ensinoDiv.classList.remove('hidden');
+
+            // Status visual do avatar
+            const statusDot = document.getElementById('avatarStatus');
+            if (statusDot) {
+                statusDot.classList.remove('bg-slate-600');
+                statusDot.classList.add('bg-emerald-500');
+            }
+            document.getElementById('statusFala').classList.remove('hidden');
+
+            const utt = new SpeechSynthesisUtterance(secao.texto);
+            utt.lang = 'pt-BR';
+            // Usa os controles personalizados do usuário
+            const pitchCtrl = document.getElementById('voicePitch');
+            const rateCtrl = document.getElementById('voiceRate');
+            utt.pitch = pitchCtrl ? parseFloat(pitchCtrl.value) : 0.75;
+            utt.rate  = rateCtrl  ? parseFloat(rateCtrl.value)  : 0.87;
+            utt.volume = 1.0;
+
+            const voices = window.speechSynthesis.getVoices();
+            
+            // Prioridade para vozes masculinas mais naturais
+            const vozMasculina = 
+                voices.find(v => /pt-BR|pt_BR/.test(v.lang) && /daniel|ricardo|felipe|heitor|male|masculin|google.*brasil/i.test(v.name)) ||
+                voices.find(v => /pt/.test(v.lang) && /daniel|ricardo|felipe|heitor|male|masculin/i.test(v.name)) ||
+                voices.find(v => /pt-BR|pt_BR/.test(v.lang) && !/luciana|maria|female|femin|helen|vit[oó]ria/i.test(v.name)) ||
+                voices.find(v => /pt-BR|pt_BR/.test(v.lang)) ||
+                voices.find(v => /pt/.test(v.lang));
+            
+            if (vozMasculina) {
+                utt.voice = vozMasculina;
+                console.log('Voz selecionada:', vozMasculina.name);
+            }
+
+            utt.onend = () => {
+                document.getElementById('statusFala').classList.add('hidden');
+                if (statusDot) {
+                    statusDot.classList.remove('bg-emerald-500');
+                    statusDot.classList.add('bg-slate-600');
+                }
+            };
+
+            utteranceAtual = utt;
+            window.speechSynthesis.speak(utt);
+        }
+
+        function pararFala() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                document.getElementById('statusFala').classList.add('hidden');
+                document.getElementById('textoEnsino').classList.add('hidden');
+                const statusDot = document.getElementById('avatarStatus');
+                if (statusDot) {
+                    statusDot.classList.remove('bg-emerald-500');
+                    statusDot.classList.add('bg-slate-600');
+                }
+            }
+        }
+
+        // Base de conhecimento com habilidades de vendas, convencimento e antecipação de objeções
+        const conhecimentoProposta = {
+            "quórum": "Essa é a dúvida mais comum e também a nossa maior proteção. O quórum mínimo de 20 alunos matriculados e adimplentes garante que só iniciamos estrutura quando a demanda já está comprovada. Se não atingir, simplesmente não abrimos. Zero prejuízo. É exatamente o modelo que grandes grupos usam para não queimar capital.",
+            "quorum": "O quórum de 20 alunos é a trava de segurança. Sem ele, não há locação nem início de turma. Isso elimina o risco clássico de abrir estrutura e depois descobrir que a demanda não veio.",
+            "risco": "O risco do DMap está extremamente controlado: só há custo de estrutura depois do quórum, a propriedade intelectual permanece conosco e temos exclusividade territorial. Em outras palavras, o modelo foi desenhado para o DMap não se expor. É uma parceria de baixo risco e alto alinhamento.",
+            "proteção": "A proteção está em quatro camadas: quórum mínimo, CAPEX zero, exclusividade territorial e retenção total da propriedade intelectual. Nenhuma dessas cláusulas é negociável. Elas transformam esta proposta em uma operação de risco controlado, no padrão das melhores joint ventures.",
+            "segurança": "Segurança jurídica e financeira são os pilares desta proposta. Quórum mínimo, ausência de passivo fixo, exclusividade e propriedade intelectual protegida. O DMap só avança quando a operação já tem lastro.",
+            "receita": "O modelo é Revenue Share puro. Partilhamos a receita bruta. Os repasses são mensais e transparentes. Só calculamos custos sobre o que realmente entrou. Isso alinha os interesses: quanto melhor a operação performar, mais as duas partes ganham.",
+            "percentual": "O percentual de partilha será definido no contrato definitivo de forma transparente e alinhada ao desempenho. O importante é que o modelo é de ganha-ganha. Não existe cobrança sobre inadimplência.",
+            "revenue": "Revenue Share é o padrão das grandes operações de educação e tecnologia. O DMap só ganha se a operação performar. A Faculdade só repassa o que realmente recebeu. Nenhum dos lados carrega o risco isolado do outro.",
+            "exclusividade": "A exclusividade territorial é o que permite investir com segurança. Sem ela, o DMap estaria construindo mercado para outro operador colher depois. Em qualquer joint venture séria, a exclusividade é a base da confiança e do investimento de longo prazo.",
+            "dmap ai": "O DMap AI e toda a propriedade intelectual pertencem exclusivamente ao Instituto DMap. A Faculdade recebe apenas licença de uso. Isso é exatamente como as grandes empresas de tecnologia fazem: o parceiro usa a ferramenta, mas a propriedade nunca sai de casa.",
+            "propriedade": "A propriedade intelectual é o ativo mais estratégico desta operação. Softwares, algoritmos, landing pages e fluxos de automação permanecem 100% do DMap. Esta cláusula é padrão em qualquer parceria de alto nível.",
+            "capex": "CAPEX inicial zero para a Faculdade. O DMap assume a operação e a infraestrutura sob demanda. A Metropolitana não precisa construir nem alugar estrutura própria. Este é um dos maiores atrativos do modelo.",
+            "objeção": "As principais objeções que surgem neste tipo de parceria são: medo de não atingir quórum, dúvida sobre percentual e receio de perder controle da operação. Todas foram respondidas nesta proposta: quórum protege, revenue share alinha e a Faculdade mantém o controle acadêmico total.",
+            "dúvida": "Ficou alguma dúvida? Pode perguntar. Estou aqui exatamente para esclarecer qualquer ponto e avançarmos com segurança.",
+            "próximos": "Os próximos passos são claros: aprovação da proposta pela diretoria, demonstração do DMap AI, elaboração da minuta com as cláusulas de proteção e lançamento dos eventos piloto. Estamos prontos para avançar.",
+            "default": "Ficou alguma dúvida? Pode perguntar. Esta proposta foi construída para eliminar objeções e criar segurança para os dois lados. Posso detalhar proteção financeira, modelo de receita, exclusividade, propriedade intelectual ou os próximos passos. O que gostaria de esclarecer?"
+        };
+
+        function perguntarAvatar() {
+            const input = document.getElementById('perguntaAvatar');
+            const pergunta = input.value.trim().toLowerCase();
+            const respostaDiv = document.getElementById('respostaAvatar');
+            
+            if (!pergunta) return;
+
+            let resposta = conhecimentoProposta.default;
+            for (const [chave, valor] of Object.entries(conhecimentoProposta)) {
+                if (pergunta.includes(chave)) {
+                    resposta = valor;
+                    break;
+                }
+            }
+
+            respostaDiv.innerHTML = `<strong class="text-[#C5A059]">Anderclay:</strong> ${resposta}`;
+            respostaDiv.classList.remove('hidden');
+
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utt = new SpeechSynthesisUtterance(resposta);
+                utt.lang = 'pt-BR';
+                const pitchCtrl = document.getElementById('voicePitch');
+                const rateCtrl = document.getElementById('voiceRate');
+                utt.pitch = pitchCtrl ? parseFloat(pitchCtrl.value) : 0.75;
+                utt.rate  = rateCtrl  ? parseFloat(rateCtrl.value)  : 0.87;
+                utt.volume = 1.0;
+                const voices = window.speechSynthesis.getVoices();
+                const vozMasculina = 
+                    voices.find(v => /pt-BR|pt_BR/.test(v.lang) && /daniel|ricardo|felipe|heitor|male|masculin|google.*brasil/i.test(v.name)) ||
+                    voices.find(v => /pt/.test(v.lang) && /daniel|ricardo|felipe|heitor|male|masculin/i.test(v.name)) ||
+                    voices.find(v => /pt-BR|pt_BR/.test(v.lang) && !/luciana|maria|female|femin|helen|vit[oó]ria/i.test(v.name)) ||
+                    voices.find(v => /pt-BR|pt_BR/.test(v.lang)) ||
+                    voices.find(v => /pt/.test(v.lang));
+                if (vozMasculina) utt.voice = vozMasculina;
+                window.speechSynthesis.speak(utt);
+            }
+
+            input.value = '';
+        }
+
+        function testarVoz() {
+            if (!('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+            const utt = new SpeechSynthesisUtterance('Olá, eu sou Anderclay Pereira, Diretor Executivo do Instituto DMap. Esta é a voz personalizada do avatar.');
+            utt.lang = 'pt-BR';
+            const pitchCtrl = document.getElementById('voicePitch');
+            const rateCtrl = document.getElementById('voiceRate');
+            utt.pitch = pitchCtrl ? parseFloat(pitchCtrl.value) : 0.75;
+            utt.rate  = rateCtrl  ? parseFloat(rateCtrl.value)  : 0.87;
+            utt.volume = 1.0;
+            const voices = window.speechSynthesis.getVoices();
+            const vozMasculina = 
+                voices.find(v => /pt-BR|pt_BR/.test(v.lang) && /daniel|ricardo|felipe|heitor|male|masculin|google.*brasil/i.test(v.name)) ||
+                voices.find(v => /pt/.test(v.lang) && /daniel|ricardo|felipe|heitor|male|masculin/i.test(v.name)) ||
+                voices.find(v => /pt-BR|pt_BR/.test(v.lang) && !/luciana|maria|female|femin|helen|vit[oó]ria/i.test(v.name)) ||
+                voices.find(v => /pt-BR|pt_BR/.test(v.lang)) ||
+                voices.find(v => /pt/.test(v.lang));
+            if (vozMasculina) utt.voice = vozMasculina;
+            window.speechSynthesis.speak(utt);
+        }
+
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = () => {};
+        }
+        // ==================== FIM AVATAR FALANTE ====================
+    </script>
+</body>
+</html>
