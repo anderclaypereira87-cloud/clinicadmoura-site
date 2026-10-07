@@ -44,11 +44,11 @@
     garanhuns: { cidade: 'Garanhuns', bairro: 'Boa Vista', no: 'na Boa Vista', rotulo: 'Garanhuns — Boa Vista', end: 'Av. Capitão João Leite, 300 — Empresarial Leandro, Boa Vista' }
   };
 
-  // livros.html: títulos, autores, resumos, links "Quero o curso" e valores exatamente como estão na página
+  // livros.html: títulos, autores, resumos e links "Quero o curso" (condições de parceria só pelo WhatsApp)
   var LIVROS = [
     { id: 'ecosystem', titulo: "D'Moura Ecosystem", autor: 'Anderclay Pereira e Dra. Danusa Moura',
       resumo: 'o modelo de parceria e expansão da clínica, com níveis Start, Bronze, Prata e Ouro',
-      valores: 'Na página, o investimento aparece assim: Start R$ 20 mil, Bronze R$ 50 mil, e a faixa vai até R$ 120 mil.',
+      valores: 'As condições de parceria são tratadas diretamente com a equipe pelo WhatsApp.',
       link: 'https://wa.me/5581997181046?text=Quero%20o%20curso%20Parceria%20DMoura%20Ecosystem',
       chaves: ['ecosystem', 'ecossistema', 'parceria', 'parceiro', 'franquia', 'franqueado', 'investir', 'investimento', 'rewards', 'nivel start', 'bronze', 'prata', 'ouro'] },
     { id: 'empreenda', titulo: 'Empreenda+', autor: 'Anderclay Pereira',
