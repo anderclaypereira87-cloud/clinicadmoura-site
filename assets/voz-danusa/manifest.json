@@ -1,0 +1,43 @@
+{
+  "voice": "Dra. Danusa Moura — clone de voz por IA (uso autorizado, conforme informado pelo usuário)",
+  "model": "Coqui XTTS-v2 (coqui-tts 0.27.5, tts_models/multilingual/multi-dataset/xtts_v2), idioma 'pt', CPU",
+  "reference": [
+    "voz-danusa/ref/danusa_ref_v02.wav",
+    "voz-danusa/ref/danusa_ref_v04.wav",
+    "voz-danusa/ref/danusa_ref_v05_0-25s.wav"
+  ],
+  "format": "MP3 mono 24 kHz 64 kbps, loudnorm -16 LUFS",
+  "generated": "2026-10-07",
+  "clips": [
+    {
+      "text": "Oi! Que bom ter você aqui. Essa é a galeria de vídeos da Clínica D'Moura. É só escolher um vídeo e dar o play. Bateu alguma dúvida? Chama a gente no WhatsApp, tá?",
+      "file": "videos/01.mp3",
+      "page": "videos.html",
+      "source": "FALA (boas-vindas da galeria, linhas 103-106 originais)",
+      "duration_s": 17.4,
+      "tts_text": "Oi! Que bom ter você aqui. Essa é a galeria de vídeos da Clínica Dê Moura. É só escolher um vídeo e dar o play. Bateu alguma dúvida? Chama a gente no WhatsApp, tá?",
+      "whisper_wer": 0.029,
+      "take": "videos_01_t1"
+    },
+    {
+      "text": "Olá! Sou a Dra. Danusa Moura, biomédica esteta integrante do Instituto DMap e à frente da Clínica D'Moura. Minha missão é cuidar de você por inteiro, unindo ciência e tecnologia na harmonização facial, estética corporal e saúde íntima feminina. Como posso te ajudar hoje?",
+      "file": "avatares-danusa/01.mp3",
+      "page": "avatares/danusa.html",
+      "source": "INTRO_TEXT (botão de intro + 'repetir' inicial)",
+      "duration_s": 24.29,
+      "tts_text": "Olá! Sou a doutora Danusa Moura, biomédica esteta integrante do Instituto Dê Map e à frente da Clínica Dê Moura. Minha missão é cuidar de você por inteiro, unindo ciência e tecnologia na harmonização facial, estética corporal e saúde íntima feminina. Como posso te ajudar hoje?",
+      "whisper_wer": 0.043,
+      "take": "danusa_01_t0"
+    },
+    {
+      "text": "Como biomédica esteta no Instituto DMap e na Clínica D'Moura, meu compromisso é aliar tecnologia e biossegurança. Para o seu caso, combinamos triagem individualizada e bioestimuladores de alta performance. Gostaria de agendar uma consulta presencial de avaliação?",
+      "file": "avatares-danusa/02.mp3",
+      "page": "avatares/danusa.html",
+      "source": "fallbackReply (resposta fixa quando a IA falha / sem chave)",
+      "duration_s": 21.38,
+      "tts_text": "Como biomédica esteta no Instituto Dê Map e na Clínica Dê Moura, meu compromisso é aliar tecnologia e biossegurança. Para o seu caso, combinamos triagem individualizada e bioestimuladores de alta performance. Gostaria de agendar uma consulta presencial de avaliação?",
+      "whisper_wer": 0.026,
+      "take": "danusa_02_t0 (r2)"
+    }
+  ]
+}

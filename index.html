@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="assets/ana/ana.css">
   <link rel="stylesheet" href="assets/avatares/avatar-falante.css">
+  <link rel="stylesheet" href="css/google-theme.css">
 </head>
 <body>
   <header class="site-header">
@@ -165,6 +166,9 @@
             <span class="cta">Abrir avatar →</span>
           </a>
         </div>
+        <div class="voz-danusa-row">
+          <button type="button" class="btn btn-outline" id="ouca-danusa" aria-label="Ouça a Dra. Danusa (voz por IA autorizada)">▶ Ouça a Dra. Danusa</button>
+        </div>
         <p style="margin-top:1.25rem;text-align:center">
           <a class="btn btn-outline" href="avatares/index.html">Ver todos os avatares</a>
         </p>
@@ -320,6 +324,18 @@
         }).join('');
       }
       render();
+    })();
+  </script>
+  <script>
+    (function () {
+      var btn = document.getElementById('ouca-danusa'); if (!btn) return;
+      var audio = null;
+      btn.addEventListener('click', function () {
+        if (audio && !audio.paused) { audio.pause(); audio.currentTime = 0; btn.textContent = '▶ Ouça a Dra. Danusa'; return; }
+        audio = audio || new Audio('assets/voz-danusa/avatares-danusa/01.mp3');
+        audio.onended = function () { btn.textContent = '▶ Ouça a Dra. Danusa'; };
+        audio.play().then(function () { btn.textContent = '■ Parar'; }, function () {});
+      });
     })();
   </script>
   <script src="assets/ana/ana.js" defer></script>

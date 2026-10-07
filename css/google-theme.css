@@ -1,0 +1,84 @@
+/* Clínica D'Moura — tema claro estilo Google (compartilhado por todas as páginas) 2026-10-07 */
+:root {
+  --g-bg: #ffffff; --g-bg-alt: #f8f9fa; --g-text: #202124; --g-muted: #5f6368;
+  --g-line: #e8eaed; --g-primary: #0b4f6c; --g-primary-hover: #093d54; --g-accent: #b8893a;
+  --g-font: Inter, Roboto, "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  /* remapeia variáveis do styles.css */
+  --bg: #ffffff; --bg-deep: #f8f9fa; --bg-card: #ffffff; --bg-card-hover: #ffffff; --navy: #ffffff;
+  --gold: #b8893a; --gold-soft: #0b4f6c; --gold-dim: #f1f3f4; --teal: #0b4f6c; --teal-bright: #0b4f6c;
+  --teal-dim: #f1f3f4; --text: #202124; --text-muted: #5f6368; --border: #e8eaed;
+  --radius: 12px; --shadow: none; --font: var(--g-font);
+}
+html body { background: var(--g-bg) !important; background-image: none !important; color: var(--g-text) !important; font-family: var(--g-font) !important; }
+body h1, body h2, body h3, body h4, body .font-serif, body .font-serif-title, body .font-brand,
+body .font-display, body .font-sans-header { font-family: var(--g-font) !important; letter-spacing: normal !important; }
+body h1 { font-weight: 500 !important; } body h2 { font-weight: 500 !important; } body h3 { font-weight: 500 !important; }
+body a { color: var(--g-primary); }
+body a:hover { color: var(--g-primary-hover); }
+
+/* ---- páginas com styles.css ---- */
+.site-header { background: rgba(255,255,255,.96) !important; backdrop-filter: none !important; border-bottom: 1px solid var(--g-line) !important; }
+.brand-text strong { color: var(--g-text) !important; font-weight: 500; }
+.brand-text span { color: var(--g-muted) !important; }
+.nav-links a { color: var(--g-muted) !important; }
+.nav-links a.active, .nav-links a:hover { color: var(--g-primary) !important; background: transparent !important; border-color: transparent !important; }
+.btn { box-shadow: none !important; transform: none !important; filter: none !important; border-radius: 999px !important; font-weight: 500 !important; }
+.btn-gold, .btn-teal { background: var(--g-primary) !important; color: #fff !important; border: 1px solid var(--g-primary) !important; }
+.btn-gold:hover, .btn-teal:hover { background: var(--g-primary-hover) !important; color: #fff !important; }
+.btn-outline { background: #fff !important; color: var(--g-primary) !important; border: 1px solid #dadce0 !important; }
+.btn-outline:hover { background: var(--g-bg-alt) !important; }
+.btn-whatsapp { background: #fff !important; color: #188038 !important; border: 1px solid #dadce0 !important; }
+.nav-links .btn-whatsapp { color: #188038 !important; }
+.hero-badge { background: none !important; border: 0 !important; padding: 0 !important; color: var(--g-accent) !important; box-shadow: none !important; }
+.hero h1 em { color: var(--g-text) !important; font-style: normal !important; background: none !important; -webkit-text-fill-color: currentColor !important; }
+.hero p, .section-head p, .card p, .card li, .page-hero p { color: var(--g-muted) !important; }
+section { padding: 3.5rem 0 !important; }
+.section-alt { background: var(--g-bg-alt) !important; border: 0 !important; }
+.section-head h2, .page-hero h1 { color: var(--g-text) !important; }
+.card, .logo-card { background: #fff !important; border: 1px solid var(--g-line) !important; box-shadow: none !important; transform: none !important; }
+.card:hover { border-color: #dadce0 !important; box-shadow: 0 1px 3px rgba(60,64,67,.12) !important; }
+.card h3 { color: var(--g-text) !important; }
+.unit-pin { background: var(--g-primary) !important; box-shadow: none !important; }
+.avatar-card .icon, .avatar-card .icon.af-icone-foto { background: #f1f3f4 !important; border: 0 !important; color: var(--g-muted) !important; box-shadow: none !important; }
+.avatar-card .icon.foto-placeholder { border: 0 !important; background: #e8eaed !important; }
+.avatar-card .role, .video-card .tag { color: var(--g-muted) !important; }
+.avatar-card .cta { color: var(--g-primary) !important; border: 0 !important; }
+.proc-media, .video-card video, .video-card .missing { border: 0 !important; background: #f1f3f4 !important; }
+.notice { background: var(--g-bg-alt) !important; border: 1px solid var(--g-line) !important; color: var(--g-muted) !important; }
+.site-footer { background: var(--g-bg-alt) !important; border-top: 1px solid var(--g-line) !important; color: var(--g-muted) !important; }
+.site-footer h4 { color: var(--g-text) !important; }
+.site-footer a { color: var(--g-muted) !important; }
+code { background: #f1f3f4; color: var(--g-text); padding: 0 .25em; border-radius: 4px; }
+.voz-danusa-row { text-align: center; margin-top: 1rem; }
+
+/* ---- páginas de avatar (Tailwind): tema claro ---- */
+body [class*="bg-slate-9"], body [class*="bg-slate-8"], body [class*="bg-navy-"], body [class*="bg-plum-"],
+body [class*="bg-dmap-9"], body [class*="bg-dmap-8"], body [class*="bg-brand-darkNavy"], body [class*="bg-black"],
+body [class*="bg-[#0"], body [class*="bg-slate-950"], body [class*="bg-purple-9"], body [class*="bg-pink-9"],
+body [class*="bg-red-9"], body [class*="bg-emerald-9"], body .glass-card, body .glass-panel, body .dmap-panel,
+body .glass-card-dmoura, body .card-gold-border, body [class*="bg-white/"] {
+  background: #fff !important; background-image: none !important; }
+body > header, body > nav, body > footer, body header[class], body footer[class] { background: #fff !important; border-color: var(--g-line) !important; }
+body.min-h-screen, body[class*="bg-"] { background: var(--g-bg) !important; }
+body [class*="text-slate-1"], body [class*="text-slate-2"], body [class*="text-slate-3"], body [class*="text-gray-2"],
+body [class*="text-gray-3"], body [class*="text-[#E8D8B8]"], body [class*="text-rose-100"], body [class*="text-rose-200"],
+body [class*="text-purple-1"], body [class*="text-purple-2"], body [class*="text-amber-100"], body .text-white:not([class*="bg-"]) { color: var(--g-text) !important; }
+body [class*="text-slate-4"], body [class*="text-gray-4"], body [class*="text-slate-5"], body .text-dmoura-muted { color: var(--g-muted) !important; }
+body [class*="text-gold-"], body [class*="text-[#C5A059]"], body .text-dmap-gold, body .text-brand-gold, body .text-dmoura-gold,
+body [class*="text-rosegold-"], body [class*="text-purple-3"], body [class*="text-purple-4"], body [class*="text-cyan-4"],
+body [class*="text-pink-4"], body .text-brand-rose, body .text-dmap-bluelight, body [class*="text-emerald-4"], body [class*="text-amber-4"] { color: var(--g-primary) !important; }
+body .text-transparent, body .gold-gradient-text, body .neon-gradient-text, body [class*="bg-clip-text"] {
+  background: none !important; -webkit-text-fill-color: var(--g-text) !important; color: var(--g-text) !important; }
+body [class*="border-slate-"], body [class*="border-gold-"], body [class*="border-rosegold-"], body [class*="border-[#C5A059]"],
+body [class*="border-dmap-"], body [class*="border-purple-"], body [class*="border-dmoura-"], body .gold-border-gradient,
+body [class*="border-amber-"], body [class*="border-rose-5"], body [class*="border-blue-"], body [class*="border-emerald-5"] { border-color: var(--g-line) !important; }
+body [class*="shadow"], body .ring-glow, body .glow-gold { box-shadow: none !important; }
+body [class*="backdrop-blur"], body .glass-card, body .glass-panel, body .dmap-panel { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+body [class*="bg-gradient-to"]:not(img) { background-image: none !important; }
+body [class*="bg-gradient-to"][class*="from-"] { background-color: #f1f3f4; }
+body button[class*="bg-gold"], body a[class*="bg-gold"], body button[class*="bg-[#C5A059]"], body a[class*="bg-[#C5A059]"],
+body .btn-gold-gradient, body button[class*="bg-dmap-blue"], body button[class*="bg-brand-"], body button[class*="bg-rosegold-5"], body button[class*="bg-purple-6"] {
+  background: var(--g-primary) !important; background-image: none !important; color: #fff !important; }
+body input, body textarea, body select { background: #fff !important; color: var(--g-text) !important; border-color: #dadce0 !important; }
+body input::placeholder, body textarea::placeholder { color: #80868b !important; }
+::-webkit-scrollbar-track { background: #f1f3f4 !important; } ::-webkit-scrollbar-thumb { background: #dadce0 !important; }
