@@ -30,7 +30,7 @@
     </div>
   </header>
 
-  <main>
+  <main data-layout="home-reorg-20261007">
     <section class="container hero">
       <div>
         <span class="hero-badge">Ecossistema D'Moura · DMAP</span>
@@ -48,19 +48,19 @@
         </div>
       </div>
       <div class="hero-logos">
+        <div class="logo-card logo-main">
+          <img src="assets/logo-dmoura-clinica.jpg" alt="Logo Clínica D'Moura">
+        </div>
         <div class="logo-card">
           <img src="assets/logo-instituto-dmap.jpeg" alt="Instituto DMAP">
         </div>
         <div class="logo-card banner">
           <img src="assets/banner-instituto-dmap.jpeg" alt="Banner Instituto DMAP">
         </div>
-        <div class="logo-card">
-          <img src="assets/logo-dmoura-clinica.jpg" alt="Logo Clínica D'Moura">
-        </div>
       </div>
     </section>
 
-    <section class="section-alt" id="unidades">
+    <section id="unidades">
       <div class="container">
         <div class="section-head">
           <h2>Nossas unidades</h2>
@@ -83,13 +83,13 @@
       </div>
     </section>
 
-    <section id="avatares">
+    <section class="section-alt" id="avatares">
       <div class="container">
         <div class="section-head">
           <h2>Avatares do ecossistema</h2>
           <p>Assistentes digitais da clínica e do Instituto DMAP — conversa por voz e texto, no estilo Canvas/Gemini.</p>
         </div>
-        <div class="grid grid-auto">
+        <div class="grid team-grid">
           <a class="card avatar-card" href="avatares/anderclay.html">
             <div class="icon af-icone-foto"><img src="assets/avatares/fotos/anderclay-mini.jpg" alt="Foto de Anderclay Pereira" width="64" height="64" loading="lazy"></div>
             <div class="role">Direção</div>
@@ -106,8 +106,8 @@
           </a>
           <a class="card avatar-card" href="avatares/flavia.html">
             <!-- TODO foto Flávia/Paula: usuário envia em 08/10/2026 -->
-            <div class="icon" style="border-style:dashed" title="Foto em breve">DF</div>
-            <div class="foto-em-breve" style="font-size:0.72rem;color:var(--text-muted);margin:-0.55rem 0 0.5rem">foto em breve</div>
+            <div class="icon foto-placeholder" title="Foto em breve">DF</div>
+            <div class="foto-em-breve">foto em breve</div>
             <div class="role">Estética &amp; Cosmetologia</div>
             <h3>Dra. Flávia</h3>
             <p>Equipe clínica D'Moura</p>
@@ -115,8 +115,8 @@
           </a>
           <a class="card avatar-card" href="avatares/paula.html">
             <!-- TODO foto Flávia/Paula: usuário envia em 08/10/2026 -->
-            <div class="icon" style="border-style:dashed" title="Foto em breve">DP</div>
-            <div class="foto-em-breve" style="font-size:0.72rem;color:var(--text-muted);margin:-0.55rem 0 0.5rem">foto em breve</div>
+            <div class="icon foto-placeholder" title="Foto em breve">DP</div>
+            <div class="foto-em-breve">foto em breve</div>
             <div class="role">Estética Integrativa</div>
             <h3>Dra. Paula</h3>
             <p>Equipe clínica D'Moura</p>
@@ -171,13 +171,13 @@
       </div>
     </section>
 
-    <section class="section-alt" id="procedimentos">
+    <section id="procedimentos">
       <div class="container">
         <div class="section-head">
           <h2>Procedimentos em destaque</h2>
           <p>Conteúdo público de referência. Procedimentos íntimos são tratados apenas em consulta privada.</p>
         </div>
-        <div class="grid grid-2">
+        <div class="grid grid-2 proc-grid">
           <article class="card">
             <div class="proc-media">
               <img src="assets/flyer-botox-fullface.jpg" alt="Flyer Botox Full Face e sorriso gengival">
@@ -203,13 +203,24 @@
       </div>
     </section>
 
+    <section class="section-alt" id="livros">
+      <div class="container">
+        <div class="section-head">
+          <h2>Livros &amp; Formação</h2>
+        </div>
+        <p style="text-align:center">
+          <a class="btn btn-gold" href="livros.html">Livros &amp; Formação</a>
+        </p>
+      </div>
+    </section>
+
     <section id="videos">
       <div class="container">
         <div class="section-head">
           <h2>Galeria de vídeos</h2>
           <p>Conteúdo visual clínico e institucional. Os arquivos são carregados quando disponíveis em <code>/videos/</code>.</p>
         </div>
-        <div class="grid grid-auto" id="video-preview-grid">
+        <div class="grid video-grid" id="video-preview-grid">
           <!-- Prefill 6 cards; videos.html shows all 12 -->
         </div>
         <p style="margin-top:1.25rem;text-align:center">
@@ -300,7 +311,7 @@
           const posterAttr = poster ? ` poster="${poster}"` : '';
           const tag = v.tag || 'vídeo';
           return `<article class="card video-card" data-id="${v.id || ''}">
-            <video controls playsinline preload="metadata"${posterAttr}>
+            <video controls playsinline preload="none"${posterAttr}>
               <source src="videos/${file}" type="video/mp4">
             </video>
             <div class="tag">${tag}</div>
