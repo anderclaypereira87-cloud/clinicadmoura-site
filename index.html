@@ -6,6 +6,9 @@
 <title>Clínica D'Moura &amp; Instituto DMAP — Anderclay Pereira</title>
 <meta name="description" content="Clínica D'Moura e Instituto DMAP: procedimentos estéticos, vídeos, avatares, livros e unidades em Recife, Caruaru e Garanhuns.">
 <link rel="icon" href="assets/favicon.ico">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#050e1a">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
@@ -20,20 +23,27 @@
     <button role="tab" data-tab="videos">2. Vídeos &amp; Aulas</button>
     <button role="tab" data-tab="avatares">3. Avatares &amp; Livros</button>
     <button role="tab" data-tab="mapa">4. Mapa &amp; Assistente IA</button>
-    <button role="tab" data-tab="avaliacoes">5. Avaliações</button>
+    <button role="tab" data-tab="avaliacoes">5. Avaliações (<span class="rv-count">0</span>)</button>
   </nav>
-  <a class="wa-top" href="https://wa.me/5581997181046?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar." target="_blank" rel="noopener">Agendar no WhatsApp</a>
+  <div class="hdr-actions">
+    <button class="hbtn" id="theme-btn">Tema Claro</button>
+    <button class="hbtn" data-modal="lojas">Lojas (Play / App Store / MS)</button>
+    <button class="hbtn" data-modal="avaliar">Avaliar Local</button>
+    <button class="hbtn hbtn-gold" data-modal="entrar">Entrar</button>
+  </div>
 </header>
 <main>
-  <div class="hero">
+  <div class="hero" id="hero">
     <div>
       <p class="kick">D'Moura Clínica · Instituto DMAP</p>
       <h1>CLÍNICA D'MOURA &amp; INSTITUTO DMAP</h1>
       <p class="mut">Como conectar artes, profissões, conhecimento e oportunidades para transformar talento em desenvolvimento sustentável.</p>
       <p><b class="gold">ANDERCLAY PEREIRA</b><br><span class="mut" style="font-size:13px">Desenvolvimento Multidisciplinar em Artes e Profissões | CNPJ 60.412.110/0001-92</span></p>
-      <div class="row">
-        <button class="btn btn-gold" data-go="mapa">Abrir Mapa &amp; Assistente IA</button>
-        <a class="btn btn-teal" href="https://wa.me/5581997181046?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar." target="_blank" rel="noopener">Agendar pelo WhatsApp</a>
+      <div class="row"><button class="btn btn-gold" data-go="mapa">Abrir Mapa &amp; Assistente IA</button></div>
+      <div class="stores">
+        <button class="store" data-modal="lojas" data-loja="play"><small>ANDROID</small><b>Google Play Store</b></button>
+        <button class="store" data-modal="lojas" data-loja="ios"><small>IPHONE &amp; IPAD</small><b>Apple App Store</b></button>
+        <button class="store" data-modal="lojas" data-loja="ms"><small>WINDOWS 10 &amp; 11</small><b>Microsoft Store</b></button>
       </div>
     </div>
     <div class="logos">
@@ -41,53 +51,76 @@
       <figure><img src="assets/logo-instituto-dmap.jpeg" alt="Instituto DMAP"><figcaption>INSTITUTO DMAP</figcaption></figure>
     </div>
   </div>
+  <div class="card brandbar" id="brandbar">
+    <p class="mut" style="margin:0 0 4px;font-size:13px">Desenvolvimento Multidisciplinar em Artes e Profissões | CNPJ 60.412.110/0001-92</p>
+    <p style="margin:0 0 10px;font-size:14px">Selecione a seção desejada ou visualize todas as partes em sequência:</p>
+    <div class="subnav" id="subnav">
+      <button data-part="all">Visão Completa da Clínica</button>
+      <button data-part="p1">1. Clínica &amp; Procedimentos</button>
+      <button data-part="p2">2. Vídeos &amp; Aulas</button>
+      <button data-part="p3">3. Avatares &amp; DRE</button>
+      <button data-part="p4">4. Livros — Anderclay Pereira</button>
+    </div>
+  </div>
 
-  <section class="tab" id="tab-clinica">
+  <section class="part" id="p1">
     <div class="sec-h"><p class="kick">Parte 1 · D'Moura Clínica</p><h2>Clínica D'Moura — Procedimentos &amp; Protocolos</h2><p class="mut">Direção Institucional: Anderclay Pereira · Excelência Clínica</p></div>
     <div class="grid" id="procs"></div>
   </section>
-
-  <section class="tab" id="tab-videos">
-    <div class="sec-h"><p class="kick">Parte 2 · Acervo audiovisual</p><h2>Vídeos &amp; Aulas — Clínica D'Moura &amp; Instituto DMAP</h2><p class="mut">Toque no vídeo para assistir. Dúvidas? Chame a gente no WhatsApp.</p></div>
-    <div class="vgrid" id="vids"></div>
+  <section class="part" id="p2">
+    <div class="sec-h"><p class="kick">Parte 2 · Acervo audiovisual</p><h2>Central de Vídeos D'Moura &amp; Instituto DMAP</h2></div>
+    <div class="player card"><video id="feat" controls playsinline preload="metadata"></video><div id="feat-info"></div></div>
+    <div class="sec-h" style="margin-top:22px"><h3>Catálogo de Vídeos (V01 a V12) <span class="pill" id="vcount"></span></h3></div>
+    <div class="vlist" id="vlist"></div>
   </section>
-
-  <section class="tab" id="tab-avatares">
-    <div class="sec-h"><p class="kick">Parte 3 · Especialistas virtuais &amp; governança</p><h2>12 Avatares Executivos — Clínica D'Moura &amp; DMAP</h2><p class="mut">Toque em "Ouvir fala" para o avatar se apresentar, ou abra a página dele para conversar.</p></div>
+  <section class="part" id="p3">
+    <div class="sec-h"><p class="kick">Parte 3 · Especialistas virtuais &amp; governança</p><h2>12 Avatares Executivos &amp; Gestão DRE — Clínica D'Moura &amp; DMAP</h2><p class="mut">Clique em qualquer avatar para conversar com ele no Assistente IA. Toque em "Ouvir fala" para ele se apresentar.</p></div>
     <div class="grid" id="avs"></div>
-    <div class="sec-h"><p class="kick">Parte 4 · Biblioteca autoral &amp; formação</p><h2>Obras &amp; Livros — Anderclay Pereira (Instituto DMAP)</h2></div>
+  </section>
+  <section class="part" id="p4">
+    <div class="sec-h"><p class="kick">Parte 4 · Biblioteca autoral &amp; formação</p><h2>Obras &amp; Livros Autorais — Anderclay Pereira (Instituto DMAP)</h2><p class="mut">Autor: Anderclay Pereira · CNPJ 60.412.110/0001-92</p></div>
     <div class="grid" id="books"></div>
   </section>
 
-  <section class="tab" id="tab-mapa">
-    <div class="sec-h"><p class="kick">Parte 4 · Mapa, GPS &amp; Assistente</p><h2>Nossas unidades em Pernambuco</h2><p class="mut" id="gps-status" aria-live="polite">Toque em "Usar minha localização" para ver a unidade mais perto de você.</p></div>
-    <div class="mapwrap">
-      <div id="map" role="region" aria-label="Mapa das unidades"></div>
-      <div>
-        <button class="btn btn-gold" id="gps-btn" style="width:100%;justify-content:center;margin-bottom:12px">📍 Usar minha localização</button>
-        <div id="units"></div>
-      </div>
+  <section class="part" id="pmapa">
+    <div class="maptools" id="maptools">
+      <input id="map-q" placeholder="Buscar endereço ou local no mapa" aria-label="Buscar no mapa"><button class="btn btn-gold" id="map-search">Buscar</button>
+      <button class="btn" id="gps-btn">📍 Meu GPS</button>
+      <button class="btn" data-maps="traffic">Trânsito ao Vivo</button>
+      <button class="btn" data-maps="transit">Transporte Público</button>
+      <button class="btn" data-maps="route">Traçar Rota</button>
     </div>
-    <div class="card ana-box">
-      <h3>Assistente IA — Ana, recepção da Clínica D'Moura</h3>
-      <p>A Ana responde sobre procedimentos, unidades, avaliação, vídeos, livros e avatares, e te passa direto para a equipe no WhatsApp.</p>
-      <div class="row"><button class="btn btn-teal" id="abrir-ana">💬 Falar com a Ana</button>
-      <button class="btn" data-ask="Onde ficam as unidades?">Onde ficam as unidades?</button>
-      <button class="btn" data-ask="Quero agendar uma avaliação">Quero agendar</button>
-      <button class="btn" data-ask="O que é o Botox Full Face?">Botox Full Face</button></div>
+    <div class="cats"><button class="chip" data-near="atrações turísticas">Atrações Próximas</button><button class="chip" data-near="restaurantes e cafés">Restaurantes &amp; Cafés</button><button class="chip" data-near="ponto de ônibus e metrô">Ônibus &amp; Metrô</button><button class="chip" data-near="clínicas e saúde">Clínicas &amp; Saúde</button></div>
+    <div class="mapwrap">
+      <div><div id="map" role="region" aria-label="Mapa das unidades"></div>
+        <p class="coords"><span id="coords"></span> · <b id="coords-name"></b> <button class="btn btn-sm" data-modal="avaliar">Avaliar Este Local</button></p>
+        <p class="mut" id="gps-status" aria-live="polite">Toque em "Meu GPS" para ver a unidade mais perto de você.</p>
+        <div id="units"></div></div>
+      <div class="card chat">
+        <h3>Assistente IA — Clínica D'Moura &amp; Google Maps</h3>
+        <label class="mut" style="font-size:13px">Especialista<select id="spec"></select></label>
+        <div class="welcome"><b class="gold">Assistente D'Moura</b>
+          <p>Bem-vindo à Clínica D'Moura &amp; Instituto DMAP (Anderclay Pereira · CNPJ 60.412.110/0001-92).</p>
+          <p>Sou a Ana, assistente da recepção, com o mapa ao lado. Você pode perguntar sobre:</p>
+          <ul><li><b>Clínica D'Moura &amp; Instituto DMAP:</b> protocolos estéticos, os 12 vídeos, 12 avatares executivos e livros autorais de Anderclay Pereira.</li>
+          <li><b>Pontos de interesse próximos:</b> restaurantes, museus, clínicas e pontos turísticos perto de cada unidade.</li>
+          <li><b>Transporte público:</b> ônibus e metrô até a unidade.</li>
+          <li><b>Trânsito em tempo real &amp; rotas:</b> quanto tempo leva até a clínica.</li>
+          <li><b>Avaliações</b> de 1 a 5 estrelas de pacientes e visitantes.</li></ul></div>
+        <div class="cats"><button class="chip" data-near="atrações turísticas">O que há de interessante aqui perto?</button><button class="chip" data-maps="transit" data-dest="museu">Transporte público até o museu</button><button class="chip" data-maps="transit" data-dest="centro">Qual ônibus vai para o centro?</button><button class="chip" data-maps="traffic">Trânsito agora perto da clínica</button><button class="chip" data-maps="route" data-dest="aeroporto">Tempo de carro até o aeroporto</button></div>
+        <form id="chat-form" class="chatform"><input id="chat-in" placeholder="Pergunte à Ana (procedimentos, unidades, agendamento…)" aria-label="Mensagem"><button class="btn btn-teal">Enviar</button></form>
+      </div>
     </div>
   </section>
 
-  <section class="tab" id="tab-avaliacoes">
-    <div class="sec-h"><p class="kick">Parte 5 · Avaliações</p><h2>Avalie a Clínica D'Moura</h2><p class="mut">Sua opinião ajuda outros pacientes. Escolha as estrelas e envie seu comentário para a equipe pelo WhatsApp.</p></div>
-    <div class="card" style="max-width:620px">
-      <div class="stars" id="stars" role="radiogroup" aria-label="Nota de 1 a 5"></div>
-      <p><label>Unidade<br><select id="rv-unit" style="width:100%;padding:10px;border-radius:10px;background:#0a1626;color:#fff;border:1px solid rgba(148,163,184,.25)"><option>Recife — Santo Amaro</option><option>Caruaru — Maurício de Nassau</option><option>Garanhuns — Boa Vista</option></select></label></p>
-      <p><label>Comentário<br><textarea id="rv-txt" rows="4" placeholder="Conte como foi seu atendimento"></textarea></label></p>
-      <div class="row"><button class="btn btn-teal" id="rv-send">Enviar avaliação pelo WhatsApp</button></div>
-    </div>
+  <section class="part" id="prv">
+    <div class="sec-h"><p class="kick">Parte 5 · Avaliações</p><h2>Avaliações e Notas de Pacientes &amp; Visitantes — Clínica D'Moura</h2><p class="mut">Avaliações deste aparelho e enviadas para a equipe pelo WhatsApp, consultadas pela Ana.</p></div>
+    <div class="row" style="margin-bottom:14px"><button class="btn btn-gold" data-modal="avaliar">+ Nova Avaliação</button>
+      <select id="rv-filter" aria-label="Filtrar avaliações"><option value="">Todas as categorias</option></select></div>
+    <div id="rv-list"></div>
   </section>
 </main>
+<div class="modal" id="modal" hidden><div class="mbox" role="dialog" aria-modal="true"><button class="mclose" aria-label="Fechar">✕</button><div id="mbody"></div></div></div>
 <footer>Clínica D'Moura &amp; Instituto DMAP · Anderclay Pereira · CNPJ 60.412.110/0001-92 · <a href="mailto:diretoria@clinicadmoura.company">diretoria@clinicadmoura.company</a> · (81) 99718-1046<br>As informações do site não substituem a avaliação presencial com profissional habilitado.</footer>
 <a class="wa-float" href="https://wa.me/5581997181046?text=Ol%C3%A1!%20Vim%20pelo%20site." target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg></a>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
