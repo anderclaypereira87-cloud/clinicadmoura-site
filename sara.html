@@ -58,7 +58,7 @@ function showBookingOld(b){const t='Olá! Gostaria de agendar pela Sarah (site).
 async function post(obj){const r=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(Object.assign({company:'clinicadmoura',session:SESSION,easy},obj))});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||'erro');return j;}
 function audioUnlock(){try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();if(ctx?.state==='suspended'){ctx.resume().catch(()=>{});}}catch(_){} }
 function haltMic(){if(recognition){let old=recognition;recognition=null;try{old.abort()}catch(_){}}listening=false;app.classList.remove('listening');}
-function haltAudio(){try{window.speechSynthesis.cancel()}catch(_){} playbackSerial++;if(source){try{source.stop()}catch(_){}source.disconnect();source=null;}htmlAudio.pause();htmlAudio.onended=null;htmlAudio.onerror=null;htmlAudio.removeAttribute('src');htmlAudio.load();if(playedUrl){URL.revokeObjectURL(playedUrl);playedUrl=null}app.classList.remove('speaking');}
+function haltAudio(){try{sayEl.pause()}catch(_){} playbackSerial++;if(source){try{source.stop()}catch(_){}source.disconnect();source=null;}htmlAudio.pause();htmlAudio.onended=null;htmlAudio.onerror=null;htmlAudio.removeAttribute('src');htmlAudio.load();if(playedUrl){URL.revokeObjectURL(playedUrl);playedUrl=null}app.classList.remove('speaking');}
 function hangup(){live=false;turn++;if(controller){controller.abort();controller=null}haltMic();haltAudio();working=false;start.classList.remove('hidden');stop.classList.add('hidden');mic.classList.add('hidden');replay.classList.add('hidden');send.disabled=false;start.textContent='✦ Conversar novamente';state('Conversa encerrada.');}
 function activate(autoListen){if(live)return;live=true;audioUnlock();if(autoListen&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){navigator.mediaDevices.getUserMedia({audio:true}).then(m=>m.getTracks().forEach(t=>t.stop())).catch(()=>{});}start.classList.add('hidden');stop.classList.remove('hidden');state('Conversa iniciada. Fale ou digite uma pergunta.');if(autoListen)listen();}
 function listen(){
@@ -103,7 +103,7 @@ async function ask(userText){let text=String(userText||'').trim().slice(0,350);i
   const answer=String(result.answer||'Não consegui responder agora.');history.push({role:'assistant',text:answer});bubble('Sarah · Aoede',answer);
   displayQuota(result);working=false;send.disabled=false;
   if(result.audioBase64)await play(result.audioBase64,current);
-  else {if('speechSynthesis' in window){try{window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(answer);u.lang='pt-BR';u.rate=easy?0.85:1.04;const voices=window.speechSynthesis.getVoices();u.voice=voices.find(v=>v.lang==='pt-BR')||voices.find(v=>v.lang.startsWith('pt'))||null;u.onend=()=>{if(live&&turn===current)listen()};u.onerror=()=>{state('Resposta em texto. Toque em Continuar falando.');mic.classList.remove('hidden')};state('Sarah falando com a voz do aparelho…');window.speechSynthesis.speak(u);}catch(e){state('Resposta em texto. Toque para continuar.');mic.classList.remove('hidden')}}else{state('Resposta em texto. Toque para continuar.');mic.classList.remove('hidden')}}
+  else {const a=await geminiSay(answer);if(live&&turn===current){if(a)await play(a,current);else{state('Resposta em texto. Toque para continuar.');mic.classList.remove('hidden')}}}
  }catch(e){if(!live||turn!==current)return;state(e?.message||'Não consegui conectar. Tente novamente.');mic.classList.remove('hidden');}
  finally{if(turn===current){working=false;send.disabled=false;controller=null;}}
 }
@@ -120,14 +120,16 @@ $('handoff').addEventListener('click',()=>{window.open(handoffUrl(),'_blank','no
 setEasy(easy);
 $('easy').addEventListener('click',()=>{audioUnlock();setEasy(!easy);activate(false);ask(easy?'Liguei o modo fácil. Pode falar comigo bem devagar e simples, por voz.':'Desliguei o modo fácil.');});
 $('bigmic').addEventListener('click',()=>{audioUnlock();if(!live)activate(true);else if(!working){haltAudio();listen();}});
-function sayLocal(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='pt-BR';u.rate=0.85;speechSynthesis.speak(u)}catch(_){}}
+const sayMem=new Map();
+async function geminiSay(t){t=String(t||'').slice(0,700);if(!t)return null;const k=(easy?'e':'n')+t;if(sayMem.has(k))return sayMem.get(k);for(let n=0;n<2;n++){try{const r=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({company:'clinicadmoura',action:'say',easy,text:t})});const j=await r.json();if(j.audioBase64){if(t.length<=300)sayMem.set(k,j.audioBase64);return j.audioBase64}}catch(_){}}return null}
+const sayEl=new Audio();async function sayLocal(t){const a=await geminiSay(t);if(!a)return;haltAudio();try{sayEl.src='data:audio/wav;base64,'+a;await sayEl.play()}catch(_){}}
 const termAudioEl=new Audio();
 $('photo').addEventListener('click',async()=>{audioUnlock();haltMic();haltAudio();if(consentId){$('photos').classList.remove('hidden');return;}$('consent').classList.remove('hidden');if(resumo.nome&&!$('cnome').value)$('cnome').value=resumo.nome;if(resumo.cidade_origem&&!$('ccidade').value)$('ccidade').value=resumo.cidade_origem;
  if(!termVer){try{const j=await post({action:'term'});termVer=j.versao;$('termtext').textContent=j.texto;}catch(e){$('termtext').textContent='Não consegui carregar o termo. Tente de novo.';}}
  if(easy)$('termaudio').click();});
 $('termaudio').addEventListener('click',async()=>{audioUnlock();$('cmsg').textContent='🔊 Carregando a leitura do termo…';try{if(!termB64){const j=await post({action:'term',audio:true});termVer=j.versao;$('termtext').textContent=j.texto;termB64=j.audioBase64;}
  if(!termB64)throw 0;const raw=atob(termB64),b=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)b[i]=raw.charCodeAt(i);termAudioEl.src=URL.createObjectURL(new Blob([b],{type:'audio/wav'}));termAudioEl.preservesPitch=true;termAudioEl.playbackRate=easy?0.9:1;await termAudioEl.play();$('cmsg').textContent='🔊 Lendo o termo. Depois marque “Li e autorizo”.';termAudioEl.onended=()=>{$('cmsg').textContent='Se concorda, marque ✅ “Li e autorizo”, escreva ou peça ajuda para escrever seu nome e cidade, e toque em Aceito.';if(easy)sayLocal('Pronto. Se a senhora concorda, marque o quadradinho e toque em Aceito.');};}
- catch(_){$('cmsg').textContent='';sayLocal($('termtext').textContent);}});
+ catch(_){$('cmsg').textContent='Não consegui carregar a voz agora. O termo está escrito acima.';}});
 $('ccancel').addEventListener('click',()=>{termAudioEl.pause();$('consent').classList.add('hidden');});
 $('caccept').addEventListener('click',async()=>{const nome=$('cnome').value.trim(),cidade=$('ccidade').value.trim();
  if(!nome||!cidade||!$('cok').checked){const m='Falta '+(!nome?'o seu nome':!cidade?'a sua cidade':'marcar ✅ Li e autorizo')+'.';$('cmsg').textContent=m;if(easy)sayLocal(m);return;}
