@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111217"><meta name="referrer" content="no-referrer">
+<title>Sara | Atendimento da Clínica D'Moura</title>
+<meta name="description" content="Converse com a Sara, assistente virtual da Clínica D'Moura. Atendimento por voz e texto.">
+<style>
+:root{color-scheme:dark;--gold:#e5bf87;--bg:#0c0d11;--panel:#17191e;--text:#faf5ef;--muted:#bcb6ae}
+*{box-sizing:border-box}body{margin:0;font:15px/1.55 system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(circle at 55% -10%,#483d35 0%,#15151a 38%,#0a0b0f 90%);color:var(--text)}button,input{font:inherit}
+.wrap{max-width:540px;margin:auto;min-height:100dvh;padding:20px;display:flex;flex-direction:column;gap:15px}
+header{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:9px 0 14px;border-bottom:1px solid #c7a77a3c}
+.brand{display:flex;align-items:center;gap:12px}.monogram{height:47px;width:47px;border:1px solid #e5bf87a1;display:grid;place-items:center;color:var(--gold);border-radius:14px;font:26px Georgia,serif}
+.brand strong{display:block;font-size:14px;letter-spacing:.13em}.brand small{display:block;color:#d2b78c;letter-spacing:.11em;font-size:10px}
+.pill{border:1px solid #e5bf8760;border-radius:20px;color:var(--gold);padding:5px 9px;font-size:11px}
+h1{font-size:clamp(27px,6vw,35px);font-weight:620;margin:11px 0 0;letter-spacing:-.04em}p{margin:0}.lead{color:var(--muted)}
+.orbarea{display:grid;place-items:center;min-height:164px}.orb{height:128px;width:128px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#fff4db,#b7a2bd 24%,#777299 48%,#322f47 73%,#13141e);box-shadow:0 0 0 20px #e5bf8709,0 0 0 38px #e5bf8706,0 0 75px #9585ae68;animation:float 3s ease-in-out infinite}
+.listening .orb{animation:pulse .9s ease-in-out infinite}.speaking .orb{animation:pulse 1.5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-6px)}}@keyframes pulse{50%{transform:scale(1.1);filter:brightness(1.2)}}
+#status{text-align:center;color:#eed3ab;min-height:42px;font-weight:600}
+.primary{background:linear-gradient(120deg,#f7dcaa,#ba9866);border:0;color:#292015;border-radius:16px;padding:16px;font-weight:750;flex:1;min-height:56px}
+.actions{display:flex;gap:9px}.sub{background:#242028;border:1px solid #96816c;border-radius:14px;color:#eee0cc;padding:12px;min-height:52px}
+button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:3px}button:disabled{opacity:.5;cursor:wait}
+.shortcuts{display:flex;gap:8px;flex-wrap:wrap}.shortcuts button{padding:9px 12px;border:1px solid #a89576;background:#24221f;color:#e8d2b1;border-radius:999px;font-size:12px}
+.chat{flex:1;min-height:180px;max-height:38dvh;overflow:auto;background:#121318e8;border:1px solid #e5bf8738;padding:12px;border-radius:18px}
+.bubble{max-width:93%;background:#29272b;border-radius:13px;padding:9px 12px;margin:8px 0;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px}
+.bubble.user{margin-left:auto;background:#4b4032}.bubble b{display:block;color:#edce98;font-size:11px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}
+form{display:flex;gap:7px}input{min-width:0;flex:1;background:#202127;color:white;border:1px solid #b9a17a80;border-radius:13px;padding:12px}
+form button{border:0;color:#241a10;background:#e6c38d;border-radius:13px;padding:0 15px;font-weight:750}
+.footer{color:#aaa5a1;font-size:11px;text-align:center;padding:3px 0 10px}a{color:#f0d19e}.hidden{display:none!important}
+@media(max-height:650px){.orbarea{min-height:90px}.orb{height:70px;width:70px}.chat{min-height:120px}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app">
+<header><div class="brand"><div class="monogram">D</div><div><strong>CLÍNICA D'MOURA</strong><small>SARA · ASSISTENTE VIRTUAL</small></div></div><span class="pill">Piloto</span></header>
+<section><h1>Converse com a Sara</h1><p class="lead">Atendimento com voz e texto, sem precisar apertar Enviar a cada pergunta.</p></section>
+<div class="orbarea"><div class="orb" aria-hidden="true"></div></div>
+<div id="status" role="status" aria-live="polite">Toque em “Iniciar conversa” e permita o microfone.</div>
+<div class="actions"><button id="start" class="primary">🎙 Iniciar conversa</button><button id="stop" class="sub hidden">Encerrar</button><button id="listen" class="sub hidden">🎤 Ouvir</button><button id="replay" class="sub hidden">▶ Repetir</button></div>
+<div class="shortcuts"><button data-q="Onde ficam as unidades da clínica?">📍 Unidades</button><button data-q="Quero agendar uma avaliação">📅 Agendar</button><button data-q="Quais procedimentos vocês fazem?">✨ Procedimentos</button></div>
+<div id="chat" class="chat" aria-label="Mensagens da conversa"><div class="bubble"><b>Sara</b>Oi! Sou a Sara, assistente virtual da Clínica D'Moura. 😊 Como posso te ajudar?</div></div>
+<form id="form"><input id="text" autocomplete="off" maxlength="350" placeholder="Ou digite sua pergunta..." aria-label="Digite sua pergunta"><button id="send">Enviar</button></form>
+<div class="footer">A Sara não confirma horários sem consultar a equipe. Em caso de urgência médica, procure atendimento. <a href="https://wa.me/5581997181046" target="_blank" rel="noopener">WhatsApp da clínica</a> · <a href="https://clinicadmoura.com" target="_blank" rel="noopener">Site</a>.<br>O microfone depende das permissões e da compatibilidade do navegador. A voz do aparelho é utilizada quando a voz Aoede não está disponível.</div>
+</div>
+<script>
+(function(){
+'use strict';
+var API='https://qxagrqankcrsgwkjskzl.supabase.co/functions/v1/dmap-sara-public';
+var app=document.getElementById('app'),status=document.getElementById('status'),chat=document.getElementById('chat');
+var start=document.getElementById('start'),stop=document.getElementById('stop'),listenBtn=document.getElementById('listen'),replay=document.getElementById('replay'),form=document.getElementById('form'),input=document.getElementById('text'),send=document.getElementById('send');
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,micActive=false,busy=false,hearing=false,turn=0,history=[],currentText='',audio=new Audio(),lastAudio='',controller=null,retryTimer=null;
+function state(s){status.textContent=s;}
+function bubble(w,t,user){var d=document.createElement('div'),b=document.createElement('b');d.className='bubble'+(user?' user':'');b.textContent=w;d.appendChild(b);d.appendChild(document.createTextNode(t));chat.appendChild(d);chat.scrollTop=chat.scrollHeight;}
+function stopRec(){clearTimeout(retryTimer);if(rec){var r=rec;rec=null;try{r.abort();}catch(e){}}hearing=false;app.classList.remove('listening');}
+function stopVoice(){audio.pause();audio.removeAttribute('src');try{speechSynthesis.cancel();}catch(e){}app.classList.remove('speaking');}
+function end(){micActive=false;turn++;if(controller){controller.abort();controller=null;}stopRec();stopVoice();busy=false;send.disabled=false;start.classList.remove('hidden');stop.classList.add('hidden');listenBtn.classList.add('hidden');replay.classList.add('hidden');start.textContent='🎙 Conversar novamente';state('Conversa encerrada. Toque para iniciar outra.');}
+function retry(){if(!micActive||busy)return;retryTimer=setTimeout(function(){if(micActive&&!busy)listen();},400);}
+function listen(){
+ if(!micActive||busy||hearing)return;
+ if(!SR){state('Este navegador não oferece reconhecimento de voz. Você pode conversar pelo texto.');listenBtn.classList.add('hidden');return;}
+ try{
+  var r=new SR();rec=r;r.lang='pt-BR';r.continuous=false;r.interimResults=false;r.maxAlternatives=1;var got=false;
+  r.onresult=function(ev){if(rec!==r||!micActive)return;var words='';for(var i=ev.resultIndex;i<ev.results.length;i++)if(ev.results[i].isFinal)words+=ev.results[i][0].transcript;
+   if(words.trim()&&!got){got=true;hearing=false;rec=null;app.classList.remove('listening');try{r.stop();}catch(e){}ask(words.trim());}};
+  r.onerror=function(ev){if(rec!==r||!micActive)return;hearing=false;app.classList.remove('listening');if(ev.error==='not-allowed'||ev.error==='service-not-allowed'){micActive=false;start.classList.remove('hidden');stop.classList.add('hidden');state('Microfone bloqueado. No Chrome, abra Configurações do site > Microfone e permita o acesso.');listenBtn.classList.add('hidden');}else{state('Não consegui ouvir. Toque em “Ouvir” para tentar novamente.');listenBtn.classList.remove('hidden');}};
+  r.onend=function(){if(rec!==r)return;rec=null;hearing=false;app.classList.remove('listening');if(micActive&&!busy&&!got){state('Pronta para ouvir. Se o Chrome pausar, toque em “Ouvir”.');listenBtn.classList.remove('hidden');}};
+  r.start();hearing=true;listenBtn.classList.add('hidden');app.classList.add('listening');state('Estou ouvindo você...');
+ }catch(e){hearing=false;rec=null;listenBtn.classList.remove('hidden');state('O Chrome não iniciou a escuta. Toque em “Ouvir” ou escreva sua pergunta.');}
+}
+function afterSpeak(t){app.classList.remove('speaking');if(micActive&&turn===t){state('Pode continuar falando.');retry();}else state('Digite sua pergunta ou inicie uma conversa.');}
+function localSpeak(txt,t){
+ if(!('speechSynthesis'in window)){state('Resposta disponível em texto.');listenBtn.classList.remove('hidden');return;}
+ try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(txt);u.lang='pt-BR';u.rate=1.02;u.pitch=1.02;var voices=speechSynthesis.getVoices();var pt=voices.find(function(v){return /^pt-BR/i.test(v.lang)})||voices.find(function(v){return /^pt/i.test(v.lang)});if(pt)u.voice=pt;
+ u.onend=function(){afterSpeak(t)};u.onerror=function(){afterSpeak(t)};app.classList.add('speaking');state('Sara está respondendo com a voz do aparelho...');speechSynthesis.speak(u);
+ }catch(e){state('Resposta em texto. Toque em “Ouvir” para continuar.');listenBtn.classList.remove('hidden');}
+}
+function paidSpeak(base64,txt,t){
+ try{var binary=atob(base64),bytes=new Uint8Array(binary.length);for(var i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+ var blob=new Blob([bytes],{type:'audio/wav'}),u=URL.createObjectURL(blob);audio.src=u;
+ audio.onended=function(){URL.revokeObjectURL(u);afterSpeak(t)};
+ audio.onerror=function(){URL.revokeObjectURL(u);localSpeak(txt,t)};
+ app.classList.add('speaking');state('Sara falando...');var p=audio.play();if(p&&p.catch)p.catch(function(){URL.revokeObjectURL(u);localSpeak(txt,t)});
+ }catch(e){localSpeak(txt,t)}
+}
+async function ask(message){
+ var txt=String(message||'').trim();if(!txt||busy)return;txt=txt.slice(0,350);stopRec();stopVoice();busy=true;send.disabled=true;
+ bubble('Você',txt,true);input.value='';state('Sara está preparando a resposta...');
+ var id=++turn,context=history.slice(-8);history.push({role:'user',text:txt});controller=new AbortController();
+ try{
+  var res=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text:txt,history:context}),signal:controller.signal});
+  var data=await res.json();if(turn!==id)return;
+  if(!res.ok)throw Error(res.status===429?'O piloto atingiu seu limite de uso. Fale com a equipe pelo WhatsApp.':'O atendimento não está disponível agora. Tente novamente.');
+  var answer=String(data.answer||'Não consegui responder agora.');history.push({role:'assistant',text:answer});bubble('Sara',answer,false);currentText=answer;lastAudio=data.audioBase64||'';replay.classList.remove('hidden');
+  busy=false;send.disabled=false;if(lastAudio)paidSpeak(lastAudio,answer,id);else localSpeak(answer,id);
+ }catch(e){if(id!==turn)return;state(e.name==='AbortError'?'Conversa interrompida.':e.message);if(micActive)listenBtn.classList.remove('hidden');}
+ finally{if(id===turn){busy=false;send.disabled=false;controller=null;}}
+}
+async function begin(){
+ if(micActive)return;micActive=true;start.classList.add('hidden');stop.classList.remove('hidden');
+ if(!window.isSecureContext){state('O microfone exige uma página segura HTTPS.');micActive=false;start.classList.remove('hidden');stop.classList.add('hidden');return;}
+ if(!SR){state('Seu navegador não suporta o reconhecimento de fala. Use as mensagens escritas.');listenBtn.classList.add('hidden');return;}
+ try{
+  if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+   var s=await navigator.mediaDevices.getUserMedia({audio:true});s.getTracks().forEach(function(t){t.stop()});
+  }
+  if(!micActive)return;listen();
+ }catch(e){micActive=false;start.classList.remove('hidden');stop.classList.add('hidden');listenBtn.classList.remove('hidden');state('Permita o microfone ao Chrome e ao site. No Android: Ajustes > Apps > Chrome > Permissões > Microfone.');}
+}
+start.addEventListener('click',begin);stop.addEventListener('click',end);
+listenBtn.addEventListener('click',function(){if(!micActive)begin();else listen()});
+replay.addEventListener('click',function(){if(!currentText)return;stopRec();stopVoice();var id=turn;if(lastAudio)paidSpeak(lastAudio,currentText,id);else localSpeak(currentText,id)});
+form.addEventListener('submit',function(ev){ev.preventDefault();ask(input.value)});
+document.querySelectorAll('[data-q]').forEach(function(b){b.addEventListener('click',function(){ask(b.getAttribute('data-q'))})});
+window.addEventListener('pagehide',end);
+})();
+</script>
+</body></html>
