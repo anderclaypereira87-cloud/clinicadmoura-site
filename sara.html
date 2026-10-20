@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101015"><meta name="referrer" content="no-referrer"><title>Sara — Clínica D’Moura | Atendimento por voz</title>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101015"><meta name="referrer" content="no-referrer"><title>Sarah — Clínica D’Moura | Atendimento por voz</title>
 <style>
 :root{color-scheme:dark;--gold:#e0c08b;--gold2:#bc975e;--panel:#19171b;--muted:#bdb8b3;--bg:#0e0d11}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#f8f4ee}body{background:radial-gradient(ellipse at 52% -6%,#4a374f,#141219 45%,#0e0d11 92%)}
@@ -18,14 +18,14 @@ main{flex:1;display:flex;flex-direction:column;padding:18px 17px 13px}.top{text-
 </style></head>
 <body><div class="app" id="app">
 <header><div class="brand"><div class="logo">D</div><div><strong>CLÍNICA D’MOURA</strong><small>DRA. DANUSA MOURA · ESTÉTICA AVANÇADA</small></div></div><a class="tag" href="https://instagram.com/clinicadmoura" target="_blank" rel="noopener">@clinicadmoura</a></header>
-<main><div class="top"><div class="eyebrow">Sara com voz Aoede</div><h1>Vamos conversar?</h1><p class="sub">Tire dúvidas sobre procedimentos, preços em 10x e unidades em Recife, Caruaru e Garanhuns. Fale ou digite.</p></div>
-<div class="orbwrap"><div class="ring"></div><div class="orb" role="img" aria-label="Representação visual da Sara"></div></div>
-<div class="status" id="status" role="status" aria-live="polite">Toque em “Conversar com Sara”.</div>
-<div class="buttons"><button type="button" id="start" class="btn primary">✦ Conversar com Sara</button><button type="button" id="stop" class="btn danger hidden">Encerrar</button></div>
+<main><div class="top"><div class="eyebrow">Sarah com voz Aoede</div><h1>Vamos conversar?</h1><p class="sub">Tire dúvidas sobre procedimentos, preços em 10x e unidades em Recife, Caruaru e Garanhuns. Fale ou digite.</p></div>
+<div class="orbwrap"><div class="ring"></div><div class="orb" role="img" aria-label="Representação visual da Sarah"></div></div>
+<div class="status" id="status" role="status" aria-live="polite">Toque em “Conversar com Sarah”.</div>
+<div class="buttons"><button type="button" id="start" class="btn primary">✦ Conversar com Sarah</button><button type="button" id="stop" class="btn danger hidden">Encerrar</button></div>
 <div class="buttons row"><button type="button" id="mic" class="btn hidden">🎙 Continuar falando</button><button type="button" id="replay" class="btn hidden">▶ Ouvir resposta</button></div>
-<div class="chat" id="chat" aria-label="Histórico da conversa"><div class="bubble"><small>Sara</small>Oi! Eu sou a Sara, da Clínica D’Moura. Como posso ajudar?</div></div>
+<div class="chat" id="chat" aria-label="Histórico da conversa"><div class="bubble"><small>Sarah</small>Oi, tudo bem? Sou a Sarah, da Clínica D’Moura. De qual cidade você está falando e onde prefere ser atendida: Recife, Caruaru ou Garanhuns?</div></div>
 <div class="quick" aria-label="Perguntas rápidas"><button id="locations" type="button">📍 Onde ficam as clínicas?</button><button id="prices" type="button">💳 Preços</button><button id="days" type="button">📅 Dias por cidade</button><button id="booking" type="button">🗓 Agendar</button><button id="human" type="button">💬 Falar com a equipe</button></div><div id="bookcard" class="bookcard hidden"><strong>Pedido de agendamento pronto</strong><div id="booktext"></div><a id="booklink" class="btn primary" target="_blank" rel="noopener noreferrer">Enviar pelo WhatsApp da clínica</a></div><form id="compose" class="compose"><input id="message" maxlength="350" autocomplete="off" aria-label="Sua pergunta" placeholder="Ou digite sua pergunta..." required><button type="submit" id="send">Enviar</button></form>
-<div class="count" id="count">Sara é uma assistente virtual da Clínica D’Moura</div><p class="notice">A Sara coleta suas preferências e monta o pedido de agendamento. Horários e disponibilidade são sempre confirmados pela nossa equipe no WhatsApp. Não compartilhe dados de saúde além do necessário (LGPD).</p>
+<div class="count" id="count">Sarah é uma assistente virtual da Clínica D’Moura</div><p class="notice">A Sarah coleta suas preferências e monta o pedido de agendamento. Horários e disponibilidade são sempre confirmados pela nossa equipe no WhatsApp. Não compartilhe dados de saúde além do necessário (LGPD).</p>
 <p style="text-align:center;margin-top:12px"><a href="https://wa.me/5581997181046" target="_blank" rel="noopener noreferrer" style="color:#e4c995">WhatsApp (81) 99718-1046</a> · <a href="https://wa.me/5581997338779" target="_blank" rel="noopener noreferrer" style="color:#e4c995">(81) 99733-8779</a></p></main><footer><a href="https://instagram.com/dra.danusamoura" target="_blank" rel="noopener" style="color:#c9bba8">@dra.danusamoura</a> · <a href="https://instagram.com/clinicadmoura" target="_blank" rel="noopener" style="color:#c9bba8">@clinicadmoura</a> · diretoria@clinicadmoura.company<br>Clínica D’Moura · Recife · Caruaru · Garanhuns</footer></div>
 <script>
 (()=>{'use strict';
@@ -39,7 +39,7 @@ let ctx=null,source=null,htmlAudio=new Audio(),lastBase64=null,playedUrl=null,pl
 function state(text){status.textContent=text;}
 function bubble(who,text,user=false){let b=document.createElement('div');b.className='bubble'+(user?' user':'');let a=document.createElement('small');a.textContent=who;b.appendChild(a);b.appendChild(document.createTextNode(text));chat.appendChild(b);chat.scrollTop=chat.scrollHeight;}
 function displayQuota(response){if(response&&response.booking)showBooking(response.booking);}
-function showBooking(b){const t='Olá! Gostaria de agendar pela Sara (site).\nNome: '+(b.nome||'')+'\nCidade: '+(b.cidade||'')+'\nProcedimento: '+(b.procedimento||'')+'\nTurno: '+(b.turno||'')+'\nComo conheci: '+(b.origem||'')+'\nTriagem: '+(b.triagem||'')+'\nAguardo a confirmação do horário.';$('booktext').textContent=t;$('booklink').href='https://wa.me/5581997181046?text='+encodeURIComponent(t);$('bookcard').classList.remove('hidden');$('bookcard').scrollIntoView({behavior:'smooth',block:'nearest'});}
+function showBooking(b){const t='Olá! Gostaria de agendar pela Sarah (site).\nNome: '+(b.nome||'')+'\nCidade: '+(b.cidade||'')+'\nProcedimento: '+(b.procedimento||'')+'\nTurno: '+(b.turno||'')+'\nComo conheci: '+(b.origem||'')+'\nTriagem: '+(b.triagem||'')+'\nAguardo a confirmação do horário.';$('booktext').textContent=t;$('booklink').href='https://wa.me/5581997181046?text='+encodeURIComponent(t);$('bookcard').classList.remove('hidden');$('bookcard').scrollIntoView({behavior:'smooth',block:'nearest'});}
 function audioUnlock(){try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();if(ctx?.state==='suspended'){ctx.resume().catch(()=>{});}}catch(_){} }
 function haltMic(){if(recognition){let old=recognition;recognition=null;try{old.abort()}catch(_){}}listening=false;app.classList.remove('listening');}
 function haltAudio(){try{window.speechSynthesis.cancel()}catch(_){} playbackSerial++;if(source){try{source.stop()}catch(_){}source.disconnect();source=null;}htmlAudio.pause();htmlAudio.onended=null;htmlAudio.onerror=null;htmlAudio.removeAttribute('src');htmlAudio.load();if(playedUrl){URL.revokeObjectURL(playedUrl);playedUrl=null}app.classList.remove('speaking');}
@@ -67,7 +67,7 @@ function speakDone(index,serial){if(!live||turn!==index||serial!==playbackSerial
 async function play(b64,index){lastBase64=b64;haltAudio();lastBase64=b64;const serial=playbackSerial;
   try{
     const raw=atob(b64),bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
-    replay.classList.add('hidden');app.classList.add('speaking');state('Sara falando com a voz Aoede…');
+    replay.classList.add('hidden');app.classList.add('speaking');state('Sarah falando com a voz Aoede…');
     if(ctx){try{if(ctx.state==='suspended')await ctx.resume();const decoded=await ctx.decodeAudioData(bytes.buffer.slice(0));if(!live||turn!==index||serial!==playbackSerial)return;
        const node=ctx.createBufferSource();source=node;node.buffer=decoded;node.connect(ctx.destination);node.onended=()=>speakDone(index,serial);node.start();return;
     }catch(_){/* usar áudio HTML como alternativa */}}
@@ -79,15 +79,15 @@ async function play(b64,index){lastBase64=b64;haltAudio();lastBase64=b64;const s
 }
 async function ask(userText){let text=String(userText||'').trim().slice(0,350);if(!text||working||!live)return;
  haltMic();haltAudio();working=true;send.disabled=true;mic.classList.add('hidden');replay.classList.add('hidden');message.value='';bubble('Você',text,true);
- state('Sara está pensando e preparando a resposta...');let current=++turn,past=history.slice(-12);history.push({role:'user',text});controller=new AbortController();
+ state('Sarah está pensando e preparando a resposta...');let current=++turn,past=history.slice(-12);history.push({role:'user',text});controller=new AbortController();
  try{
   const response=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({company:'clinicadmoura',text,history:past}),signal:controller.signal});
   const result=await response.json();if(!live||turn!==current)return;
   if(!response.ok)throw Error(result.error==='rate_limited'?'Muitas mensagens em pouco tempo. Aguarde um minutinho, por favor.':'O servidor não conseguiu responder. Tente novamente.');
-  const answer=String(result.answer||'Não consegui responder agora.');history.push({role:'assistant',text:answer});bubble('Sara · Aoede',answer);
+  const answer=String(result.answer||'Não consegui responder agora.');history.push({role:'assistant',text:answer});bubble('Sarah · Aoede',answer);
   displayQuota(result);working=false;send.disabled=false;
   if(result.audioBase64)await play(result.audioBase64,current);
-  else {if('speechSynthesis' in window){try{window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(answer);u.lang='pt-BR';u.rate=1.04;const voices=window.speechSynthesis.getVoices();u.voice=voices.find(v=>v.lang==='pt-BR')||voices.find(v=>v.lang.startsWith('pt'))||null;u.onend=()=>{if(live&&turn===current)listen()};u.onerror=()=>{state('Resposta em texto. Toque em Continuar falando.');mic.classList.remove('hidden')};state('Sara falando com a voz do aparelho…');window.speechSynthesis.speak(u);}catch(e){state('Resposta em texto. Toque para continuar.');mic.classList.remove('hidden')}}else{state('Resposta em texto. Toque para continuar.');mic.classList.remove('hidden')}}
+  else {if('speechSynthesis' in window){try{window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(answer);u.lang='pt-BR';u.rate=1.04;const voices=window.speechSynthesis.getVoices();u.voice=voices.find(v=>v.lang==='pt-BR')||voices.find(v=>v.lang.startsWith('pt'))||null;u.onend=()=>{if(live&&turn===current)listen()};u.onerror=()=>{state('Resposta em texto. Toque em Continuar falando.');mic.classList.remove('hidden')};state('Sarah falando com a voz do aparelho…');window.speechSynthesis.speak(u);}catch(e){state('Resposta em texto. Toque para continuar.');mic.classList.remove('hidden')}}else{state('Resposta em texto. Toque para continuar.');mic.classList.remove('hidden')}}
  }catch(e){if(!live||turn!==current)return;state(e?.message||'Não consegui conectar. Tente novamente.');mic.classList.remove('hidden');}
  finally{if(turn===current){working=false;send.disabled=false;controller=null;}}
 }
@@ -98,7 +98,7 @@ compose.addEventListener('submit',e=>{e.preventDefault();audioUnlock();activate(
 $('locations').addEventListener('click',()=>{audioUnlock();activate(false);ask('Onde ficam as três clínicas D’Moura? Quais os endereços em Recife, Caruaru e Garanhuns?')});
 $('booking').addEventListener('click',()=>{audioUnlock();activate(false);ask('Quero agendar uma avaliação.')});
 $('prices').addEventListener('click',()=>{audioUnlock();activate(false);ask('Quais são os preços do botox e dos bioestimuladores?')});
-$('days').addEventListener('click',()=>{audioUnlock();activate(false);ask('Em que dias a Dra. Danusa atende em cada cidade?')});
+$('days').addEventListener('click',()=>{audioUnlock();activate(false);ask('Em que dias a Dra. Danusa atende em cada cidade? (Caruaru terça, Garanhuns quarta, Recife nos demais dias)')});
 $('human').addEventListener('click',()=>{window.open('https://wa.me/5581997181046?text='+encodeURIComponent('Olá! Vim pelo site e gostaria de falar com a equipe da Clínica D’Moura.'),'_blank','noopener')});
 window.addEventListener('pagehide',hangup);
 })();
