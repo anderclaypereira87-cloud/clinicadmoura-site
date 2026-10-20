@@ -1,118 +1,105 @@
 <!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111217"><meta name="referrer" content="no-referrer">
-<title>Sara | Atendimento da Clínica D'Moura</title>
-<meta name="description" content="Converse com a Sara, assistente virtual da Clínica D'Moura. Atendimento por voz e texto.">
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101015"><meta name="referrer" content="no-referrer"><title>Sara — Clínica D’Moura | Atendimento por voz</title>
 <style>
-:root{color-scheme:dark;--gold:#e5bf87;--bg:#0c0d11;--panel:#17191e;--text:#faf5ef;--muted:#bcb6ae}
-*{box-sizing:border-box}body{margin:0;font:15px/1.55 system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(circle at 55% -10%,#483d35 0%,#15151a 38%,#0a0b0f 90%);color:var(--text)}button,input{font:inherit}
-.wrap{max-width:540px;margin:auto;min-height:100dvh;padding:20px;display:flex;flex-direction:column;gap:15px}
-header{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:9px 0 14px;border-bottom:1px solid #c7a77a3c}
-.brand{display:flex;align-items:center;gap:12px}.monogram{height:47px;width:47px;border:1px solid #e5bf87a1;display:grid;place-items:center;color:var(--gold);border-radius:14px;font:26px Georgia,serif}
-.brand strong{display:block;font-size:14px;letter-spacing:.13em}.brand small{display:block;color:#d2b78c;letter-spacing:.11em;font-size:10px}
-.pill{border:1px solid #e5bf8760;border-radius:20px;color:var(--gold);padding:5px 9px;font-size:11px}
-h1{font-size:clamp(27px,6vw,35px);font-weight:620;margin:11px 0 0;letter-spacing:-.04em}p{margin:0}.lead{color:var(--muted)}
-.orbarea{display:grid;place-items:center;min-height:164px}.orb{height:128px;width:128px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#fff4db,#b7a2bd 24%,#777299 48%,#322f47 73%,#13141e);box-shadow:0 0 0 20px #e5bf8709,0 0 0 38px #e5bf8706,0 0 75px #9585ae68;animation:float 3s ease-in-out infinite}
-.listening .orb{animation:pulse .9s ease-in-out infinite}.speaking .orb{animation:pulse 1.5s ease-in-out infinite}
-@keyframes float{50%{transform:translateY(-6px)}}@keyframes pulse{50%{transform:scale(1.1);filter:brightness(1.2)}}
-#status{text-align:center;color:#eed3ab;min-height:42px;font-weight:600}
-.primary{background:linear-gradient(120deg,#f7dcaa,#ba9866);border:0;color:#292015;border-radius:16px;padding:16px;font-weight:750;flex:1;min-height:56px}
-.actions{display:flex;gap:9px}.sub{background:#242028;border:1px solid #96816c;border-radius:14px;color:#eee0cc;padding:12px;min-height:52px}
-button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:3px}button:disabled{opacity:.5;cursor:wait}
-.shortcuts{display:flex;gap:8px;flex-wrap:wrap}.shortcuts button{padding:9px 12px;border:1px solid #a89576;background:#24221f;color:#e8d2b1;border-radius:999px;font-size:12px}
-.chat{flex:1;min-height:180px;max-height:38dvh;overflow:auto;background:#121318e8;border:1px solid #e5bf8738;padding:12px;border-radius:18px}
-.bubble{max-width:93%;background:#29272b;border-radius:13px;padding:9px 12px;margin:8px 0;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px}
-.bubble.user{margin-left:auto;background:#4b4032}.bubble b{display:block;color:#edce98;font-size:11px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}
-form{display:flex;gap:7px}input{min-width:0;flex:1;background:#202127;color:white;border:1px solid #b9a17a80;border-radius:13px;padding:12px}
-form button{border:0;color:#241a10;background:#e6c38d;border-radius:13px;padding:0 15px;font-weight:750}
-.footer{color:#aaa5a1;font-size:11px;text-align:center;padding:3px 0 10px}a{color:#f0d19e}.hidden{display:none!important}
-@media(max-height:650px){.orbarea{min-height:90px}.orb{height:70px;width:70px}.chat{min-height:120px}}
-</style>
-</head>
-<body>
-<div class="wrap" id="app">
-<header><div class="brand"><div class="monogram">D</div><div><strong>CLÍNICA D'MOURA</strong><small>SARA · ASSISTENTE VIRTUAL</small></div></div><span class="pill">Piloto</span></header>
-<section><h1>Converse com a Sara</h1><p class="lead">Atendimento com voz e texto, sem precisar apertar Enviar a cada pergunta.</p></section>
-<div class="orbarea"><div class="orb" aria-hidden="true"></div></div>
-<div id="status" role="status" aria-live="polite">Toque em “Iniciar conversa” e permita o microfone.</div>
-<div class="actions"><button id="start" class="primary">🎙 Iniciar conversa</button><button id="stop" class="sub hidden">Encerrar</button><button id="listen" class="sub hidden">🎤 Ouvir</button><button id="replay" class="sub hidden">▶ Repetir</button></div>
-<div class="shortcuts"><button data-q="Onde ficam as unidades da clínica?">📍 Unidades</button><button data-q="Quero agendar uma avaliação">📅 Agendar</button><button data-q="Quais procedimentos vocês fazem?">✨ Procedimentos</button></div>
-<div id="chat" class="chat" aria-label="Mensagens da conversa"><div class="bubble"><b>Sara</b>Oi! Sou a Sara, assistente virtual da Clínica D'Moura. 😊 Como posso te ajudar?</div></div>
-<form id="form"><input id="text" autocomplete="off" maxlength="350" placeholder="Ou digite sua pergunta..." aria-label="Digite sua pergunta"><button id="send">Enviar</button></form>
-<div class="footer">A Sara não confirma horários sem consultar a equipe. Em caso de urgência médica, procure atendimento. <a href="https://wa.me/5581997181046" target="_blank" rel="noopener">WhatsApp da clínica</a> · <a href="https://clinicadmoura.com" target="_blank" rel="noopener">Site</a>.<br>O microfone depende das permissões e da compatibilidade do navegador. A voz do aparelho é utilizada quando a voz Aoede não está disponível.</div>
-</div>
+:root{color-scheme:dark;--gold:#e0c08b;--gold2:#bc975e;--panel:#19171b;--muted:#bdb8b3;--bg:#0e0d11}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#f8f4ee}body{background:radial-gradient(ellipse at 52% -6%,#4a374f,#141219 45%,#0e0d11 92%)}
+.app{width:min(480px,100%);margin:auto;min-height:100dvh;display:flex;flex-direction:column;background:linear-gradient(155deg,#1a171f,#111013)}
+header{display:flex;justify-content:space-between;align-items:center;padding:17px 18px;border-bottom:1px solid #bba06c44}header .brand{display:flex;align-items:center;gap:12px}.logo{display:grid;place-items:center;border:1px solid #d5ad7188;color:var(--gold);border-radius:11px;width:44px;height:44px;font:28px Georgia,serif}.brand strong{display:block;letter-spacing:1.9px;font-size:13px}.brand small{color:#c9bba8;font-size:10px;letter-spacing:1.2px}.tag{font-size:10px;color:#e6d5bb;border:1px solid #c19b653c;border-radius:30px;padding:6px 9px}
+main{flex:1;display:flex;flex-direction:column;padding:18px 17px 13px}.top{text-align:center}.eyebrow{color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase}h1{font:normal 31px Georgia,serif;margin:5px 0 8px}.sub{color:var(--muted);margin:0;font-size:13px;line-height:1.55}.orbwrap{margin:11px auto 1px;width:160px;height:148px;display:grid;place-items:center;position:relative}.ring{position:absolute;width:131px;height:131px;border:1px solid #d9b98e48;border-radius:50%;box-shadow:0 0 0 14px #ddb78d0d,0 0 0 30px #ddb78d07}.orb{height:107px;width:107px;border-radius:50%;background:radial-gradient(circle at 31% 24%,#faf0d5,#c7aad5 22%,#826cb2 48%,#3d3556 75%,#211b27 100%);box-shadow:0 0 55px #9f79c064;animation:float 3.8s ease-in-out infinite}.listening .orb{animation:beat 1.5s infinite}.speaking .orb{animation:beat .68s infinite;box-shadow:0 0 60px #bd9bc9b8}@keyframes float{50%{transform:translateY(-8px)}}@keyframes beat{50%{transform:scale(1.1);filter:brightness(1.24)}}
+.status{color:#f2dec2;min-height:36px;text-align:center;font-size:13px;font-weight:600;padding:8px 0}.buttons{display:flex;gap:9px;margin:5px 0}.btn{min-height:49px;border-radius:14px;border:1px solid #9c7c56;background:#241f23;color:#e6d9c7;padding:10px 13px;font-weight:600;font-size:13px}.primary{flex:1;color:#241b15;border:0;background:linear-gradient(110deg,#f5dcaa,#c5a16b);font-size:15px}.danger{border:1px solid #a65d5d;background:#5a3237;color:#fff}.row{justify-content:center}.row .btn{flex:1}.hidden{display:none!important}button:disabled{opacity:.56}
+.chat{border:1px solid #ceaa7845;border-radius:16px;background:#121117;min-height:180px;max-height:31dvh;overflow:auto;padding:10px 12px;margin-top:12px;flex:1}.bubble{max-width:93%;padding:9px 11px;border-radius:12px;margin:7px 0;background:#26222b;overflow-wrap:anywhere;white-space:pre-wrap;font-size:13px;line-height:1.5}.bubble.user{background:#54422f;margin-left:auto}.bubble small{display:block;color:#e4c69c;font-size:10px;letter-spacing:1.1px;text-transform:uppercase;margin-bottom:3px}.compose{margin-top:11px;display:flex;gap:8px}input{flex:1;min-width:0;background:#262229;border:1px solid #ad926e66;color:white;border-radius:13px;padding:12px;font:14px system-ui}input:focus-visible,button:focus-visible{outline:2px solid #fff;outline-offset:2px}.compose button{color:#241b15;background:#e0c08b;border:0;border-radius:13px;padding:10px 13px;font-weight:700}.notice{font-size:11px;line-height:1.5;color:#bab2a6;margin:11px 1px 0;border-left:2px solid #b89a6b;padding-left:10px}footer{color:#8e8790;text-align:center;padding:8px 12px 15px;font-size:10px}
+@media(min-width:520px){.app{min-height:min(890px,98dvh);margin:14px auto;border:1px solid #be9c7045;border-radius:21px;overflow:hidden}}
+
+.quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.quick button{flex:1 1 150px;border:1px solid #c49c6a75;border-radius:12px;background:#241d21;color:#e9d0aa;min-height:41px;font-size:12px;font-weight:600}
+.tag{text-decoration:none}.bookcard{margin-top:12px;border:1px solid #e0c08b;border-radius:14px;padding:12px;background:#1d1a16;font-size:13px;line-height:1.5}.bookcard div{white-space:pre-wrap;margin:6px 0 10px;color:#e9dcc8}.bookcard a{display:flex;align-items:center;justify-content:center;text-decoration:none}.count{text-align:center;color:#c8b9a6;margin-top:5px;font-size:11px}
+.listening .status::before{content:"● ";color:#fa9b88}
+@media(prefers-reduced-motion:reduce){.orb{animation:none!important}}
+</style></head>
+<body><div class="app" id="app">
+<header><div class="brand"><div class="logo">D</div><div><strong>CLÍNICA D’MOURA</strong><small>DRA. DANUSA MOURA · ESTÉTICA AVANÇADA</small></div></div><a class="tag" href="https://instagram.com/clinicadmoura" target="_blank" rel="noopener">@clinicadmoura</a></header>
+<main><div class="top"><div class="eyebrow">Sara com voz Aoede</div><h1>Vamos conversar?</h1><p class="sub">Tire dúvidas sobre procedimentos, preços em 10x e unidades em Recife, Caruaru e Garanhuns. Fale ou digite.</p></div>
+<div class="orbwrap"><div class="ring"></div><div class="orb" role="img" aria-label="Representação visual da Sara"></div></div>
+<div class="status" id="status" role="status" aria-live="polite">Toque em “Conversar com Sara”.</div>
+<div class="buttons"><button type="button" id="start" class="btn primary">✦ Conversar com Sara</button><button type="button" id="stop" class="btn danger hidden">Encerrar</button></div>
+<div class="buttons row"><button type="button" id="mic" class="btn hidden">🎙 Continuar falando</button><button type="button" id="replay" class="btn hidden">▶ Ouvir resposta</button></div>
+<div class="chat" id="chat" aria-label="Histórico da conversa"><div class="bubble"><small>Sara</small>Oi! Eu sou a Sara, da Clínica D’Moura. Como posso ajudar?</div></div>
+<div class="quick" aria-label="Perguntas rápidas"><button id="locations" type="button">📍 Onde ficam as clínicas?</button><button id="prices" type="button">💳 Preços</button><button id="days" type="button">📅 Dias por cidade</button><button id="booking" type="button">🗓 Agendar</button><button id="human" type="button">💬 Falar com a equipe</button></div><div id="bookcard" class="bookcard hidden"><strong>Pedido de agendamento pronto</strong><div id="booktext"></div><a id="booklink" class="btn primary" target="_blank" rel="noopener noreferrer">Enviar pelo WhatsApp da clínica</a></div><form id="compose" class="compose"><input id="message" maxlength="350" autocomplete="off" aria-label="Sua pergunta" placeholder="Ou digite sua pergunta..." required><button type="submit" id="send">Enviar</button></form>
+<div class="count" id="count">Sara é uma assistente virtual da Clínica D’Moura</div><p class="notice">A Sara coleta suas preferências e monta o pedido de agendamento. Horários e disponibilidade são sempre confirmados pela nossa equipe no WhatsApp. Não compartilhe dados de saúde além do necessário (LGPD).</p>
+<p style="text-align:center;margin-top:12px"><a href="https://wa.me/5581997181046" target="_blank" rel="noopener noreferrer" style="color:#e4c995">WhatsApp (81) 99718-1046</a> · <a href="https://wa.me/5581997338779" target="_blank" rel="noopener noreferrer" style="color:#e4c995">(81) 99733-8779</a></p></main><footer><a href="https://instagram.com/dra.danusamoura" target="_blank" rel="noopener" style="color:#c9bba8">@dra.danusamoura</a> · <a href="https://instagram.com/clinicadmoura" target="_blank" rel="noopener" style="color:#c9bba8">@clinicadmoura</a> · diretoria@clinicadmoura.company<br>Clínica D’Moura · Recife · Caruaru · Garanhuns</footer></div>
 <script>
-(function(){
-'use strict';
-var API='https://qxagrqankcrsgwkjskzl.supabase.co/functions/v1/dmap-sara-public';
-var app=document.getElementById('app'),status=document.getElementById('status'),chat=document.getElementById('chat');
-var start=document.getElementById('start'),stop=document.getElementById('stop'),listenBtn=document.getElementById('listen'),replay=document.getElementById('replay'),form=document.getElementById('form'),input=document.getElementById('text'),send=document.getElementById('send');
-var SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,micActive=false,busy=false,hearing=false,turn=0,history=[],currentText='',audio=new Audio(),lastAudio='',controller=null,retryTimer=null;
-function state(s){status.textContent=s;}
-function bubble(w,t,user){var d=document.createElement('div'),b=document.createElement('b');d.className='bubble'+(user?' user':'');b.textContent=w;d.appendChild(b);d.appendChild(document.createTextNode(t));chat.appendChild(d);chat.scrollTop=chat.scrollHeight;}
-function stopRec(){clearTimeout(retryTimer);if(rec){var r=rec;rec=null;try{r.abort();}catch(e){}}hearing=false;app.classList.remove('listening');}
-function stopVoice(){audio.pause();audio.removeAttribute('src');try{speechSynthesis.cancel();}catch(e){}app.classList.remove('speaking');}
-function end(){micActive=false;turn++;if(controller){controller.abort();controller=null;}stopRec();stopVoice();busy=false;send.disabled=false;start.classList.remove('hidden');stop.classList.add('hidden');listenBtn.classList.add('hidden');replay.classList.add('hidden');start.textContent='🎙 Conversar novamente';state('Conversa encerrada. Toque para iniciar outra.');}
-function retry(){if(!micActive||busy)return;retryTimer=setTimeout(function(){if(micActive&&!busy)listen();},400);}
+(()=>{'use strict';
+const API='https://qxagrqankcrsgwkjskzl.supabase.co/functions/v1/dmap-sara-public';
+
+const $=id=>document.getElementById(id);
+const app=$('app'),status=$('status'),start=$('start'),stop=$('stop'),mic=$('mic'),replay=$('replay'),chat=$('chat'),compose=$('compose'),message=$('message'),send=$('send'),count=$('count');
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let live=false,working=false,listening=false,recognition=null,turn=0,history=[],controller=null;
+let ctx=null,source=null,htmlAudio=new Audio(),lastBase64=null,playedUrl=null,playbackSerial=0;
+function state(text){status.textContent=text;}
+function bubble(who,text,user=false){let b=document.createElement('div');b.className='bubble'+(user?' user':'');let a=document.createElement('small');a.textContent=who;b.appendChild(a);b.appendChild(document.createTextNode(text));chat.appendChild(b);chat.scrollTop=chat.scrollHeight;}
+function displayQuota(response){if(response&&response.booking)showBooking(response.booking);}
+function showBooking(b){const t='Olá! Gostaria de agendar pela Sara (site).\nNome: '+(b.nome||'')+'\nCidade: '+(b.cidade||'')+'\nProcedimento: '+(b.procedimento||'')+'\nTurno: '+(b.turno||'')+'\nComo conheci: '+(b.origem||'')+'\nTriagem: '+(b.triagem||'')+'\nAguardo a confirmação do horário.';$('booktext').textContent=t;$('booklink').href='https://wa.me/5581997181046?text='+encodeURIComponent(t);$('bookcard').classList.remove('hidden');$('bookcard').scrollIntoView({behavior:'smooth',block:'nearest'});}
+function audioUnlock(){try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();if(ctx?.state==='suspended'){ctx.resume().catch(()=>{});}}catch(_){} }
+function haltMic(){if(recognition){let old=recognition;recognition=null;try{old.abort()}catch(_){}}listening=false;app.classList.remove('listening');}
+function haltAudio(){try{window.speechSynthesis.cancel()}catch(_){} playbackSerial++;if(source){try{source.stop()}catch(_){}source.disconnect();source=null;}htmlAudio.pause();htmlAudio.onended=null;htmlAudio.onerror=null;htmlAudio.removeAttribute('src');htmlAudio.load();if(playedUrl){URL.revokeObjectURL(playedUrl);playedUrl=null}app.classList.remove('speaking');}
+function hangup(){live=false;turn++;if(controller){controller.abort();controller=null}haltMic();haltAudio();working=false;start.classList.remove('hidden');stop.classList.add('hidden');mic.classList.add('hidden');replay.classList.add('hidden');send.disabled=false;start.textContent='✦ Conversar novamente';state('Conversa encerrada.');}
+function activate(autoListen){if(live)return;live=true;audioUnlock();if(autoListen&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){navigator.mediaDevices.getUserMedia({audio:true}).then(m=>m.getTracks().forEach(t=>t.stop())).catch(()=>{});}start.classList.add('hidden');stop.classList.remove('hidden');state('Conversa iniciada. Fale ou digite uma pergunta.');if(autoListen)listen();}
 function listen(){
- if(!micActive||busy||hearing)return;
- if(!SR){state('Este navegador não oferece reconhecimento de voz. Você pode conversar pelo texto.');listenBtn.classList.add('hidden');return;}
+  if(!live||working||listening)return;
+  if(!SR){state('O reconhecimento de voz não está disponível aqui. Abra no Chrome e permita o microfone ou digite.');mic.classList.remove('hidden');return;}
+  try{
+    const local=new SR();recognition=local;let heard=false;
+    local.lang='pt-BR';local.continuous=false;local.interimResults=true;local.maxAlternatives=1;
+    local.onresult=e=>{if(!live||recognition!==local||heard)return;
+      let phrase='';for(let i=0;i<e.results.length;i++)if(e.results[i].isFinal)phrase+=(phrase?' ':'')+e.results[i][0].transcript;
+      if(phrase.trim()){heard=true;haltMic();ask(phrase.trim());}
+    };
+    local.onerror=e=>{if(!live||recognition!==local)return;
+      listening=false;app.classList.remove('listening');mic.classList.remove('hidden');
+      state(e.error==='not-allowed'?'Microfone bloqueado. Permita o acesso nas configurações do Chrome ou digite.':e.error==='no-speech'?'Não ouvi sua pergunta. Toque em “Continuar falando”.':'Não consegui ouvir. Toque para tentar novamente ou digite.');
+    };
+    local.onend=()=>{if(recognition!==local)return;recognition=null;listening=false;app.classList.remove('listening');if(live&&!working&&!heard){mic.classList.remove('hidden');state('Microfone pausado. Toque em “Continuar falando”.');}};
+    local.start();listening=true;app.classList.add('listening');mic.classList.add('hidden');state('Estou ouvindo... pode falar.');
+  }catch(e){recognition=null;listening=false;mic.classList.remove('hidden');state('Não foi possível abrir o microfone. Abra no Chrome ou digite uma pergunta.');}
+}
+function speakDone(index,serial){if(!live||turn!==index||serial!==playbackSerial)return;app.classList.remove('speaking');state('Pode continuar. Estou ouvindo você.');listen();}
+async function play(b64,index){lastBase64=b64;haltAudio();lastBase64=b64;const serial=playbackSerial;
+  try{
+    const raw=atob(b64),bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+    replay.classList.add('hidden');app.classList.add('speaking');state('Sara falando com a voz Aoede…');
+    if(ctx){try{if(ctx.state==='suspended')await ctx.resume();const decoded=await ctx.decodeAudioData(bytes.buffer.slice(0));if(!live||turn!==index||serial!==playbackSerial)return;
+       const node=ctx.createBufferSource();source=node;node.buffer=decoded;node.connect(ctx.destination);node.onended=()=>speakDone(index,serial);node.start();return;
+    }catch(_){/* usar áudio HTML como alternativa */}}
+    playedUrl=URL.createObjectURL(new Blob([bytes],{type:'audio/wav'}));htmlAudio.src=playedUrl;
+    htmlAudio.onended=()=>speakDone(index,serial);
+    htmlAudio.onerror=()=>{if(live){app.classList.remove('speaking');replay.classList.remove('hidden');state('A resposta chegou, mas o áudio falhou. Tente “Ouvir resposta”.');}};
+    await htmlAudio.play();
+  }catch(_){if(!live||turn!==index)return;app.classList.remove('speaking');replay.classList.remove('hidden');mic.classList.remove('hidden');state('A voz não tocou automaticamente. Toque em “Ouvir resposta” ou continue pelo texto.');}
+}
+async function ask(userText){let text=String(userText||'').trim().slice(0,350);if(!text||working||!live)return;
+ haltMic();haltAudio();working=true;send.disabled=true;mic.classList.add('hidden');replay.classList.add('hidden');message.value='';bubble('Você',text,true);
+ state('Sara está pensando e preparando a resposta...');let current=++turn,past=history.slice(-12);history.push({role:'user',text});controller=new AbortController();
  try{
-  var r=new SR();rec=r;r.lang='pt-BR';r.continuous=false;r.interimResults=false;r.maxAlternatives=1;var got=false;
-  r.onresult=function(ev){if(rec!==r||!micActive)return;var words='';for(var i=ev.resultIndex;i<ev.results.length;i++)if(ev.results[i].isFinal)words+=ev.results[i][0].transcript;
-   if(words.trim()&&!got){got=true;hearing=false;rec=null;app.classList.remove('listening');try{r.stop();}catch(e){}ask(words.trim());}};
-  r.onerror=function(ev){if(rec!==r||!micActive)return;hearing=false;app.classList.remove('listening');if(ev.error==='not-allowed'||ev.error==='service-not-allowed'){micActive=false;start.classList.remove('hidden');stop.classList.add('hidden');state('Microfone bloqueado. No Chrome, abra Configurações do site > Microfone e permita o acesso.');listenBtn.classList.add('hidden');}else{state('Não consegui ouvir. Toque em “Ouvir” para tentar novamente.');listenBtn.classList.remove('hidden');}};
-  r.onend=function(){if(rec!==r)return;rec=null;hearing=false;app.classList.remove('listening');if(micActive&&!busy&&!got){state('Pronta para ouvir. Se o Chrome pausar, toque em “Ouvir”.');listenBtn.classList.remove('hidden');}};
-  r.start();hearing=true;listenBtn.classList.add('hidden');app.classList.add('listening');state('Estou ouvindo você...');
- }catch(e){hearing=false;rec=null;listenBtn.classList.remove('hidden');state('O Chrome não iniciou a escuta. Toque em “Ouvir” ou escreva sua pergunta.');}
+  const response=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({company:'clinicadmoura',text,history:past}),signal:controller.signal});
+  const result=await response.json();if(!live||turn!==current)return;
+  if(!response.ok)throw Error(result.error==='rate_limited'?'Muitas mensagens em pouco tempo. Aguarde um minutinho, por favor.':'O servidor não conseguiu responder. Tente novamente.');
+  const answer=String(result.answer||'Não consegui responder agora.');history.push({role:'assistant',text:answer});bubble('Sara · Aoede',answer);
+  displayQuota(result);working=false;send.disabled=false;
+  if(result.audioBase64)await play(result.audioBase64,current);
+  else {if('speechSynthesis' in window){try{window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(answer);u.lang='pt-BR';u.rate=1.04;const voices=window.speechSynthesis.getVoices();u.voice=voices.find(v=>v.lang==='pt-BR')||voices.find(v=>v.lang.startsWith('pt'))||null;u.onend=()=>{if(live&&turn===current)listen()};u.onerror=()=>{state('Resposta em texto. Toque em Continuar falando.');mic.classList.remove('hidden')};state('Sara falando com a voz do aparelho…');window.speechSynthesis.speak(u);}catch(e){state('Resposta em texto. Toque para continuar.');mic.classList.remove('hidden')}}else{state('Resposta em texto. Toque para continuar.');mic.classList.remove('hidden')}}
+ }catch(e){if(!live||turn!==current)return;state(e?.message||'Não consegui conectar. Tente novamente.');mic.classList.remove('hidden');}
+ finally{if(turn===current){working=false;send.disabled=false;controller=null;}}
 }
-function afterSpeak(t){app.classList.remove('speaking');if(micActive&&turn===t){state('Pode continuar falando.');retry();}else state('Digite sua pergunta ou inicie uma conversa.');}
-function localSpeak(txt,t){
- if(!('speechSynthesis'in window)){state('Resposta disponível em texto.');listenBtn.classList.remove('hidden');return;}
- try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(txt);u.lang='pt-BR';u.rate=1.02;u.pitch=1.02;var voices=speechSynthesis.getVoices();var pt=voices.find(function(v){return /^pt-BR/i.test(v.lang)})||voices.find(function(v){return /^pt/i.test(v.lang)});if(pt)u.voice=pt;
- u.onend=function(){afterSpeak(t)};u.onerror=function(){afterSpeak(t)};app.classList.add('speaking');state('Sara está respondendo com a voz do aparelho...');speechSynthesis.speak(u);
- }catch(e){state('Resposta em texto. Toque em “Ouvir” para continuar.');listenBtn.classList.remove('hidden');}
-}
-function paidSpeak(base64,txt,t){
- try{var binary=atob(base64),bytes=new Uint8Array(binary.length);for(var i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
- var blob=new Blob([bytes],{type:'audio/wav'}),u=URL.createObjectURL(blob);audio.src=u;
- audio.onended=function(){URL.revokeObjectURL(u);afterSpeak(t)};
- audio.onerror=function(){URL.revokeObjectURL(u);localSpeak(txt,t)};
- app.classList.add('speaking');state('Sara falando...');var p=audio.play();if(p&&p.catch)p.catch(function(){URL.revokeObjectURL(u);localSpeak(txt,t)});
- }catch(e){localSpeak(txt,t)}
-}
-async function ask(message){
- var txt=String(message||'').trim();if(!txt||busy)return;txt=txt.slice(0,350);stopRec();stopVoice();busy=true;send.disabled=true;
- bubble('Você',txt,true);input.value='';state('Sara está preparando a resposta...');
- var id=++turn,context=history.slice(-8);history.push({role:'user',text:txt});controller=new AbortController();
- try{
-  var res=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text:txt,history:context}),signal:controller.signal});
-  var data=await res.json();if(turn!==id)return;
-  if(!res.ok)throw Error(res.status===429?'O piloto atingiu seu limite de uso. Fale com a equipe pelo WhatsApp.':'O atendimento não está disponível agora. Tente novamente.');
-  var answer=String(data.answer||'Não consegui responder agora.');history.push({role:'assistant',text:answer});bubble('Sara',answer,false);currentText=answer;lastAudio=data.audioBase64||'';replay.classList.remove('hidden');
-  busy=false;send.disabled=false;if(lastAudio)paidSpeak(lastAudio,answer,id);else localSpeak(answer,id);
- }catch(e){if(id!==turn)return;state(e.name==='AbortError'?'Conversa interrompida.':e.message);if(micActive)listenBtn.classList.remove('hidden');}
- finally{if(id===turn){busy=false;send.disabled=false;controller=null;}}
-}
-async function begin(){
- if(micActive)return;micActive=true;start.classList.add('hidden');stop.classList.remove('hidden');
- if(!window.isSecureContext){state('O microfone exige uma página segura HTTPS.');micActive=false;start.classList.remove('hidden');stop.classList.add('hidden');return;}
- if(!SR){state('Seu navegador não suporta o reconhecimento de fala. Use as mensagens escritas.');listenBtn.classList.add('hidden');return;}
- try{
-  if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
-   var s=await navigator.mediaDevices.getUserMedia({audio:true});s.getTracks().forEach(function(t){t.stop()});
-  }
-  if(!micActive)return;listen();
- }catch(e){micActive=false;start.classList.remove('hidden');stop.classList.add('hidden');listenBtn.classList.remove('hidden');state('Permita o microfone ao Chrome e ao site. No Android: Ajustes > Apps > Chrome > Permissões > Microfone.');}
-}
-start.addEventListener('click',begin);stop.addEventListener('click',end);
-listenBtn.addEventListener('click',function(){if(!micActive)begin();else listen()});
-replay.addEventListener('click',function(){if(!currentText)return;stopRec();stopVoice();var id=turn;if(lastAudio)paidSpeak(lastAudio,currentText,id);else localSpeak(currentText,id)});
-form.addEventListener('submit',function(ev){ev.preventDefault();ask(input.value)});
-document.querySelectorAll('[data-q]').forEach(function(b){b.addEventListener('click',function(){ask(b.getAttribute('data-q'))})});
-window.addEventListener('pagehide',end);
+start.addEventListener('click',()=>activate(true));stop.addEventListener('click',hangup);
+mic.addEventListener('click',()=>{if(!live)activate(true);else if(!working){haltAudio();listen();}});
+replay.addEventListener('click',()=>{if(!lastBase64||!live)return;audioUnlock();play(lastBase64,turn);});
+compose.addEventListener('submit',e=>{e.preventDefault();audioUnlock();activate(false);ask(message.value);});
+$('locations').addEventListener('click',()=>{audioUnlock();activate(false);ask('Onde ficam as três clínicas D’Moura? Quais os endereços em Recife, Caruaru e Garanhuns?')});
+$('booking').addEventListener('click',()=>{audioUnlock();activate(false);ask('Quero agendar uma avaliação.')});
+$('prices').addEventListener('click',()=>{audioUnlock();activate(false);ask('Quais são os preços do botox e dos bioestimuladores?')});
+$('days').addEventListener('click',()=>{audioUnlock();activate(false);ask('Em que dias a Dra. Danusa atende em cada cidade?')});
+$('human').addEventListener('click',()=>{window.open('https://wa.me/5581997181046?text='+encodeURIComponent('Olá! Vim pelo site e gostaria de falar com a equipe da Clínica D’Moura.'),'_blank','noopener')});
+window.addEventListener('pagehide',hangup);
 })();
-</script>
-</body></html>
+</script></body></html>
