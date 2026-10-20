@@ -2,7 +2,7 @@
   "name": "Clínica D'Moura",
   "short_name": "D'Moura",
   "id": "./",
-  "start_url": "./",
+  "start_url": "./sara.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#030e12",

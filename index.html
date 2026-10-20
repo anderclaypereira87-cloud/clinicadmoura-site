@@ -124,5 +124,5 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script src="assets/app.js"></script>
 <script src="assets/ana/ana.js" defer></script>
-<script src="assets/pwa-install.js" defer></script></body>
+<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){})</script></body>
 </html>
