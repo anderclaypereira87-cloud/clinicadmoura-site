@@ -8,7 +8,7 @@ input,select,button{font:inherit;width:100%;padding:13px;border-radius:12px;bord
 pre{white-space:pre-wrap;font:15px/1.4 system-ui;max-height:300px;overflow:auto;background:#faf6f0;padding:10px;border-radius:10px}.hide{display:none}.err{color:#b00020;font-weight:600}table{width:100%;font-size:15px;border-collapse:collapse}td{border-bottom:1px solid #eee;padding:6px 2px}
 body.f{font-size:23px}body.f input,body.f button{font-size:24px;padding:18px}body.f h2{font-size:28px}.qr{text-align:center}.qr img{width:240px;max-width:100%}textarea{width:100%;font:13px monospace;height:80px}
 .asaas{margin:10px 0}.asaas a.btn{display:block;text-align:center;text-decoration:none;padding:13px;border-radius:12px;font-weight:700;background:linear-gradient(135deg,var(--gold-l),#c08a3e);color:#1a1205;margin:6px 0}.asaas2{display:flex;gap:8px}.asaas2 button{flex:1}
-</style><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-dmoura-32.png"><link rel="apple-touch-icon" href="assets/apple-touch-dmoura.png"><link rel="stylesheet" href="assets/lux.css"><main><img class="brandlogo" src="assets/logo-dmoura-brand.webp" alt="Clínica D’Moura" width="190" height="183">
+</style><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-dmoura-32.png"><link rel="stylesheet" href="assets/lux.css"><main><img class="brandlogo" src="assets/logo-dmoura-brand.webp" alt="Clínica D’Moura" width="190" height="183">
 <h1>💳 Carteira de Créditos D'Moura</h1><p style=font-size:14px><a href=index.html>← Site da clínica</a> · <a href=sara.html>Falar com a Sarah</a> <span id=topSair class=hide>· <a href=# onclick="sair();return false">Sair</a></span></p>
 <div id=msg class=err></div>
 
@@ -80,3 +80,4 @@ async function criar(){$('msg').textContent='';try{await call({action:'criar',no
  if(slug){try{const j=await call({action:'publico',slug});show('vPub');$('pNome').textContent='Carteira de '+j.primeiro_nome;$('pProc').textContent=j.procedimento?'Para: '+j.procedimento:'';$('pBar').style.width=(j.progresso||0)+'%';$('pPct').textContent=j.progresso==null?'':j.progresso+'% do caminho';payBox($('pay2'))}catch(e){err(e)}}
  else iniciar()})();
 </script></html>
+<script src="assets/pwa-install.js" defer></script>
