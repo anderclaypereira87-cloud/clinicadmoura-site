@@ -6,25 +6,31 @@ input,select,button{font:inherit;width:100%;padding:13px;border-radius:12px;bord
 .card{background:linear-gradient(135deg,#2a2420,#7a5a2f 60%,#e0c08b);color:#fff;border-radius:20px;padding:22px;min-height:190px;position:relative}.card .n{font-size:24px;font-weight:700;margin-top:28px}.card small{opacity:.85}.card .s{font-size:30px;font-weight:800}
 .bar{height:22px;background:#0002;border-radius:11px;overflow:hidden;margin:10px 0}.bar i{display:block;height:100%;background:#25a244;width:0}
 pre{white-space:pre-wrap;font:15px/1.4 system-ui;max-height:300px;overflow:auto;background:#faf6f0;padding:10px;border-radius:10px}.hide{display:none}.err{color:#b00020;font-weight:600}table{width:100%;font-size:15px;border-collapse:collapse}td{border-bottom:1px solid #eee;padding:6px 2px}
-.qr{text-align:center}.qr img{width:240px;max-width:100%}textarea{width:100%;font:13px monospace;height:80px}
+body.f{font-size:23px}body.f input,body.f button{font-size:24px;padding:18px}body.f h2{font-size:28px}.qr{text-align:center}.qr img{width:240px;max-width:100%}textarea{width:100%;font:13px monospace;height:80px}
 </style><main>
-<h1>💳 Carteira de Créditos D'Moura</h1>
+<h1>💳 Carteira de Créditos D'Moura</h1><p style=font-size:14px><a href=index.html>← Site da clínica</a> · <a href=sara.html>Falar com a Sarah</a> <span id=topSair class=hide>· <a href=# onclick="sair();return false">Sair</a></span></p>
 <div id=msg class=err></div>
 
-<section id=vNovo class="box hide"><h2>Criar minha carteira</h2>
+<section id=vNovo class="box hide"><h2>Criar minha carteira</h2><p style=font-size:15px>Você entrou como <b class=meEm></b>.</p>
 <p>Junte aos poucos, por Pix ou cartão, para o procedimento que você quer. Parentes também podem ajudar.</p>
 <input id=nNome placeholder="Nome completo" autocomplete=name><input id=nCpf placeholder="CPF" inputmode=numeric><input id=nTel placeholder="WhatsApp com DDD" inputmode=tel><input id=nProc placeholder="Procedimento que deseja (ex.: Botox)">
 <p><b>Termo de adesão</b> <button class=sec style=width:auto onclick=ouvir(T)>🔊 Ouvir o termo</button></p><pre id=termo>Carregando…</pre>
 <label style=display:flex;gap:10px;align-items:center><input type=checkbox id=nAc style=width:28px;height:28px> Li (ou ouvi) e aceito o termo</label>
 <button onclick=criar()>Criar carteira</button></section>
 
-<section id=vLink class="box hide"><h2>✅ Carteira criada!</h2><p><b>Guarde este link. Ele é só seu</b> (abre sua carteira):</p><textarea id=lPriv readonly></textarea><button class=alt onclick=wa(lPriv.value)>Mandar para meu WhatsApp</button><button onclick="location.href=lPriv.value;location.reload()">Abrir minha carteira</button></section>
+<section id=vEntrar class="box hide"><h2>🔐 Entrar na minha carteira</h2>
+<button class=alt id=bFacil onclick=facil()>🔊 Modo fácil · Ouvir</button>
+<p id=e1>Digite o seu <b>e-mail</b>. Vamos mandar um e-mail para você entrar. Só você, com o seu e-mail, consegue abrir a sua carteira.</p>
+<input id=lEmail type=email autocomplete=email inputmode=email placeholder="seu@email.com"><button onclick=enviar()>Receber acesso no e-mail</button>
+<div id=passo2 class=hide><p id=e2>📩 Pronto! Abra o seu e-mail e <b>toque no botão do e-mail</b> (pode estar escrito "Sign in" ou "Confirm"). Ele volta para cá já com você dentro.<br>Se o e-mail trouxer um <b>código de 6 números</b>, digite aqui:</p>
+<input id=lCode maxlength=8 inputmode=numeric placeholder="000000" style="font-size:30px;text-align:center;letter-spacing:8px"><button onclick=verificar()>Entrar com o código</button>
+<button class=sec onclick=enviar()>Mandar de novo</button><p style=font-size:14px>Não chegou? Olhe a caixa de spam ou promoções, espere 1 minuto e toque em "Mandar de novo".</p></div></section>
 
-<section id=vLogin class="box hide"><h2>Entrar na carteira</h2><p>Para sua segurança, digite os <b>4 últimos números do seu CPF</b>.</p><input id=cpf4 maxlength=4 inputmode=numeric placeholder="0000" style="font-size:28px;text-align:center;letter-spacing:8px"><button onclick=ver()>Entrar</button></section>
+<section id=vCpf class="box hide"><h2>Confirme que é você</h2><p>Achamos uma carteira para <b id=cpfEm></b>. Digite os <b>4 últimos números do seu CPF</b>. É só desta primeira vez.</p><input id=cpf4 maxlength=4 inputmode=numeric placeholder="0000" style="font-size:30px;text-align:center;letter-spacing:8px"><button onclick=vincular()>Confirmar</button></section>
 
 <section id=vCart class=hide>
 <div class=card><small>CLÍNICA D'MOURA · CARTEIRA DE CRÉDITOS</small><div class=n id=cNome></div><small>Saldo</small><div class=s id=cSaldo></div><small id=cMeta></small><div class=bar><i id=cBar></i></div><small id=cPct></small></div>
-<button class=sec onclick=ouvir(fala)>🔊 Ouvir minha carteira</button>
+<button class=sec onclick=ouvir(fala)>🔊 Ouvir minha carteira</button><p style=font-size:15px;text-align:center>Entrou como <b class=meEm></b> · <a href=# onclick="sair();return false">Sair</a></p>
 <div class=box id=pay></div>
 <div class=box><h3>Peça ajuda à família 💛</h3><p>Mande este link. Eles só veem seu primeiro nome e o progresso.</p><textarea id=cShare readonly></textarea><button class=alt onclick=wa('Me ajuda a juntar para meu procedimento na Clínica D\'Moura? '+cShare.value)>Compartilhar no WhatsApp</button></div>
 <div class=box><h3>Histórico</h3><table id=hist></table></div></section>
@@ -33,21 +39,39 @@ pre{white-space:pre-wrap;font:15px/1.4 system-ui;max-height:300px;overflow:auto;
 <div class=box><input id=dep placeholder="Seu nome (aparece para ela)"></div><div class=box id=pay2></div></section>
 <p style="font-size:13px;color:#7a6a5a">Crédito pré-pago para procedimentos. Não é consórcio. Pagamentos processados pelo Asaas. Dúvidas: WhatsApp (81) 99718-1046.</p>
 </main><script>
-const API="https://qxagrqankcrsgwkjskzl.supabase.co/functions/v1/dmap-carteira";
-const $=id=>document.getElementById(id),show=id=>$(id).classList.remove('hide'),brl=v=>v==null?'a definir pela clínica':Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-let T='',TV='',fala='';const tok=(location.hash.match(/t=([A-Za-z0-9_-]+)/)||[])[1],slug=new URLSearchParams(location.search).get('p');
-async function call(o){const r=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(o)});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||r.status);return j}
-const err=e=>{const m={cpf_invalido:'CPF inválido.',nome_completo:'Digite o nome completo.',telefone_invalido:'Telefone com DDD.',aceite_obrigatorio:'Você precisa aceitar o termo.',acesso_negado:'Dados não conferem.',valor_invalido:'Valor entre R$ 5 e R$ 50.000.',rate_limited:'Muitas tentativas. Espere alguns minutos.'};$('msg').textContent=m[e.message]||'Não deu certo agora. Tente de novo.'};
-function ouvir(t){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='pt-BR';u.rate=.85;speechSynthesis.speak(u)}
+const SB="https://qxagrqankcrsgwkjskzl.supabase.co",API=SB+"/functions/v1/dmap-carteira",PK="sb_publishable_MnCmP7CeTXdbL1doXCg_gA_d-h5a1JB",PAGE=location.origin+location.pathname;
+const $=id=>document.getElementById(id),show=id=>$(id).classList.remove('hide'),hide=id=>$(id).classList.add('hide'),brl=v=>v==null?'a definir pela clínica':Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+let T='',TV='',fala='';const slug=new URLSearchParams(location.search).get('p');let F=localStorage.cf==='1';
+const S={get(){try{return JSON.parse(localStorage.cs||'null')}catch{return null}},set(o){localStorage.cs=JSON.stringify(o)},del(){localStorage.removeItem('cs')}};
+async function auth(path,body,tok){const r=await fetch(SB+'/auth/v1/'+path,{method:'POST',headers:{apikey:PK,'content-type':'application/json',...(tok?{authorization:'Bearer '+tok}:{})},body:JSON.stringify(body||{})});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error_code||j.msg||r.status);return j}
+const salvar=j=>S.set({a:j.access_token,r:j.refresh_token,e:Date.now()+(Number(j.expires_in)||3600)*1000});
+async function token(){let s=S.get();if(!s)return null;if(Date.now()>s.e-60e3){try{salvar(await auth('token?grant_type=refresh_token',{refresh_token:s.r}));s=S.get()}catch{S.del();return null}}return s.a}
+async function call(o,priv){const h={'content-type':'application/json'};if(priv){const t=await token();if(!t)throw new Error('login_necessario');h.authorization='Bearer '+t}const r=await fetch(API,{method:'POST',headers:h,body:JSON.stringify(o)});const j=await r.json().catch(()=>({}));if(r.status===401){S.del()}if(!r.ok)throw new Error(j.error||r.status);return j}
+const ME={cpf_invalido:'CPF inválido.',nome_completo:'Digite o nome completo.',telefone_invalido:'Telefone com DDD.',aceite_obrigatorio:'Você precisa aceitar o termo.',acesso_negado:'Os números não conferem.',valor_invalido:'Valor entre R$ 5 e R$ 50.000.',rate_limited:'Muitas tentativas. Espere alguns minutos.',over_email_send_rate_limit:'Muitos e-mails agora. Espere alguns minutos e tente de novo.',otp_expired:'Código vencido ou errado. Peça um novo.',login_necessario:'Entre de novo com seu e-mail.',email_invalido:'Digite um e-mail válido.',ja_tem_carteira:'Você já tem uma carteira.'};
+const err=e=>{const m=ME[e.message]||'Não deu certo agora. Tente de novo.';$('msg').textContent=m;if(F)ouvir(m)};
+function ouvir(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='pt-BR';u.rate=F?.75:.85;speechSynthesis.speak(u)}catch{}}
+function facil(){F=!F;localStorage.cf=F?'1':'0';document.body.classList.toggle('f',F);if(F)ouvir('Modo fácil ligado. Escreva o seu e-mail e toque no botão Receber acesso. Depois abra o seu e-mail e toque no botão que chegou.')}
+document.body.classList.toggle('f',F);
 const wa=t=>open('https://wa.me/?text='+encodeURIComponent(t));
-function payBox(el,extra){el.innerHTML=`<h3>Depositar</h3><input id=${el.id}v inputmode=decimal placeholder="Valor em R$ (ex.: 50)"><button class=alt onclick="pagar('${el.id}','PIX')">Pagar com Pix</button><button onclick="pagar('${el.id}','CREDIT_CARD')">Cartão de crédito (até 10x)</button><div id=${el.id}r></div>`;el._x=extra}
-async function pagar(id,tipo){$('msg').textContent='';const v=Number(($(id+'v').value||'').replace(/\./g,'').replace(',','.'));const o={action:'cobrar',valor:v,tipo};if(tok)Object.assign(o,{token:tok,cpf4:sessionStorage.c4});else Object.assign(o,{slug,depositante:$('dep').value});
- try{const j=await call(o);const r=$(id+'r');if(j.pix_copia_cola)r.innerHTML=`<div class=qr><p>Abra o app do banco e leia o QR Code, ou copie o código:</p><img src="data:image/png;base64,${j.pix_qr_png_base64}"><textarea readonly>${j.pix_copia_cola}</textarea><button class=sec onclick="navigator.clipboard.writeText(this.previousElementSibling.value);this.textContent='Copiado ✓'">Copiar código Pix</button><p>O saldo atualiza quando o pagamento for confirmado.</p></div>`;else{r.innerHTML=`<p>${brl(j.valor)} em até 10x de ${brl(j.parcelas_10x)} no cartão.</p><a href="${j.link}" target=_blank><button>Abrir pagamento com cartão</button></a>`}}catch(e){err(e)}}
-async function ver(){const c4=$('cpf4').value||sessionStorage.c4;try{const j=await call({action:'ver',token:tok,cpf4:c4});sessionStorage.c4=c4;$('vLogin').classList.add('hide');show('vCart');
- $('cNome').textContent=j.nome;$('cSaldo').textContent=brl(j.saldo);$('cMeta').textContent=`Meta: ${j.procedimento||'procedimento'} · ${brl(j.valor_alvo)}`;$('cBar').style.width=(j.progresso||0)+'%';$('cPct').textContent=j.progresso==null?'A clínica vai definir o valor da meta.':(j.liberado?'🎉 Meta atingida! Fale com a clínica para agendar.':j.progresso+'% da meta');
+function payBox(el){el.innerHTML=`<h3>Depositar</h3><input id=${el.id}v inputmode=decimal placeholder="Valor em R$ (ex.: 50)"><button class=alt onclick="pagar('${el.id}','PIX')">Pagar com Pix</button><button onclick="pagar('${el.id}','CREDIT_CARD')">Cartão de crédito (até 10x)</button><div id=${el.id}r></div>`}
+async function pagar(id,tipo){$('msg').textContent='';const v=Number(($(id+'v').value||'').replace(/\./g,'').replace(',','.'));const o={action:'cobrar',valor:v,tipo};if(slug)Object.assign(o,{slug,depositante:$('dep').value});
+ try{const j=await call(o,!slug);const r=$(id+'r');if(j.pix_copia_cola)r.innerHTML=`<div class=qr><p>Abra o app do banco e leia o QR Code, ou copie o código:</p><img src="data:image/png;base64,${j.pix_qr_png_base64}"><textarea readonly>${j.pix_copia_cola}</textarea><button class=sec onclick="navigator.clipboard.writeText(this.previousElementSibling.value);this.textContent='Copiado ✓'">Copiar código Pix</button><p>O saldo atualiza quando o pagamento for confirmado.</p></div>`;else{r.innerHTML=`<p>${brl(j.valor)} em até 10x de ${brl(j.parcelas_10x)} no cartão.</p><a href="${j.link}" target=_blank><button>Abrir pagamento com cartão</button></a>`}}catch(e){err(e)}}
+let EM='';
+async function enviar(){$('msg').textContent='';EM=$('lEmail').value.trim().toLowerCase();if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(EM))return err(new Error('email_invalido'));
+ try{await fetch(SB+'/auth/v1/otp?redirect_to='+encodeURIComponent(PAGE),{method:'POST',headers:{apikey:PK,'content-type':'application/json'},body:JSON.stringify({email:EM,create_user:true})}).then(async r=>{if(!r.ok){const j=await r.json().catch(()=>({}));throw new Error(j.error_code||r.status)}});show('passo2');if(F)ouvir('Pronto. Mandamos um e-mail para você. Abra o seu e-mail e toque no botão que chegou. Ele traz você de volta para cá.')}catch(e){err(e)}}
+async function verificar(){$('msg').textContent='';const c=$('lCode').value.replace(/\D/g,'');try{salvar(await auth('verify',{type:'email',email:EM||$('lEmail').value.trim().toLowerCase(),token:c}));iniciar()}catch(e){err(new Error('otp_expired'))}}
+async function sair(){const t=S.get();S.del();sessionStorage.clear();if(t)auth('logout',{},t.a).catch(()=>{});location.href=PAGE}
+async function vincular(){$('msg').textContent='';try{await call({action:'vincular',cpf4:$('cpf4').value},1);hide('vCpf');iniciar()}catch(e){err(e)}}
+function tela(j){['vEntrar','vCpf','vNovo','vCart'].forEach(hide);show('topSair');document.querySelectorAll('.meEm').forEach(x=>x.textContent=j.email||'')}
+async function iniciar(){let j;try{j=await call({action:'ver'},1)}catch(e){['vCpf','vNovo','vCart'].forEach(hide);hide('topSair');show('vEntrar');if(e.message!=='login_necessario')err(e);return}
+ tela(j);if(j.precisa_cpf){$('cpfEm').textContent=j.email;show('vCpf');if(F)ouvir('Digite os quatro últimos números do seu CPF.');return}
+ if(j.sem_carteira){show('vNovo');if(!T){const t=await call({action:'termo'});T=t.texto;TV=t.versao;$('termo').textContent=T}return}
+ show('vCart');$('cNome').textContent=j.nome;$('cSaldo').textContent=brl(j.saldo);$('cMeta').textContent=`Meta: ${j.procedimento||'procedimento'} · ${brl(j.valor_alvo)}`;$('cBar').style.width=(j.progresso||0)+'%';$('cPct').textContent=j.progresso==null?'A clínica vai definir o valor da meta.':(j.liberado?'🎉 Meta atingida! Fale com a clínica para agendar.':j.progresso+'% da meta');
  $('cShare').value=j.link_parentes;$('hist').innerHTML=j.historico.length?j.historico.map(h=>`<tr><td>${new Date(h.confirmado_em||h.created_at).toLocaleDateString('pt-BR')}</td><td>${h.depositante?'De '+h.depositante:'Você'} · ${h.billing_type==='PIX'?'Pix':'Cartão'}</td><td><b>${brl(h.valor)}</b></td></tr>`).join(''):'<tr><td>Nenhum depósito confirmado ainda.</td></tr>';
- fala=`Olá, ${j.nome.split(' ')[0]}. Seu saldo é ${brl(j.saldo)}. ${j.progresso==null?'':'Você já juntou '+j.progresso+' por cento da meta.'}`;payBox($('pay'))}catch(e){sessionStorage.removeItem('c4');show('vLogin');err(e)}}
-async function criar(){$('msg').textContent='';try{const j=await call({action:'criar',nome:$('nNome').value,cpf:$('nCpf').value,telefone:$('nTel').value,procedimento:$('nProc').value,aceito:$('nAc').checked,termo_versao:TV,origem:new URLSearchParams(location.search).get('origem')});$('vNovo').classList.add('hide');show('vLink');$('lPriv').value=j.link_privado}catch(e){err(e)}}
-(async()=>{if(tok){sessionStorage.c4?ver():show('vLogin')}else if(slug){try{const j=await call({action:'publico',slug});show('vPub');$('pNome').textContent='Carteira de '+j.primeiro_nome;$('pProc').textContent=j.procedimento?'Para: '+j.procedimento:'';$('pBar').style.width=(j.progresso||0)+'%';$('pPct').textContent=j.progresso==null?'':j.progresso+'% do caminho';payBox($('pay2'))}catch(e){err(e)}}
- else{show('vNovo');const j=await call({action:'termo'});T=j.texto;TV=j.versao;$('termo').textContent=T}})();
+ fala=`Olá, ${j.nome.split(' ')[0]}. Seu saldo é ${brl(j.saldo)}. ${j.progresso==null?'':'Você já juntou '+j.progresso+' por cento da meta.'}`;payBox($('pay'));if(F)ouvir(fala)}
+async function criar(){$('msg').textContent='';try{await call({action:'criar',nome:$('nNome').value,cpf:$('nCpf').value,telefone:$('nTel').value,procedimento:$('nProc').value,aceito:$('nAc').checked,termo_versao:TV,origem:new URLSearchParams(location.search).get('origem')||sessionStorage.origem},1);iniciar()}catch(e){err(e)}}
+(async()=>{const o=new URLSearchParams(location.search).get('origem');if(o)sessionStorage.origem=o;
+ const h=new URLSearchParams(location.hash.slice(1));if(h.get('access_token')){salvar({access_token:h.get('access_token'),refresh_token:h.get('refresh_token'),expires_in:h.get('expires_in')});history.replaceState(null,'',PAGE+location.search)}else if(h.get('error')){history.replaceState(null,'',PAGE+location.search);$('msg').textContent='O link do e-mail venceu ou já foi usado. Peça um novo abaixo.'}else if(location.hash)history.replaceState(null,'',PAGE+location.search);
+ if(slug){try{const j=await call({action:'publico',slug});show('vPub');$('pNome').textContent='Carteira de '+j.primeiro_nome;$('pProc').textContent=j.procedimento?'Para: '+j.procedimento:'';$('pBar').style.width=(j.progresso||0)+'%';$('pPct').textContent=j.progresso==null?'':j.progresso+'% do caminho';payBox($('pay2'))}catch(e){err(e)}}
+ else iniciar()})();
 </script></html>
