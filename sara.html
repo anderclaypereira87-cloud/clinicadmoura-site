@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101015"><meta name="referrer" content="no-referrer"><title>Sarah — Clínica D’Moura | Atendimento por voz</title>
+<html lang="pt-BR" data-page="sara"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f8f3ec"><meta name="referrer" content="no-referrer"><title>Sarah — Clínica D’Moura | Atendimento por voz</title>
 <style>
 :root{color-scheme:dark;--gold:#e0c08b;--gold2:#bc975e;--panel:#19171b;--muted:#bdb8b3;--bg:#0e0d11}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#f8f4ee}body{background:radial-gradient(ellipse at 52% -6%,#4a374f,#141219 45%,#0e0d11 92%)}
@@ -19,11 +19,13 @@ main{flex:1;display:flex;flex-direction:column;padding:18px 17px 13px}.top{text-
 body.easy .bubble{font-size:21px;line-height:1.55}body.easy .status{font-size:20px}body.easy .quick button{font-size:19px;min-height:64px;flex-basis:100%}body.easy input,body.easy .compose button{font-size:19px}body.easy .sub{font-size:17px}body.easy .chat{max-height:45dvh}body.easy .notice{font-size:15px}
 .modal{position:fixed;inset:0;background:#000c;display:flex;align-items:flex-start;justify-content:center;z-index:9;overflow:auto;padding:12px}.modal>div{background:#1b181d;border:1px solid #e0c08b;border-radius:18px;max-width:460px;width:100%;padding:16px;font-size:16px;line-height:1.5}.modal pre{white-space:pre-wrap;font:inherit;background:#121117;padding:10px;border-radius:10px;max-height:38dvh;overflow:auto}.modal label{display:block;margin:10px 0 4px;font-weight:700}.modal input[type=text]{width:100%;font-size:18px}.modal .chk{display:flex;gap:10px;align-items:center;font-size:19px;margin:12px 0}.modal .chk input{width:32px;height:32px;flex:none}.modal .btn{width:100%;margin-top:8px;font-size:18px;min-height:56px}
 @media(prefers-reduced-motion:reduce){.orb{animation:none!important}}
-</style></head>
+.orb{position:relative;width:118px;height:118px;animation:none;overflow:hidden;background:#f3ebe1;border:2px solid #d9b98e;box-shadow:0 0 0 4px #fff8,0 0 34px #d9b98e66}.speaking .orb{box-shadow:0 0 0 4px #fff8,0 0 46px #e6c79bcc;animation:glow 1.4s ease-in-out infinite}.listening .orb{animation:listen 1.6s ease-in-out infinite}@keyframes glow{50%{box-shadow:0 0 0 7px #e9d2ae88,0 0 60px #e6c79bee}}@keyframes listen{50%{box-shadow:0 0 0 9px #9fc7b955,0 0 40px #9fc7b9aa}}.face{position:absolute;inset:0;transform-origin:50% 90%;will-change:transform}.face img{width:100%;height:100%;object-fit:cover;display:block}.mgap{position:absolute;left:44.5%;width:16%;top:64%;height:2.2%;border-radius:50%;background:#4a1f1f;opacity:0;filter:blur(.6px)}.jaw{position:absolute;left:33%;width:39%;top:64.6%;height:22%;background:url(assets/sarah-avatar.webp) 54.1% 82.8%/256.4% auto;-webkit-mask:radial-gradient(ellipse 50% 60% at 50% 35%,#000 55%,transparent 100%);mask:radial-gradient(ellipse 50% 60% at 50% 35%,#000 55%,transparent 100%);will-change:transform}.lid{position:absolute;border-radius:50% 50% 45% 45%;background:linear-gradient(#cfa08b,#bf8b76 78%,#4a2c22 92%,transparent);transform:scaleY(0);transform-origin:50% 0;filter:blur(.5px);transition:transform .07s ease-in}.blink .lid{transform:scaleY(1)}.face{inset:-3%!important}.aname{text-align:center;font:600 15px Georgia,serif;color:var(--gold);letter-spacing:1.5px;margin:2px 0 4px}
+@media(prefers-reduced-motion:reduce){.face,.jaw{transform:none!important}.mgap{opacity:0!important}}
+</style><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/lux.css"></head>
 <body><div class="app" id="app">
 <header><div class="brand"><div class="logo">D</div><div><strong>CLÍNICA D’MOURA</strong><small>DRA. DANUSA MOURA · ESTÉTICA AVANÇADA</small></div></div><a class="tag" href="https://instagram.com/clinicadmoura" target="_blank" rel="noopener">@clinicadmoura</a><a class="tag" href="carteira.html" style="margin-left:6px">💳 Minha carteira</a></header>
 <main><div class="top"><div class="eyebrow">Sarah com voz Aoede</div><h1>Vamos conversar?</h1><p class="sub">Tire dúvidas sobre procedimentos, preços em 10x e unidades em Recife, Caruaru e Garanhuns. Fale ou digite.</p></div>
-<div class="orbwrap"><div class="ring"></div><div class="orb" role="img" aria-label="Representação visual da Sarah"></div></div>
+<div class="orbwrap"><div class="ring"></div><div class="orb" role="img" aria-label="Sarah, assistente virtual da clínica"><div class="face" id="sarahFace"><img src="assets/sarah-avatar.webp" alt="" width="400" height="400"><i class="mgap"></i><div class="jaw" id="sarahJaw"></div></div></div></div><div class="aname">Sarah</div>
 <div class="status" id="status" role="status" aria-live="polite">Toque em “Conversar com Sarah”.</div>
 <div class="easybar"><button type="button" id="easy" class="btn" aria-pressed="false">🔊 Modo fácil · Ouvir</button></div><button type="button" id="bigmic" class="hidden" aria-label="Apertar para falar com a Sarah">🎤 Aperte e fale</button>
 <div class="buttons"><button type="button" id="start" class="btn primary">✦ Conversar com Sarah</button><button type="button" id="stop" class="btn danger hidden">Encerrar</button></div>
@@ -83,7 +85,7 @@ async function play(b64,index){lastBase64=b64;haltAudio();lastBase64=b64;const s
     const raw=atob(b64),bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
     replay.classList.add('hidden');app.classList.add('speaking');state('Sarah falando com a voz Aoede…');
     if(ctx&&!easy){try{if(ctx.state==='suspended')await ctx.resume();const decoded=await ctx.decodeAudioData(bytes.buffer.slice(0));if(!live||turn!==index||serial!==playbackSerial)return;
-       const node=ctx.createBufferSource();source=node;node.buffer=decoded;node.connect(ctx.destination);node.onended=()=>speakDone(index,serial);node.start();return;
+       const node=ctx.createBufferSource();source=node;node.buffer=decoded;node.connect(window.sarahTap?window.sarahTap(ctx):ctx.destination);node.onended=()=>speakDone(index,serial);node.start();return;
     }catch(_){/* usar áudio HTML como alternativa */}}
     playedUrl=URL.createObjectURL(new Blob([bytes],{type:'audio/wav'}));htmlAudio.src=playedUrl;htmlAudio.preservesPitch=true;htmlAudio.playbackRate=easy?0.88:1;
     htmlAudio.onended=()=>speakDone(index,serial);
@@ -141,4 +143,12 @@ async function sendPhotos(files){files=[...files].slice(0,3);if(!files.length||!
 $('fcam').addEventListener('change',e=>sendPhotos(e.target.files));$('fgal').addEventListener('change',e=>sendPhotos(e.target.files));
 window.addEventListener('pagehide',hangup);
 })();
-</script></body></html>
+</script><script>(function(){var an=null,buf=null,lv=0,t0=performance.now();var rm=matchMedia('(prefers-reduced-motion: reduce)');
+window.sarahTap=function(c){try{if(!an||an.context!==c){an=c.createAnalyser();an.fftSize=512;an.smoothingTimeConstant=.5;an.connect(c.destination);buf=new Uint8Array(an.fftSize)}return an}catch(e){return c.destination}};
+var face=document.getElementById('sarahFace'),jaw=document.getElementById('sarahJaw'),gap=document.querySelector('.mgap');
+function amp(){var sp=document.querySelector('.speaking');if(!sp)return 0;if(an&&buf){an.getByteTimeDomainData(buf);var s=0;for(var i=0;i<buf.length;i++){var v=(buf[i]-128)/128;s+=v*v}var r=Math.sqrt(s/buf.length);if(r>0.003)return Math.min(1,r*5)}var t=performance.now()/1000;return Math.max(0,.45+.35*Math.sin(t*11)+.2*Math.sin(t*17.3))*.8}
+function loop(){requestAnimationFrame(loop);if(rm.matches||!face)return;var a=amp();lv+=(a-lv)*(a>lv?.45:.2);var t=(performance.now()-t0)/1000;
+var o=lv*5.5;jaw.style.transform='translateY('+(o*0.55).toFixed(2)+'%) scaleY('+(1+lv*.035).toFixed(3)+')';gap.style.opacity=(Math.min(1,lv*1.8)*.5).toFixed(2);gap.style.transform='scaleY('+(1+lv*3.2).toFixed(2)+')';
+var br=1+Math.sin(t*1.5)*.006;face.style.transform='translateY('+(Math.sin(t*1.5)*.5+lv*.35).toFixed(2)+'%) rotate('+(Math.sin(t*.6)*.45+Math.sin(t*1.9)*lv*.4).toFixed(2)+'deg) scale('+br.toFixed(4)+')'}
+function blink(){if(!rm.matches&&face){face.classList.add('blink');setTimeout(function(){face.classList.remove('blink');if(Math.random()<.15)setTimeout(blink,220)},110)}setTimeout(blink,2500+Math.random()*3500)}
+loop()})();</script></body></html>

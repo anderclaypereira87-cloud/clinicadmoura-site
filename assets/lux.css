@@ -1,0 +1,54 @@
+/* Clínica D'Moura — tema claro premium (Sarah + Carteira) */
+:root{--ink:#2b2420;--soft:#6f6257;--line:#e6d9c6;--gold:#a8834f;--gold-l:#c9a46a;--paper:#fffdf9;--bg:#f8f3ec}
+html[data-page]{color-scheme:light}
+html[data-page] body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+html[data-page] h1,html[data-page] h2,html[data-page] .aname{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;color:var(--ink)}
+/* Sarah */
+[data-page=sara] body{background:radial-gradient(ellipse at 50% -10%,#f3e6d4,#f8f3ec 55%)}
+[data-page=sara] .app{background:var(--paper);box-shadow:0 20px 60px rgba(90,60,30,.10)}
+[data-page=sara] header{border-bottom:1px solid var(--line);padding:16px 20px}
+[data-page=sara] .logo{border-color:var(--gold-l);color:var(--gold);font-family:"Cormorant Garamond",serif}
+[data-page=sara] .brand strong{color:var(--ink);font-weight:600}[data-page=sara] .brand small{color:var(--soft)}
+[data-page=sara] .tag{color:var(--gold);border-color:var(--line);background:#fff}
+[data-page=sara] main{padding:24px 20px 16px}
+[data-page=sara] .eyebrow{color:var(--gold);font-weight:600}
+[data-page=sara] h1{font-size:38px;margin:6px 0 8px;line-height:1.1}
+[data-page=sara] .sub{color:var(--soft);font-size:14px}
+[data-page=sara] .orbwrap{width:190px;height:178px;margin:16px auto 0}
+[data-page=sara] .ring{width:166px;height:166px;border-color:#d8c3a2;box-shadow:0 0 0 12px #c9a46a10,0 0 0 26px #c9a46a08}
+[data-page=sara] .orb{width:146px;height:146px;border:3px solid #fff;box-shadow:0 0 0 1px #d8c3a2,0 14px 34px rgba(110,75,35,.22)}
+[data-page=sara] .speaking .orb{animation:luxspeak 1.3s ease-in-out infinite}
+[data-page=sara] .listening .orb{animation:luxlisten 1.6s ease-in-out infinite}
+@keyframes luxspeak{50%{box-shadow:0 0 0 1px #c9a46a,0 0 0 9px #c9a46a33,0 14px 40px rgba(170,120,60,.35)}}
+@keyframes luxlisten{50%{box-shadow:0 0 0 1px #7fa79c,0 0 0 9px #7fa79c33,0 14px 34px rgba(80,120,110,.25)}}
+[data-page=sara] .aname{font-size:24px;letter-spacing:.06em;color:var(--ink);margin:4px 0 0}
+[data-page=sara] .status{color:var(--soft);font-weight:500}
+[data-page=sara] .btn{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:999px;font-weight:600}
+[data-page=sara] .primary,[data-page=sara] #bigmic{background:linear-gradient(135deg,var(--gold-l),var(--gold));color:#fff;border:0;box-shadow:0 8px 20px rgba(168,131,79,.28)}
+[data-page=sara] .danger{background:#fbeeee;color:#8a2f2f;border-color:#e3b9b9}
+[data-page=sara] #easy[aria-pressed=true]{background:#2f6b45;color:#fff;border-color:#2f6b45}
+[data-page=sara] .chat{background:#fbf7f1;border:1px solid var(--line);border-radius:18px}
+[data-page=sara] .bubble{background:#fff;color:var(--ink);border:1px solid #efe4d4;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+[data-page=sara] .bubble.user{background:#f1e4d1;border-color:#e6d2b6}
+[data-page=sara] .bubble small{color:var(--gold);font-weight:600}
+[data-page=sara] input{background:#fff;color:var(--ink);border:1px solid var(--line);font-family:Inter,sans-serif}
+[data-page=sara] input:focus-visible,[data-page=sara] button:focus-visible{outline:2px solid var(--gold)}
+[data-page=sara] .compose button{background:var(--gold);color:#fff;border-radius:999px}
+[data-page=sara] .quick button{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:999px;font-weight:500}
+[data-page=sara] .notice{color:var(--soft);border-left-color:var(--gold-l)}
+[data-page=sara] footer{color:#8c7f73}
+[data-page=sara] .bookcard{background:#fbf3e6;border-color:var(--gold-l)}[data-page=sara] .bookcard div{color:var(--ink)}
+[data-page=sara] .count{color:var(--soft)}
+[data-page=sara] .modal{background:rgba(43,36,32,.55)}
+[data-page=sara] .modal>div{background:var(--paper);color:var(--ink);border-color:var(--line);box-shadow:0 20px 60px rgba(0,0,0,.2)}
+[data-page=sara] .modal pre{background:#f6efe5;color:var(--ink)}
+@media(min-width:520px){[data-page=sara] .app{border-color:var(--line);border-radius:26px}}
+/* Carteira */
+[data-page=carteira] main{max-width:580px;padding:28px 20px}
+[data-page=carteira] h1{font-size:36px;color:var(--ink)}
+[data-page=carteira] .box{border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 30px rgba(90,60,30,.06);padding:22px}
+[data-page=carteira] input,[data-page=carteira] select{border-color:var(--line);background:#fff}
+[data-page=carteira] button{background:linear-gradient(135deg,var(--gold-l),var(--gold));border-radius:999px}
+[data-page=carteira] button.sec{background:#f3ece2;color:var(--ink)}[data-page=carteira] button.alt{background:#2f7a4c}
+[data-page=carteira] .card{background:linear-gradient(135deg,#2b2420,#6e5232 60%,#c9a46a);border-radius:22px}
+[data-page=carteira] h1{font-size:30px;line-height:1.15}[data-page=carteira] a{color:var(--gold)}
