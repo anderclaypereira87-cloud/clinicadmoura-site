@@ -97,11 +97,11 @@ async function ask(userText){let text=String(userText||'').trim().slice(0,350);i
  haltMic();haltAudio();working=true;send.disabled=true;mic.classList.add('hidden');replay.classList.add('hidden');message.value='';bubble('Você',text,true);
  state('Sarah está pensando e preparando a resposta...');let current=++turn,past=history.slice(-12);history.push({role:'user',text});controller=new AbortController();
  try{
-  const response=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({company:'clinicadmoura',session:SESSION,easy,text,history:past}),signal:controller.signal});
+  const response=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({company:'clinicadmoura',session:SESSION,easy,text,history:past,voice:false}),signal:controller.signal});
   const result=await response.json();if(!live||turn!==current)return;
   if(!response.ok)throw Error(result.error==='rate_limited'?'Muitas mensagens em pouco tempo. Aguarde um minutinho, por favor.':'O servidor não conseguiu responder. Tente novamente.');
   const answer=String(result.answer||'Não consegui responder agora.');history.push({role:'assistant',text:answer});bubble('Sarah · Aoede',answer);
-  displayQuota(result);working=false;send.disabled=false;
+  displayQuota(result);working=false;send.disabled=false;state('Sarah está preparando a voz…');
   if(result.audioBase64)await play(result.audioBase64,current);
   else {const a=await geminiSay(answer);if(live&&turn===current){if(a)await play(a,current);else{state('Resposta em texto. Toque para continuar.');mic.classList.remove('hidden')}}}
  }catch(e){if(!live||turn!==current)return;state(e?.message||'Não consegui conectar. Tente novamente.');mic.classList.remove('hidden');}
