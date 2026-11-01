@@ -1,5 +1,5 @@
 (function(){'use strict';
-var WA='5581999976804',SITE='https://anderclaypereira87-cloud.github.io/clinicadmoura-site/';
+var WA='558199976804',SITE='https://anderclaypereira87-cloud.github.io/clinicadmoura-site/';
 function wa(t){return 'https://wa.me/'+WA+'?text='+encodeURIComponent(t);}
 function $(s){return document.querySelector(s);}function $$(s){return [].slice.call(document.querySelectorAll(s));}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
