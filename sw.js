@@ -1,4 +1,4 @@
-const CACHE='dmoura-v4';
+const CACHE='dmoura-v5';
 const CORE=['./','sara.html','index.html','sara.html','carteira.html','assets/lux.css','assets/pwa-192.png','manifest.webmanifest'];
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).catch(()=>{}))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
