@@ -1,5 +1,5 @@
 (function(){'use strict';
-var WA='5581997181046',SITE='https://anderclaypereira87-cloud.github.io/clinicadmoura-site/';
+var WA='5581999976804',SITE='https://anderclaypereira87-cloud.github.io/clinicadmoura-site/';
 function wa(t){return 'https://wa.me/'+WA+'?text='+encodeURIComponent(t);}
 function $(s){return document.querySelector(s);}function $$(s){return [].slice.call(document.querySelectorAll(s));}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
@@ -156,7 +156,7 @@ function avaliar(){var o=UNITS.map(function(u){return '<option>'+u.nome+'</optio
  $('#f-pub').onclick=function(){var r={nome:$('#f-nome').value.trim(),local:$('#f-local').value.trim(),end:$('#f-end').value.trim(),nota:n,cat:$('#f-cat .on').textContent,txt:$('#f-txt').value.trim(),t:Date.now()};
   var l=rvs();l.unshift(r);try{localStorage.setItem('dm_avaliacoes',JSON.stringify(l.slice(0,50)));}catch(_){}renderRv();close();
   window.open(wa('Avaliação pelo site — '+r.nota+'/5 — '+r.local+' ('+r.cat+')\n'+r.txt+(r.nome?'\n— '+r.nome:'')),'_blank','noopener');};}
-function entrar(){open('<h2>Entrar — Área do Paciente</h2><p>Para agendar, confirmar horário, receber orientações ou falar com a equipe, entre pelo WhatsApp oficial da clínica. Não pedimos senha nem login no site.</p><div class="row"><a class="btn btn-teal" target="_blank" rel="noopener" href="'+wa('Olá! Quero entrar na área do paciente / falar com a equipe.')+'">Entrar pelo WhatsApp</a><a class="btn" href="tel:+5581997181046">Ligar (81) 99718-1046</a><button class="btn" data-close>Fechar</button></div>');}
+function entrar(){open('<h2>Entrar — Área do Paciente</h2><p>Para agendar, confirmar horário, receber orientações ou falar com a equipe, entre pelo WhatsApp oficial da clínica. Não pedimos senha nem login no site.</p><div class="row"><a class="btn btn-teal" target="_blank" rel="noopener" href="'+wa('Olá! Quero entrar na área do paciente / falar com a equipe.')+'">Entrar pelo WhatsApp</a><a class="btn" href="tel:+5581999976804">Ligar (81) 99997-6804</a><button class="btn" data-close>Fechar</button></div>');}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-modal]');if(b){var m=b.dataset.modal;if(m==='lojas')lojas(b.dataset.loja);else if(m==='avaliar')avaliar();else entrar();return;}
  var l=e.target.closest('[data-l]');if(l)lt(l.dataset.l);
  if(e.target.id==='copy-url'){(navigator.clipboard?navigator.clipboard.writeText(SITE):Promise.reject()).then(function(){e.target.textContent='URL copiada!';}).catch(function(){prompt('Copie a URL:',SITE);});}
